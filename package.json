@@ -4,6 +4,7 @@
 	"description": "Frontend tools for building on Hyperliquid.",
 	"private": true,
 	"license": "FSL-1.1-MIT",
+	"packageManager": "pnpm@10.16.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
