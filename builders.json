@@ -1,0 +1,3090 @@
+[
+	{
+		"builder_name": "Phantom",
+		"builder_address": "0xb84168cf3be63c6b8dad05ff5d755e97432ff80b",
+		"total_fees": 19733338.12492107,
+		"total_volume": 39322314596.42619,
+		"total_users": 56899,
+		"trade_count_30d": 1133548
+	},
+	{
+		"builder_name": "Based",
+		"builder_address": "0x1924b8561eef20e70ede628a296175d358be80e5",
+		"total_fees": 14949879.89404743,
+		"total_volume": 47175521842.59167,
+		"total_users": 28901,
+		"trade_count_30d": 1162736
+	},
+	{
+		"builder_name": "PVP",
+		"builder_address": "0x0cbf655b0d22ae71fba3a674b0e1c0c7e7f975af",
+		"total_fees": 7916747.74495417,
+		"total_volume": 16794622091.262186,
+		"total_users": 28042,
+		"trade_count_30d": 23817
+	},
+	{
+		"builder_name": "MetaMask",
+		"builder_address": "0xe95a5e31904e005066614247d309e00d8ad753aa",
+		"total_fees": 6103184.010019001,
+		"total_volume": 7669611707.861588,
+		"total_users": 8047,
+		"trade_count_30d": 315459
+	},
+	{
+		"builder_name": "Insilico",
+		"builder_address": "0x2868fc0d9786a740b491577a43502259efa78a39",
+		"total_fees": 3220268.43404821,
+		"total_volume": 32505080127.881683,
+		"total_users": 1582,
+		"trade_count_30d": 587747
+	},
+	{
+		"builder_name": "Infinex",
+		"builder_address": "0xcf56dd84ed85eb4929e0a76a0f2f04049b4ffc1a",
+		"total_fees": 2700369.69652195,
+		"total_volume": 5360778354.912211,
+		"total_users": 3283,
+		"trade_count_30d": 25801
+	},
+	{
+		"builder_name": "Axiom",
+		"builder_address": "0x1cc34f6af34653c515b47a83e1de70ba9b0cda1f",
+		"total_fees": 2245626.916723,
+		"total_volume": 22371473957.19749,
+		"total_users": 27432,
+		"trade_count_30d": 151143
+	},
+	{
+		"builder_name": "Builder_0x999a4b",
+		"builder_address": "0x999a4b5f268a8fbf33736feff360d462ad248dbf",
+		"total_fees": 1874197.9155402998,
+		"total_volume": 9436313611.129139,
+		"total_users": 344,
+		"trade_count_30d": 3998676
+	},
+	{
+		"builder_name": "Dreamcash",
+		"builder_address": "0x4950994884602d1b6c6d96e4fe30f58205c39395",
+		"total_fees": 1649142.82636099,
+		"total_volume": 6488424698.992591,
+		"total_users": 506,
+		"trade_count_30d": 5001771
+	},
+	{
+		"builder_name": "Mass",
+		"builder_address": "0xf944069b489f1ebff4c3c6a6014d58cbef7c7009",
+		"total_fees": 1351080.816859,
+		"total_volume": 2384056631.6321898,
+		"total_users": 895,
+		"trade_count_30d": 29304
+	},
+	{
+		"builder_name": "Liquid",
+		"builder_address": "0x6d4e7f472e6a491b98cbeed327417e310ae8ce48",
+		"total_fees": 1139571.9190961,
+		"total_volume": 2438657838.392392,
+		"total_users": 1109,
+		"trade_count_30d": 130651
+	},
+	{
+		"builder_name": "Rabby",
+		"builder_address": "0xad9be64fd7a35d99a138b87cb212baefbcdcf045",
+		"total_fees": 792220.120325,
+		"total_volume": 3152609693.926285,
+		"total_users": 5283,
+		"trade_count_30d": 235047
+	},
+	{
+		"builder_name": "Okto",
+		"builder_address": "0x05984fd37db96dc2a11a09519a8def556e80590b",
+		"total_fees": 790340.6367990001,
+		"total_volume": 3683536110.6553154,
+		"total_users": 8702,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Defiapp",
+		"builder_address": "0x1922810825c90f4270048b96da7b1803cd8609ef",
+		"total_fees": 731511.22252497,
+		"total_volume": 5506246141.166411,
+		"total_users": 6938,
+		"trade_count_30d": 27667
+	},
+	{
+		"builder_name": "Dexari",
+		"builder_address": "0x7975cafdff839ed5047244ed3a0dd82a89866081",
+		"total_fees": 603831.28900667,
+		"total_volume": 3132422167.076133,
+		"total_users": 2741,
+		"trade_count_30d": 14612
+	},
+	{
+		"builder_name": "Bullpen",
+		"builder_address": "0x4c8731897503f86a2643959cbaa1e075e84babb7",
+		"total_fees": 531139.04826985,
+		"total_volume": 1609071025.0634146,
+		"total_users": 794,
+		"trade_count_30d": 20296
+	},
+	{
+		"builder_name": "Rainbow",
+		"builder_address": "0x60dc8e3dad2e4e0738e813b9cb09b9c00b5e0fc9",
+		"total_fees": 522155.86971443996,
+		"total_volume": 1043964502.555357,
+		"total_users": 1869,
+		"trade_count_30d": 22575
+	},
+	{
+		"builder_name": "Pear Protocol",
+		"builder_address": "0xa47d4d99191db54a4829cdf3de2417e527c3b042",
+		"total_fees": 394250.38649315,
+		"total_volume": 664591220.4539106,
+		"total_users": 674,
+		"trade_count_30d": 153929
+	},
+	{
+		"builder_name": "HyperDash",
+		"builder_address": "0xe966a12bf7b93838096e4519a684519ab22df618",
+		"total_fees": 388311.17055615,
+		"total_volume": 1156956352.1233473,
+		"total_users": 186,
+		"trade_count_30d": 175952
+	},
+	{
+		"builder_name": "1KREF",
+		"builder_address": "0x9b12e858da780a96876e3018780cf0d83359b0bb",
+		"total_fees": 359595.86141134,
+		"total_volume": 1359900937.1189196,
+		"total_users": 152,
+		"trade_count_30d": 51181
+	},
+	{
+		"builder_name": "MOONBOT",
+		"builder_address": "0xb84c7fb41ee7d8781e2b0d59eed2accd2ae99533",
+		"total_fees": 354470.21230147005,
+		"total_volume": 2340991048.7632823,
+		"total_users": 108,
+		"trade_count_30d": 146145
+	},
+	{
+		"builder_name": "Dextrabot",
+		"builder_address": "0x49ae63056b3a0be0b166813ee687309ab653c07c",
+		"total_fees": 349015.93108799995,
+		"total_volume": 710478306.993489,
+		"total_users": 2562,
+		"trade_count_30d": 57721
+	},
+	{
+		"builder_name": "METASCALP",
+		"builder_address": "0xa9ab442f9dfe752dc74b666c41e7a0498baf8687",
+		"total_fees": 326272.3358166,
+		"total_volume": 1168457434.6101356,
+		"total_users": 216,
+		"trade_count_30d": 331053
+	},
+	{
+		"builder_name": "Kinto",
+		"builder_address": "0xc1f4d15c16a1f3555e0a5f7aefd1e17ad4aaf40b",
+		"total_fees": 283496.45931,
+		"total_volume": 736976399.050565,
+		"total_users": 1216,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Lootbase",
+		"builder_address": "0x3e0ef9ad4096c30acefbf7a996f4c19edd071286",
+		"total_fees": 266664.53484164,
+		"total_volume": 330855811.28891015,
+		"total_users": 2815,
+		"trade_count_30d": 2527
+	},
+	{
+		"builder_name": "Liminal",
+		"builder_address": "0x7e1830b1796b01f2f6a7118d50d4d02491421f32",
+		"total_fees": 229151.36552179002,
+		"total_volume": 528985898.7045826,
+		"total_users": 13719,
+		"trade_count_30d": 2494
+	},
+	{
+		"builder_name": "SuperCexy",
+		"builder_address": "0x0000000bfbf4c62c43c2e71ef0093f382bf7a7b4",
+		"total_fees": 223725.29715243,
+		"total_volume": 1375539749.7896807,
+		"total_users": 594,
+		"trade_count_30d": 4561
+	},
+	{
+		"builder_name": "Apexliquid",
+		"builder_address": "0xe1f55f2f25884c2ddc86b6f7efa5f45b2ef04221",
+		"total_fees": 209359.81592999998,
+		"total_volume": 442400154.795865,
+		"total_users": 1242,
+		"trade_count_30d": 98386
+	},
+	{
+		"builder_name": "SuperX",
+		"builder_address": "0x4ecd58def11dc3cadf7deb09f27da69d5475acb3",
+		"total_fees": 204134.61431695,
+		"total_volume": 505527874.37800616,
+		"total_users": 655,
+		"trade_count_30d": 109729
+	},
+	{
+		"builder_name": "Builder_0x8af354",
+		"builder_address": "0x8af3545a3988b7a46f96f9f1ae40c0e64fa493c2",
+		"total_fees": 203914.37452900002,
+		"total_volume": 522247884.68956804,
+		"total_users": 477,
+		"trade_count_30d": 32416
+	},
+	{
+		"builder_name": "Builder_0x653051",
+		"builder_address": "0x6530512a6c89c7cfcebc3ba7fcd9ada5f30827a6",
+		"total_fees": 195830.15313138,
+		"total_volume": 2227462431.338463,
+		"total_users": 388,
+		"trade_count_30d": 430907
+	},
+	{
+		"builder_name": "Builder_0x90c873",
+		"builder_address": "0x90c8737fcc9d607b15e718eaf9c4465fb2436d32",
+		"total_fees": 194004.494609,
+		"total_volume": 541846217.802614,
+		"total_users": 57,
+		"trade_count_30d": 37583
+	},
+	{
+		"builder_name": "Splash",
+		"builder_address": "0x3f24962739e6d703942dc2456e7c51c8d0ca4b70",
+		"total_fees": 154158.67380956,
+		"total_volume": 186603470.588305,
+		"total_users": 77,
+		"trade_count_30d": 2463
+	},
+	{
+		"builder_name": "WUNDERTRADING",
+		"builder_address": "0x75982eb8b734b24b653b39e308489a428041f162",
+		"total_fees": 151097.75142956997,
+		"total_volume": 433956639.26305324,
+		"total_users": 174,
+		"trade_count_30d": 137383
+	},
+	{
+		"builder_name": "Coinpilot",
+		"builder_address": "0xe9935bb291ab3603b4d7862e6f19315f759aa3a4",
+		"total_fees": 150017.772874,
+		"total_volume": 297307882.45444095,
+		"total_users": 1181,
+		"trade_count_30d": 32298
+	},
+	{
+		"builder_name": "VOOI",
+		"builder_address": "0xbe622f92438ae55b12908b01eeace15d98ed1eec",
+		"total_fees": 136251.212721,
+		"total_volume": 803193974.462953,
+		"total_users": 2428,
+		"trade_count_30d": 11934
+	},
+	{
+		"builder_name": "Builder_0x846d88",
+		"builder_address": "0x846d882beeb4fc34231b661e52430ef9ebadbc20",
+		"total_fees": 127861.473032,
+		"total_volume": 255607325.03800797,
+		"total_users": 970,
+		"trade_count_30d": 4384
+	},
+	{
+		"builder_name": "HyperX",
+		"builder_address": "0xc74812f67eddaf2f3aed6e061eaa9168b36d7ea1",
+		"total_fees": 125283.54233872,
+		"total_volume": 264363169.51972708,
+		"total_users": 447,
+		"trade_count_30d": 48274
+	},
+	{
+		"builder_name": "Lit",
+		"builder_address": "0x24a747628494231347f4f6aead2ec14f50bcc8b7",
+		"total_fees": 115949.35933884,
+		"total_volume": 437903611.6483485,
+		"total_users": 554,
+		"trade_count_30d": 3005
+	},
+	{
+		"builder_name": "Okto",
+		"builder_address": "0x4fe1141b9066f3777f4bd4d4ac9d216173031dc1",
+		"total_fees": 101462.74988696999,
+		"total_volume": 588309957.8181026,
+		"total_users": 927,
+		"trade_count_30d": 7254
+	},
+	{
+		"builder_name": "FOMOAPP",
+		"builder_address": "0xb838e4d1c8bcf71fa8e63299d5aa3258c83d6adb",
+		"total_fees": 88330.715884,
+		"total_volume": 137708628.167826,
+		"total_users": 367,
+		"trade_count_30d": 11071
+	},
+	{
+		"builder_name": "UXUY",
+		"builder_address": "0x2e266a0f40e9f5bca48f5df1686aab10b1b68ec8",
+		"total_fees": 71401.684811,
+		"total_volume": 160903362.686734,
+		"total_users": 835,
+		"trade_count_30d": 8972
+	},
+	{
+		"builder_name": "Wallet V",
+		"builder_address": "0x68c68ba58f50bdbe5c4a6faf0186b140eab2b764",
+		"total_fees": 60035.933997,
+		"total_volume": 299530646.178653,
+		"total_users": 300,
+		"trade_count_30d": 36683
+	},
+	{
+		"builder_name": "XBITDEX",
+		"builder_address": "0x0c322f69ab8d0544be3cfd54424762a4251806c5",
+		"total_fees": 53788.92579700003,
+		"total_volume": 405946672.06281596,
+		"total_users": 602,
+		"trade_count_30d": 64325
+	},
+	{
+		"builder_name": "Builder_0x6633d7",
+		"builder_address": "0x6633d75e488fae2a19b0242cc82099692db8d310",
+		"total_fees": 47755.334805,
+		"total_volume": 47754296.328044996,
+		"total_users": 108,
+		"trade_count_30d": 604
+	},
+	{
+		"builder_name": "TULEEPTRADE",
+		"builder_address": "0x00000000617c4307d352e8c1720a9f29d01c3d62",
+		"total_fees": 41649.441975999995,
+		"total_volume": 41651830.385761,
+		"total_users": 11,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Ranger",
+		"builder_address": "0xf5bc9107916b91a3ea5966cd2e51655d21b7eb02",
+		"total_fees": 40796.20284599999,
+		"total_volume": 215483265.39291498,
+		"total_users": 1483,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "GEMWALLET",
+		"builder_address": "0x0d9dab1a248f63b0a48965ba8435e4de7497a3dc",
+		"total_fees": 40164.71077456,
+		"total_volume": 89176785.342342,
+		"total_users": 26,
+		"trade_count_30d": 6713
+	},
+	{
+		"builder_name": "SLASH",
+		"builder_address": "0xaf69b1587b87c78409e5a20c3fd5f1ca386fd350",
+		"total_fees": 38913.096225,
+		"total_volume": 88496316.300618,
+		"total_users": 129,
+		"trade_count_30d": 1
+	},
+	{
+		"builder_name": "Builder_0xc36f6e",
+		"builder_address": "0xc36f6e7dc0ab7146c11f500e146d0084254c8bf6",
+		"total_fees": 33180.60599648001,
+		"total_volume": 59116263.88272116,
+		"total_users": 24,
+		"trade_count_30d": 364
+	},
+	{
+		"builder_name": "Coin98",
+		"builder_address": "0x3342ee6851ef0ec3cf42658c2be3b28a905271aa",
+		"total_fees": 28037.71771714,
+		"total_volume": 70131404.31032324,
+		"total_users": 167,
+		"trade_count_30d": 4310
+	},
+	{
+		"builder_name": "AURADOTMONEY",
+		"builder_address": "0xee41f05496bc30dbd29c96bc31283c7e9f062192",
+		"total_fees": 26386.18369485,
+		"total_volume": 76658228.865368,
+		"total_users": 112,
+		"trade_count_30d": 2034
+	},
+	{
+		"builder_name": "Builder_0xb290f2",
+		"builder_address": "0xb290f2f3fad4e540d0550985951cdad2711ac34a",
+		"total_fees": 24604.96431411,
+		"total_volume": 80548625.17260264,
+		"total_users": 77,
+		"trade_count_30d": 14990
+	},
+	{
+		"builder_name": "TopDog",
+		"builder_address": "0xaef63e8441987a5e9bf1d37ebb61d8855f405a98",
+		"total_fees": 23558.609073,
+		"total_volume": 79747082.175447,
+		"total_users": 272,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "MOONTRADER",
+		"builder_address": "0x38b176c674cd9a3b97a59b0a7045ba26a13783cb",
+		"total_fees": 23029.0142802,
+		"total_volume": 51655975.03374922,
+		"total_users": 35,
+		"trade_count_30d": 4312
+	},
+	{
+		"builder_name": "KATOSHI",
+		"builder_address": "0x274e3cdb7bdc4805f41a07e3348243ba3e7e5b72",
+		"total_fees": 22649.42116578,
+		"total_volume": 87295980.15331699,
+		"total_users": 143,
+		"trade_count_30d": 276
+	},
+	{
+		"builder_name": "BILL1BILL2",
+		"builder_address": "0x9802f9d3b6996d53b56a3e69d8c4afe806aa8827",
+		"total_fees": 21584.217431,
+		"total_volume": 42998456.354692,
+		"total_users": 83,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "LIQUID8",
+		"builder_address": "0x7151a036313eee8aa9bc45d0969ca0e1637aad3c",
+		"total_fees": 20985.803568,
+		"total_volume": 63497201.416051,
+		"total_users": 158,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xaa1d89",
+		"builder_address": "0xaa1d89f333857ed78f8434cc4f896a9293efe65c",
+		"total_fees": 16847.506502890003,
+		"total_volume": 31726953.1190303,
+		"total_users": 201,
+		"trade_count_30d": 1582
+	},
+	{
+		"builder_name": "Builder_0x7f66d9",
+		"builder_address": "0x7f66d958f6018c45e6ccca0339731a808d976e63",
+		"total_fees": 16522.737157,
+		"total_volume": 19644107.535409,
+		"total_users": 83,
+		"trade_count_30d": 1142
+	},
+	{
+		"builder_name": "Builder_0xff0985",
+		"builder_address": "0xff09853a49dde85a8e7eab58abf94018fbe76116",
+		"total_fees": 14655.41388994,
+		"total_volume": 17088362.2752294,
+		"total_users": 34,
+		"trade_count_30d": 16484
+	},
+	{
+		"builder_name": "Builder_0xf1a6fa",
+		"builder_address": "0xf1a6fa529f2a6e343ed7bcf716e453eb073d4238",
+		"total_fees": 14499.03099436,
+		"total_volume": 17482296.24661,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x055ba8",
+		"builder_address": "0x055ba87dbff972e23bcf26ea4728c31e05240e66",
+		"total_fees": 14047.758486,
+		"total_volume": 44974032.395632006,
+		"total_users": 143,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "GTR.Trade",
+		"builder_address": "0x5ef4deeb76f87d979d0ddc8c51f5b4f65d1c972a",
+		"total_fees": 12329.743147660001,
+		"total_volume": 30667268.506520223,
+		"total_users": 50,
+		"trade_count_30d": 252
+	},
+	{
+		"builder_name": "Builder_0xb977b6",
+		"builder_address": "0xb977b6625dfe3d26eefa4ac6f99ada6546586962",
+		"total_fees": 12161.225704999999,
+		"total_volume": 48351853.923275,
+		"total_users": 19,
+		"trade_count_30d": 5177
+	},
+	{
+		"builder_name": "CIPHER",
+		"builder_address": "0x32f6940795d6d484a6d29b6b628ebaff80a0c779",
+		"total_fees": 11776.962940000001,
+		"total_volume": 68935284.378169,
+		"total_users": 41,
+		"trade_count_30d": 776
+	},
+	{
+		"builder_name": "Builder_0x9394df",
+		"builder_address": "0x9394df21a598f706f2754c8e02aab495609e7618",
+		"total_fees": 9499.570524,
+		"total_volume": 33061806.71155,
+		"total_users": 23,
+		"trade_count_30d": 1533
+	},
+	{
+		"builder_name": "Builder_0xc1a2f7",
+		"builder_address": "0xc1a2f762f67af72fd05e79afa23f8358a4d7dbaf",
+		"total_fees": 7950.65515381,
+		"total_volume": 52968689.075607,
+		"total_users": 84,
+		"trade_count_30d": 4307
+	},
+	{
+		"builder_name": "Jester",
+		"builder_address": "0x786a53cbf73dd90fd6f2b4cf9514b60c8411dca7",
+		"total_fees": 7909.793107,
+		"total_volume": 8623159.296996,
+		"total_users": 24,
+		"trade_count_30d": 9356
+	},
+	{
+		"builder_name": "SLTP",
+		"builder_address": "0xac4d34989483281d41052fd78c0b36cfffba266d",
+		"total_fees": 7243.341504,
+		"total_volume": 36651269.830525,
+		"total_users": 22,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x70cf60",
+		"builder_address": "0x70cf605bb180daf00c3e2f1ca3df5bb602664452",
+		"total_fees": 6858.689346,
+		"total_volume": 8878456.949972,
+		"total_users": 18,
+		"trade_count_30d": 1706
+	},
+	{
+		"builder_name": "PEERXYZ",
+		"builder_address": "0xa2c7b6462a22e202ef89fc06fd0eb77655803231",
+		"total_fees": 6725.055659060001,
+		"total_volume": 13455627.1229036,
+		"total_users": 5,
+		"trade_count_30d": 64
+	},
+	{
+		"builder_name": "Builder_0xb09b18",
+		"builder_address": "0xb09b18a42819a8c2c7ced842dfd06a8d6ef6ccb8",
+		"total_fees": 6603.00055443,
+		"total_volume": 4068204.2684212304,
+		"total_users": 634,
+		"trade_count_30d": 188
+	},
+	{
+		"builder_name": "Builder_0x87fdab",
+		"builder_address": "0x87fdabdc48ea5fa26412aebf320634f9e1cfe6f0",
+		"total_fees": 6506.6824505099985,
+		"total_volume": 130207357.62273127,
+		"total_users": 8,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x0c83e1",
+		"builder_address": "0x0c83e114becfa7ec7dad02a155d9b626a0643ac3",
+		"total_fees": 6362.825138,
+		"total_volume": 7507305.76386,
+		"total_users": 17,
+		"trade_count_30d": 18
+	},
+	{
+		"builder_name": "WICKDOTTRADE",
+		"builder_address": "0x8cc1f9a883711644d42adc696c40a621e9517d28",
+		"total_fees": 6029.4943144300005,
+		"total_volume": 19109614.43592933,
+		"total_users": 28,
+		"trade_count_30d": 2200
+	},
+	{
+		"builder_name": "ONESHOT",
+		"builder_address": "0x17063330d2f6b59b735746c560666ddcaa5609c5",
+		"total_fees": 5827.7413930699995,
+		"total_volume": 1302310.7883748598,
+		"total_users": 121,
+		"trade_count_30d": 17
+	},
+	{
+		"builder_name": "TRYSPARK",
+		"builder_address": "0x761591e46a19e4e18b5a14bcc8565feca17f7278",
+		"total_fees": 5394.385534,
+		"total_volume": 6147128.232247,
+		"total_users": 65,
+		"trade_count_30d": 7
+	},
+	{
+		"builder_name": "Builder_0xd128dd",
+		"builder_address": "0xd128dd90cd4eabfcf6efc4d11dd9f46e53c893b8",
+		"total_fees": 5259.400086000001,
+		"total_volume": 52594041.951491,
+		"total_users": 11,
+		"trade_count_30d": 4657
+	},
+	{
+		"builder_name": "FANAPP",
+		"builder_address": "0xbbbbbbe4126c0bbc6a209faa60b67f17b10dea86",
+		"total_fees": 4800.51062222,
+		"total_volume": 9603377.1960932,
+		"total_users": 14,
+		"trade_count_30d": 1
+	},
+	{
+		"builder_name": "BLOCKLIQUIDITY",
+		"builder_address": "0x23ff884fab981b7e8b5c43f56d64cd29d1fad4f7",
+		"total_fees": 4234.13207656,
+		"total_volume": 21175322.8084089,
+		"total_users": 7,
+		"trade_count_30d": 2205
+	},
+	{
+		"builder_name": "Builder_0xfac5de",
+		"builder_address": "0xfac5de987335d35f0fee81b19ec63d67f33a6d5a",
+		"total_fees": 3698.517352,
+		"total_volume": 3693156.308476,
+		"total_users": 58,
+		"trade_count_30d": 232
+	},
+	{
+		"builder_name": "PLUTO001",
+		"builder_address": "0xcdde3cdada126e2dcb1faea51a1155e306c692f5",
+		"total_fees": 3462.842584,
+		"total_volume": 9290064.892795,
+		"total_users": 27,
+		"trade_count_30d": 88
+	},
+	{
+		"builder_name": "HLBot",
+		"builder_address": "0x52d8b948e300bd30097af941e937837e6fbb7a8a",
+		"total_fees": 3447.82994444,
+		"total_volume": 9339715.578298999,
+		"total_users": 139,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "SUPERSTACKXYZ",
+		"builder_address": "0xcdb943570bcb48a6f1d3228d0175598fea19e87b",
+		"total_fees": 3432.8018186799995,
+		"total_volume": 35911990.79085757,
+		"total_users": 27,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "HYPERETHIO",
+		"builder_address": "0xe744a93a10c209d045157ac262ab012197a5cc00",
+		"total_fees": 2478.11577658,
+		"total_volume": 10632534.97522598,
+		"total_users": 33,
+		"trade_count_30d": 161670
+	},
+	{
+		"builder_name": "Builder_0x832ad2",
+		"builder_address": "0x832ad2df37f572bb7ed33ea6689cea3f65ddabd9",
+		"total_fees": 2449.513914,
+		"total_volume": 23857562.123769,
+		"total_users": 19,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4b1be7",
+		"builder_address": "0x4b1be7c3b92f85eba3e638dc50d816518faded02",
+		"total_fees": 2417.51809589,
+		"total_volume": 5385139.9290015,
+		"total_users": 4,
+		"trade_count_30d": 493
+	},
+	{
+		"builder_name": "FELIXPROTOCOL",
+		"builder_address": "0x2157f54f7a745c772e686aa691fa590b49171ec9",
+		"total_fees": 2316.51471188,
+		"total_volume": 156109480.82470632,
+		"total_users": 1251,
+		"trade_count_30d": 19376
+	},
+	{
+		"builder_name": "Builder_0xecb63c",
+		"builder_address": "0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00",
+		"total_fees": 2198.135875,
+		"total_volume": 21981966.580276,
+		"total_users": 13,
+		"trade_count_30d": 3105
+	},
+	{
+		"builder_name": "Builder_0x73b565",
+		"builder_address": "0x73b56567e47ff95704d6eb2918cdc507f60d4e6d",
+		"total_fees": 2172.403624,
+		"total_volume": 2475507.992767,
+		"total_users": 12,
+		"trade_count_30d": 18
+	},
+	{
+		"builder_name": "Builder_0xab3fc2",
+		"builder_address": "0xab3fc2c0452889177c3f7c1867f8d9c12434e0fa",
+		"total_fees": 2067.455646,
+		"total_volume": 2667442.7261799998,
+		"total_users": 10,
+		"trade_count_30d": 7134
+	},
+	{
+		"builder_name": "Builder_0xb2ad46",
+		"builder_address": "0xb2ad46c8fa4d59077f75774c43ed490fafa13695",
+		"total_fees": 1981.60361209,
+		"total_volume": 19820606.64810659,
+		"total_users": 77,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "XTRADE",
+		"builder_address": "0xa58d3d31f09d75bd92ae2ef277e785b2ebb83b77",
+		"total_fees": 1955.17339,
+		"total_volume": 19514900.071814,
+		"total_users": 94,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x38997e",
+		"builder_address": "0x38997ec63ac630d03226676b7dc550ccc55f20df",
+		"total_fees": 1948.10757198,
+		"total_volume": 3897246.1421421,
+		"total_users": 112,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "EASYFUN",
+		"builder_address": "0x58377cf5c6d0a724dda89229a65355e33a50ffb3",
+		"total_fees": 1785.930452,
+		"total_volume": 3829623.311656,
+		"total_users": 74,
+		"trade_count_30d": 1288
+	},
+	{
+		"builder_name": "QUANTHIVEAI",
+		"builder_address": "0xc0d7917f754daa08c2e5351a37963119d997ae38",
+		"total_fees": 1728.105617,
+		"total_volume": 1728107.037308,
+		"total_users": 604,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x5ce4b8",
+		"builder_address": "0x5ce4b8cad590f75a2238d21e65571e529eeefb67",
+		"total_fees": 1562.44741,
+		"total_volume": 1561089.510038,
+		"total_users": 25,
+		"trade_count_30d": 508
+	},
+	{
+		"builder_name": "3647SDFHJS924KAS",
+		"builder_address": "0x1bd38cf3155fcb4719592ae5dd5c966e9736d9d9",
+		"total_fees": 1548.947866,
+		"total_volume": 3296525.508736,
+		"total_users": 19,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xb5f659",
+		"builder_address": "0xb5f659ffe0d3d2a72e63189bab89de716ac502c4",
+		"total_fees": 1531.446498,
+		"total_volume": 1760643.150268,
+		"total_users": 33,
+		"trade_count_30d": 466
+	},
+	{
+		"builder_name": "Builder_0xd24cb0",
+		"builder_address": "0xd24cb02bed630baa49887168440d90be8da6708c",
+		"total_fees": 1516.8682860000001,
+		"total_volume": 2492567.396779,
+		"total_users": 47,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xf4e422",
+		"builder_address": "0xf4e422730ba7e44201e4aa246701e188967781e1",
+		"total_fees": 1488.126086,
+		"total_volume": 1602113.29842,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x33e98f",
+		"builder_address": "0x33e98fdcf6fb3a5142374cac5bde06ab1bcdb7df",
+		"total_fees": 1362.880018,
+		"total_volume": 2725760.357055,
+		"total_users": 7,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x507c77",
+		"builder_address": "0x507c7777837b85ede1e67f5a4554ddd7e58b1f87",
+		"total_fees": 1294.189064,
+		"total_volume": 12774122.132074,
+		"total_users": 149,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x86f4f9",
+		"builder_address": "0x86f4f970fe8e8bc184c8d3aa5ef0f9c08f02430a",
+		"total_fees": 1223.834504,
+		"total_volume": 3477244.226968,
+		"total_users": 8,
+		"trade_count_30d": 1337
+	},
+	{
+		"builder_name": "Builder_0x42f5eb",
+		"builder_address": "0x42f5eb78d337c6ee8cdeaacd81a73f694eddedd9",
+		"total_fees": 1204.09175,
+		"total_volume": 12025682.390146,
+		"total_users": 311,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "FFS",
+		"builder_address": "0x113f059d7a863fbca1ff60df5b1954dbec9f91dd",
+		"total_fees": 1171.75517186,
+		"total_volume": 917748.42857,
+		"total_users": 47,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x9fe5f6",
+		"builder_address": "0x9fe5f68ab6e269de53ac14db9c103c044b8ed30c",
+		"total_fees": 1108.582191,
+		"total_volume": 1464931.544447,
+		"total_users": 7,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x30ca24",
+		"builder_address": "0x30ca24f8bd504db95295faa37c96fc2271389483",
+		"total_fees": 1108.17671733,
+		"total_volume": 2217836.9995637606,
+		"total_users": 3,
+		"trade_count_30d": 274
+	},
+	{
+		"builder_name": "Builder_0x338c48",
+		"builder_address": "0x338c482c9b89047b1caf9f8ebb504aa0e8550694",
+		"total_fees": 999.2266609999999,
+		"total_volume": 9988080.827882,
+		"total_users": 24,
+		"trade_count_30d": 79
+	},
+	{
+		"builder_name": "Builder_0x659c60",
+		"builder_address": "0x659c60fb79add360c565cdbfd9aa08805cd74b5c",
+		"total_fees": 981.60309506,
+		"total_volume": 981942.59573376,
+		"total_users": 16,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x12f5f5",
+		"builder_address": "0x12f5f5ce07647f5e7bf9ea054ea119d1cbb85a9b",
+		"total_fees": 959.296854,
+		"total_volume": 960098.641698,
+		"total_users": 8,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Pulse Trader",
+		"builder_address": "0x151e3af3c2387a2138ccc684d1d1d78277db68a9",
+		"total_fees": 953.430291,
+		"total_volume": 1316026.80157,
+		"total_users": 24,
+		"trade_count_30d": 21
+	},
+	{
+		"builder_name": "Builder_0x377003",
+		"builder_address": "0x377003338915c45450df1bcde76e6a306943a426",
+		"total_fees": 865.66678369,
+		"total_volume": 1732463.03644722,
+		"total_users": 19,
+		"trade_count_30d": 28545
+	},
+	{
+		"builder_name": "Builder_0x746337",
+		"builder_address": "0x746337a98821e1e38aa2bad0e77900d98b80609e",
+		"total_fees": 814.6425402899998,
+		"total_volume": 5422321.657085999,
+		"total_users": 20,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4bc2a8",
+		"builder_address": "0x4bc2a8920a02baae5f1fc583c923e529f70fb5a2",
+		"total_fees": 785.65894801,
+		"total_volume": 2618869.99489,
+		"total_users": 2,
+		"trade_count_30d": 1324
+	},
+	{
+		"builder_name": "MOOLE",
+		"builder_address": "0x6c8f41de4dabdef0f9ec43bf9fc3a5fbdb627ad5",
+		"total_fees": 779.9813660000001,
+		"total_volume": 2776877.484647,
+		"total_users": 139,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x67b642",
+		"builder_address": "0x67b642d2c19b4cb20681c997180ddd124e3c83ef",
+		"total_fees": 677.283736,
+		"total_volume": 677792.904449,
+		"total_users": 5,
+		"trade_count_30d": 178
+	},
+	{
+		"builder_name": "Builder_0xf7aae7",
+		"builder_address": "0xf7aae720d79b062ec268ac8e4389be68baf8f9d3",
+		"total_fees": 675.3591,
+		"total_volume": 1275523.910486,
+		"total_users": 16,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x87f148",
+		"builder_address": "0x87f1484e7236b4cc2c7cdaf7e512b6e431be728f",
+		"total_fees": 581.160902,
+		"total_volume": 1309293.316711,
+		"total_users": 7,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xf874a0",
+		"builder_address": "0xf874a0562a58a9412c47fde11450c807ce8d86ed",
+		"total_fees": 547.240671,
+		"total_volume": 651804.100379,
+		"total_users": 20,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "PIGEONTRADE",
+		"builder_address": "0x6f55fbf266f3470bda8db3b47f6d76f56db1f360",
+		"total_fees": 509.82130979,
+		"total_volume": 1018822.929265,
+		"total_users": 20,
+		"trade_count_30d": 1
+	},
+	{
+		"builder_name": "Builder_0x36be02",
+		"builder_address": "0x36be02a397e969e010ccbd7333f4169f66b8989f",
+		"total_fees": 494.57767843999994,
+		"total_volume": 1704947.9212082,
+		"total_users": 22,
+		"trade_count_30d": 168
+	},
+	{
+		"builder_name": "Builder_0xe711f7",
+		"builder_address": "0xe711f7f248e12ff4dbe5de2d9625074bc9757c23",
+		"total_fees": 488.58630566,
+		"total_volume": 985397.05812,
+		"total_users": 6,
+		"trade_count_30d": 310
+	},
+	{
+		"builder_name": "ARCA",
+		"builder_address": "0xd73236437dfb48a89cf739efe86c39b46ded4f5c",
+		"total_fees": 468.186805,
+		"total_volume": 468186.98353200004,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xeb697d",
+		"builder_address": "0xeb697dadf88ebf57f1444c25102d9ac471c353c0",
+		"total_fees": 463.958969,
+		"total_volume": 1245938.21538,
+		"total_users": 17,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xe4fea7",
+		"builder_address": "0xe4fea748eca48f44b1e042775f0c2363be1a2d80",
+		"total_fees": 457.71446212,
+		"total_volume": 2994846.909286,
+		"total_users": 14,
+		"trade_count_30d": 171
+	},
+	{
+		"builder_name": "MOONPNL",
+		"builder_address": "0x52de54919118066fcb614336c4bf96f564b4e3a8",
+		"total_fees": 448.535935,
+		"total_volume": 908307.723893,
+		"total_users": 111,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "APPLEBEEE",
+		"builder_address": "0x13dc499f972689924076a979eb3f3a91fbfb6098",
+		"total_fees": 421.328251,
+		"total_volume": 421328.300968,
+		"total_users": 9,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "DJDOG",
+		"builder_address": "0xcf2c53e9db89db2734adf4cc36366bb363bfaf33",
+		"total_fees": 407.09658099999996,
+		"total_volume": 852935.88445,
+		"total_users": 29,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x1f3e97",
+		"builder_address": "0x1f3e97fada893ebf79bc6e1242dd1bbe8a4946d7",
+		"total_fees": 370.087967,
+		"total_volume": 373095.949069,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x2c1b59",
+		"builder_address": "0x2c1b5924966111c039383b36409b490ef29824eb",
+		"total_fees": 362.338079,
+		"total_volume": 435645.732378,
+		"total_users": 14,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4635d4",
+		"builder_address": "0x4635d41d4b426fa4f5a42db0cd4bb8d7dbdeca49",
+		"total_fees": 359.501982,
+		"total_volume": 719004.02093,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "EZPAIRS",
+		"builder_address": "0xecaae0ee2710aa6f13e831ef00f20df09add5dd0",
+		"total_fees": 353.805136,
+		"total_volume": 829932.2644710001,
+		"total_users": 22,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xf8ead1",
+		"builder_address": "0xf8ead1ecc72dfbb87cdd7bf78450f7cf68d046a3",
+		"total_fees": 337.516939,
+		"total_volume": 6569365.371499,
+		"total_users": 15,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xae4f12",
+		"builder_address": "0xae4f125e893d3723f64bae11d9e43302906534ab",
+		"total_fees": 336.59944399999995,
+		"total_volume": 346921.929339,
+		"total_users": 50,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "GETRABBIT",
+		"builder_address": "0xe8d5bc481393c6a7cf1bea358f79b4de8aa16f36",
+		"total_fees": 316.954854,
+		"total_volume": 3169554.967649,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "HYPERWALLET",
+		"builder_address": "0xc46745118e75d2441546f3d574296e4b97f681b7",
+		"total_fees": 283.14660607999997,
+		"total_volume": 286210.342126,
+		"total_users": 35,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "TRADEDOTFUN",
+		"builder_address": "0xb696e41d27250951d0135848d3a42b9b4bd9ae7d",
+		"total_fees": 262.78863757,
+		"total_volume": 2723224.82313587,
+		"total_users": 92,
+		"trade_count_30d": 1
+	},
+	{
+		"builder_name": "Builder_0x0fb746",
+		"builder_address": "0x0fb746d8b1b983c98d99dc3feb9f5efc678c9547",
+		"total_fees": 251.70831588,
+		"total_volume": 366271.5707719,
+		"total_users": 6,
+		"trade_count_30d": 232
+	},
+	{
+		"builder_name": "Builder_0x6fdd24",
+		"builder_address": "0x6fdd24b8d341fdaf4833f12a1c4b8db1b4e43952",
+		"total_fees": 245.16752,
+		"total_volume": 489918.897868,
+		"total_users": 40,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x2fc5f7",
+		"builder_address": "0x2fc5f7e839a1b7d3d0f5af8d1a03cdcd60525c75",
+		"total_fees": 235.62648368000004,
+		"total_volume": 14063441.047930006,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x664850",
+		"builder_address": "0x6648500c7c2c30f0765c28e2498d2c8737a04e57",
+		"total_fees": 231.71270927999998,
+		"total_volume": 218621.01670751,
+		"total_users": 16,
+		"trade_count_30d": 9
+	},
+	{
+		"builder_name": "Builder_0xe8e430",
+		"builder_address": "0xe8e4305ecef9d2c13c7301a1dae44a9309ba76ce",
+		"total_fees": 223.57078904,
+		"total_volume": 779407.3503212,
+		"total_users": 39,
+		"trade_count_30d": 17
+	},
+	{
+		"builder_name": "PADTAI",
+		"builder_address": "0xedb0a3cc02575362a088556fa3653a8a3a17aaab",
+		"total_fees": 218.268765,
+		"total_volume": 288578.897526,
+		"total_users": 69,
+		"trade_count_30d": 243
+	},
+	{
+		"builder_name": "Builder_0xb2fed3",
+		"builder_address": "0xb2fed3acf6e30e0f1902a2b190c88c9a0a68edc3",
+		"total_fees": 215.289474,
+		"total_volume": 430579.76107999997,
+		"total_users": 8,
+		"trade_count_30d": 18
+	},
+	{
+		"builder_name": "ANDALE",
+		"builder_address": "0x746d98149d226313300f44570633ad68ab222949",
+		"total_fees": 214.334427,
+		"total_volume": 204193.056357,
+		"total_users": 16,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xac7b0f",
+		"builder_address": "0xac7b0f39d8fd212b41f75549c981d817ceafc01f",
+		"total_fees": 210.320594,
+		"total_volume": 845809.20023,
+		"total_users": 5,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "HALAFI",
+		"builder_address": "0x1be7ed5c02e9b5470c72451a801155c6972e7a98",
+		"total_fees": 208.911918,
+		"total_volume": 431776.27292899997,
+		"total_users": 12,
+		"trade_count_30d": 180
+	},
+	{
+		"builder_name": "Builder_0xf58f56",
+		"builder_address": "0xf58f5698b49d24239f95f0a4ad03d306e9c7182b",
+		"total_fees": 187.63546,
+		"total_volume": 1882493.2394309998,
+		"total_users": 13,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x98fbe0",
+		"builder_address": "0x98fbe0d024bac8eb3f8b0f07b43981f21f14a00d",
+		"total_fees": 182.84671894,
+		"total_volume": 178850.99014857,
+		"total_users": 10,
+		"trade_count_30d": 224
+	},
+	{
+		"builder_name": "Builder_0x3396ac",
+		"builder_address": "0x3396ace6eaacafc4ff6b85c766e4272a0f9734b0",
+		"total_fees": 174.641028,
+		"total_volume": 1740440.885165,
+		"total_users": 44,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xa021c5",
+		"builder_address": "0xa021c54a30dd50372194486df5d0191423dd67f2",
+		"total_fees": 155.574116,
+		"total_volume": 622296.88455,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "MINA",
+		"builder_address": "0xa0225de9250b519b59f15b5a499b6daa70fb99bf",
+		"total_fees": 153.84222313,
+		"total_volume": 1526856.15428406,
+		"total_users": 6,
+		"trade_count_30d": 9
+	},
+	{
+		"builder_name": "Builder_0x12cc5e",
+		"builder_address": "0x12cc5e108f926d98bff5602d003e217f91ec6308",
+		"total_fees": 142.99628327,
+		"total_volume": 467485.10353599995,
+		"total_users": 8,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x5fa69f",
+		"builder_address": "0x5fa69f55f867336f4b8616b063609ef25cb79662",
+		"total_fees": 138.9372343,
+		"total_volume": 25671.03535982,
+		"total_users": 26,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xbe698e",
+		"builder_address": "0xbe698e3d926a5cc2658aa6cffcc7bb0857314c82",
+		"total_fees": 132.44870411,
+		"total_volume": 687638.92764,
+		"total_users": 13,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xc5ea64",
+		"builder_address": "0xc5ea6406cd9132ef43780fac98ed7092c1b769fc",
+		"total_fees": 124.320506,
+		"total_volume": 140237.518205,
+		"total_users": 8,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "LASTONE",
+		"builder_address": "0xcac9fd5b18ed3d15d9f8e92d4b09ca1605e280c0",
+		"total_fees": 121.07146924,
+		"total_volume": 1191172.2996699999,
+		"total_users": 4,
+		"trade_count_30d": 182
+	},
+	{
+		"builder_name": "HYPURRQUANT",
+		"builder_address": "0x24686dfde021edd1cf9618caea98a0193e47bd6b",
+		"total_fees": 115.52111921,
+		"total_volume": 229723.14226459,
+		"total_users": 44,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "SPLAT",
+		"builder_address": "0x8ee7058e0e824f6d3ea85b8da1ab9ab70b87197c",
+		"total_fees": 112.7167624,
+		"total_volume": 1116476.820674,
+		"total_users": 29,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x0abc2f",
+		"builder_address": "0x0abc2f5441ca1e88280c2d67d589e47e0de11363",
+		"total_fees": 106.52490904,
+		"total_volume": 153485.5876929,
+		"total_users": 3,
+		"trade_count_30d": 34
+	},
+	{
+		"builder_name": "BWIN888",
+		"builder_address": "0x3fafd8c201ecfea482348553c263dd2e4e7407dd",
+		"total_fees": 99.49505978,
+		"total_volume": 651825.8935540001,
+		"total_users": 75,
+		"trade_count_30d": 395
+	},
+	{
+		"builder_name": "Builder_0xc61327",
+		"builder_address": "0xc61327963384eff2707331ec32cb3488c5142f72",
+		"total_fees": 98.87997700000001,
+		"total_volume": 98880.04581000001,
+		"total_users": 1,
+		"trade_count_30d": 78
+	},
+	{
+		"builder_name": "Builder_0xa52c22",
+		"builder_address": "0xa52c220527156e6e6bd639b7e08c0dc918aff6f5",
+		"total_fees": 85.796903,
+		"total_volume": 218925.56352599998,
+		"total_users": 16,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x620359",
+		"builder_address": "0x620359a55371b8dd6a34362fe717150b9796e759",
+		"total_fees": 83.044605,
+		"total_volume": 83065.336634,
+		"total_users": 9,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x6a0399",
+		"builder_address": "0x6a0399420e8af7db2501301be489e45272e94b6d",
+		"total_fees": 76.840327,
+		"total_volume": 211496.5437362,
+		"total_users": 9,
+		"trade_count_30d": 272
+	},
+	{
+		"builder_name": "Builder_0x62eeee",
+		"builder_address": "0x62eeeec4ca081053a78274fabeda7752d0835fa8",
+		"total_fees": 75.657242,
+		"total_volume": 76886.154313,
+		"total_users": 7,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x1d5f89",
+		"builder_address": "0x1d5f89eac7ee54423b8dfa3f974c0e3f79dddf09",
+		"total_fees": 68.573973,
+		"total_volume": 151385.881616,
+		"total_users": 27,
+		"trade_count_30d": 1
+	},
+	{
+		"builder_name": "Builder_0xf4950e",
+		"builder_address": "0xf4950ec284aa16babd7fd4f9f31e8b9c5bde84c2",
+		"total_fees": 67.266587,
+		"total_volume": 448446.198552,
+		"total_users": 16,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x223ff2",
+		"builder_address": "0x223ff2a843be0db5e70fc1b61e7524b066f7e03c",
+		"total_fees": 67.0517465,
+		"total_volume": 64960.905301,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xefe726",
+		"builder_address": "0xefe7265171ec3b6baaefc19220d6b7224e32ae0c",
+		"total_fees": 63.95213119,
+		"total_volume": 129190.9797281,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x39113d",
+		"builder_address": "0x39113dcab39ff54a3098c3d26e288408018ffd5c",
+		"total_fees": 60.116559,
+		"total_volume": 527454.889831,
+		"total_users": 3,
+		"trade_count_30d": 219
+	},
+	{
+		"builder_name": "IAMHYPERBOT",
+		"builder_address": "0x9fc4f70475ac05f8a1bc00b29bef94ad79ebf761",
+		"total_fees": 59.644297,
+		"total_volume": 662679.82785,
+		"total_users": 12,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x86d800",
+		"builder_address": "0x86d8009f02f14ff86784471f272f5ceb493ae717",
+		"total_fees": 57.427887,
+		"total_volume": 56388.767166,
+		"total_users": 11,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "COOKINGDEV",
+		"builder_address": "0xc73539d6cfca62128a2f5b41e6428984dc91f8df",
+		"total_fees": 51.695237,
+		"total_volume": 52445.08221,
+		"total_users": 4,
+		"trade_count_30d": 113
+	},
+	{
+		"builder_name": "Builder_0x9ac9b9",
+		"builder_address": "0x9ac9b96b2b3638df325b974075329e5cc59469e1",
+		"total_fees": 50.22461029,
+		"total_volume": 465199.0608256,
+		"total_users": 23,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x65b0d3",
+		"builder_address": "0x65b0d322592c7635a015b075760561e9d1523a44",
+		"total_fees": 49.451666620000005,
+		"total_volume": 74097.6371502,
+		"total_users": 7,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x71a7a0",
+		"builder_address": "0x71a7a0f4cbfd257a464a543bc2aecbc249519431",
+		"total_fees": 49.045066,
+		"total_volume": 98346.28081200001,
+		"total_users": 28,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x8bafa6",
+		"builder_address": "0x8bafa6d0e0f6ab4ded88c8dd193e989f2fdca2a2",
+		"total_fees": 48.953658000000004,
+		"total_volume": 97319.365817,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "PATRONSSTAGING",
+		"builder_address": "0x883725237e4514671344224c87e9c3f5f1457d5e",
+		"total_fees": 47.87454,
+		"total_volume": 95339.5105,
+		"total_users": 5,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x47b711",
+		"builder_address": "0x47b7110f5c1915cd78bca3b132011e74316d4e3d",
+		"total_fees": 46.814403,
+		"total_volume": 50370.353279,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "TPSLX",
+		"builder_address": "0x7284d89f465cf4a228e6f0f9b1a476d841732ede",
+		"total_fees": 46.059235,
+		"total_volume": 46059.350997,
+		"total_users": 7,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd2b977",
+		"builder_address": "0xd2b977baa0b13ccc70f1f5ec8a9bb7d1f736a807",
+		"total_fees": 46.025269,
+		"total_volume": 46012.19653,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xe3553c",
+		"builder_address": "0xe3553cd1387128c26427d5be6885408879e69327",
+		"total_fees": 41.672667,
+		"total_volume": 41984.280083,
+		"total_users": 8,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xa80256",
+		"builder_address": "0xa802563b4b06e1fa1b404edc7934b69013fe65a5",
+		"total_fees": 41.581271,
+		"total_volume": 41581.333042,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "JULIEBUSH",
+		"builder_address": "0x5397ffba4868814b7be03974d5e011d3e06289ed",
+		"total_fees": 41.162767,
+		"total_volume": 41164.36482,
+		"total_users": 14,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x8f9211",
+		"builder_address": "0x8f9211ca76d1383be24160beb2cc9c43cc075de4",
+		"total_fees": 40.15938,
+		"total_volume": 40409.366382,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4123bc",
+		"builder_address": "0x4123bcf22922714e646c951fcdf71982a438cf98",
+		"total_fees": 39.486359,
+		"total_volume": 171600.614561,
+		"total_users": 16,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x771722",
+		"builder_address": "0x77172290f34b8c889e8d9c7570c89ebd48560f68",
+		"total_fees": 37.350013,
+		"total_volume": 37549.96264,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "DEFINEDFI",
+		"builder_address": "0x9af5148d9294b3d0a7b82ecbf55ab5b691f689aa",
+		"total_fees": 36.799032,
+		"total_volume": 367991.724821,
+		"total_users": 4,
+		"trade_count_30d": 29
+	},
+	{
+		"builder_name": "Builder_0x346afd",
+		"builder_address": "0x346afd65ac95b62b154d7e136db83aaf43da1438",
+		"total_fees": 36.7725,
+		"total_volume": 36772.675764,
+		"total_users": 11,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "BOTFARMER1337",
+		"builder_address": "0xfd7d89cd05e655bccd0943acd3feff41db92511e",
+		"total_fees": 36.428713,
+		"total_volume": 54380.36676,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "L1",
+		"builder_address": "0x0cdd3c3b3147889353884915897881d0f7c9de76",
+		"total_fees": 35.913999,
+		"total_volume": 50735.230904000004,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x578717",
+		"builder_address": "0x578717d0392166f1442d857c6ab9a0408e411202",
+		"total_fees": 34.160238,
+		"total_volume": 56933.764151,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "FIGPRODREFER",
+		"builder_address": "0x2fb9d76cdbfcb74f7fcfed5579801bf537a04086",
+		"total_fees": 33.862674,
+		"total_volume": 33862.717818,
+		"total_users": 5,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xb982eb",
+		"builder_address": "0xb982ebd6dcf0b97f858fb95077110dc01ff1fd56",
+		"total_fees": 32.58949493,
+		"total_volume": 79296.87390006,
+		"total_users": 11,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xff069e",
+		"builder_address": "0xff069efe7907b393dcb2c0afce5f22dfdf809925",
+		"total_fees": 32.362798,
+		"total_volume": 70530.93058,
+		"total_users": 13,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x6b1678",
+		"builder_address": "0x6b16788d13843f9769243288e5cfd18cddec9019",
+		"total_fees": 31.211354,
+		"total_volume": 54616.906111,
+		"total_users": 14,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xbe1299",
+		"builder_address": "0xbe1299e1637ae06b1964d25fd6a7932974d19138",
+		"total_fees": 30.948304,
+		"total_volume": 310535.2741857,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "SNIPERWHALES",
+		"builder_address": "0x6842a90fa6da06f8399d105d27ef5d504b2f7eb7",
+		"total_fees": 29.78061,
+		"total_volume": 44563.079483,
+		"total_users": 7,
+		"trade_count_30d": 20
+	},
+	{
+		"builder_name": "Builder_0x4ed869",
+		"builder_address": "0x4ed86925aafa9ca7dc8abaf33b97a9a2e02731e4",
+		"total_fees": 29.631696,
+		"total_volume": 29631.780165,
+		"total_users": 10,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x67a6d9",
+		"builder_address": "0x67a6d918c3adfc36b047a8684491481114f6b3a6",
+		"total_fees": 29.060616239999998,
+		"total_volume": 316555.84580388,
+		"total_users": 14,
+		"trade_count_30d": 16
+	},
+	{
+		"builder_name": "Builder_0x5ec4f6",
+		"builder_address": "0x5ec4f671a1efe90fae2584186574081a5b6ac13f",
+		"total_fees": 28.351189,
+		"total_volume": 51548.070736,
+		"total_users": 13,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x3376d2",
+		"builder_address": "0x3376d28cf85f0d84539a7efec168ae6e548db14a",
+		"total_fees": 23.9437,
+		"total_volume": 9459.79947908,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "2OOLKIT",
+		"builder_address": "0xa6f967d47c6f85a5ba4fc43543e5e1c171cccf98",
+		"total_fees": 23.395096,
+		"total_volume": 1151677.263587,
+		"total_users": 5,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "HYPETO888",
+		"builder_address": "0x18de7df096cf93d6403a37604f1d21809b98d863",
+		"total_fees": 23.095316,
+		"total_volume": 117324.656539,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x6a181e",
+		"builder_address": "0x6a181ef519f21f933884038952aabef02876dbcc",
+		"total_fees": 22.986149,
+		"total_volume": 1006575.842541,
+		"total_users": 11,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xbaa7af",
+		"builder_address": "0xbaa7af339b77f5e34bf3fe254ed6a934181c08bd",
+		"total_fees": 22.091886000000002,
+		"total_volume": 22118.639098,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x9c4f88",
+		"builder_address": "0x9c4f884235e43a5e33aa5065f8d6a1b7bf45128a",
+		"total_fees": 20.855746,
+		"total_volume": 20855.7472,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xdd2422",
+		"builder_address": "0xdd2422500225fb7a6f618695076a14ddae56e5ef",
+		"total_fees": 20.839378,
+		"total_volume": 41678.992182,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4598ee",
+		"builder_address": "0x4598ee7506ac481066e277fee76d330a7de39e8b",
+		"total_fees": 19.905498,
+		"total_volume": 57450.07264,
+		"total_users": 13,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "NESTTRADE",
+		"builder_address": "0xb4b0de9b2f90e74fb606be0c5b87008a0fdc398a",
+		"total_fees": 19.128842,
+		"total_volume": 260000.438778,
+		"total_users": 10,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd0c84b",
+		"builder_address": "0xd0c84b15eed871d8ee10b2861dc746a4cfcaaf99",
+		"total_fees": 17.079597,
+		"total_volume": 61967.50429127,
+		"total_users": 10,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "LEGEND9999",
+		"builder_address": "0x63eefb268bd21c57b5eeba1cbc909695bfa66f4e",
+		"total_fees": 16.686414,
+		"total_volume": 18092.811105999997,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x43539f",
+		"builder_address": "0x43539fa237e2f20dbdb9a783bd8d8b5e99cea4c9",
+		"total_fees": 16.52947468,
+		"total_volume": 67120.88215536,
+		"total_users": 20,
+		"trade_count_30d": 6
+	},
+	{
+		"builder_name": "HYPERCASH",
+		"builder_address": "0x362294a899b304c933135781bb1f976ed8062781",
+		"total_fees": 16.1328925,
+		"total_volume": 94619.72631689999,
+		"total_users": 42,
+		"trade_count_30d": 18
+	},
+	{
+		"builder_name": "DOBLOX",
+		"builder_address": "0xc0a6dd2bbb7e0b29b51e191e6343fa17fdc0d393",
+		"total_fees": 15.873963,
+		"total_volume": 27192.37539,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4752f5",
+		"builder_address": "0x4752f5d4ea2bd35ec257228074053f19bdb41e8c",
+		"total_fees": 15.6933624,
+		"total_volume": 188820.324441,
+		"total_users": 3,
+		"trade_count_30d": 221
+	},
+	{
+		"builder_name": "Builder_0x832c26",
+		"builder_address": "0x832c26548ffcc85d1d43daafd95a58730e9d296b",
+		"total_fees": 15.214376000000001,
+		"total_volume": 30429.00858,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x91e163",
+		"builder_address": "0x91e163f58c260da2c9f957bf7d43fe72d944db9a",
+		"total_fees": 14.895444,
+		"total_volume": 16003.256224,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x151f3a",
+		"builder_address": "0x151f3ab65c1d45590d5b72be2cf5ffd78e9061eb",
+		"total_fees": 14.59912711,
+		"total_volume": 76195.383343,
+		"total_users": 7,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xc0f5c4",
+		"builder_address": "0xc0f5c42477ea4174b18d7d921e71b5627d2cc36e",
+		"total_fees": 13.299868,
+		"total_volume": 111902.64831,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "ZAPPIN",
+		"builder_address": "0xd79a4ac5ec2a3f7a3d60054b31a29569a4c26207",
+		"total_fees": 12.174611,
+		"total_volume": 34432.135048000004,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xcd1baf",
+		"builder_address": "0xcd1baf2b33781c088b30106289e745972e41b0e8",
+		"total_fees": 11.997269,
+		"total_volume": 115002.40751599999,
+		"total_users": 8,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xf1eeb0",
+		"builder_address": "0xf1eeb0215d8bacaf992ea1f8e4253abfebf259dd",
+		"total_fees": 11.967627,
+		"total_volume": 23935.30414,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd847a2",
+		"builder_address": "0xd847a2b81e53775c13b7c5aea76e02ad077f0ce8",
+		"total_fees": 11.299652,
+		"total_volume": 11322.872864,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4aeabf",
+		"builder_address": "0x4aeabf31396f38bcefc4f631e738ca5b5c797d83",
+		"total_fees": 10.573703,
+		"total_volume": 10583.82842,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x9892db",
+		"builder_address": "0x9892dba9271f680737e32b9d272110f805ee4a8e",
+		"total_fees": 9.885122,
+		"total_volume": 9885.14202,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x534e1e",
+		"builder_address": "0x534e1e020cfbb3bb6b75f8a6e07bd8278743ded6",
+		"total_fees": 9.81185,
+		"total_volume": 28033.90619,
+		"total_users": 5,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xc4ad63",
+		"builder_address": "0xc4ad631b39c2ecde33b58366a7e9d6dcd674cce6",
+		"total_fees": 9.761154,
+		"total_volume": 19522.427261,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x7301e2",
+		"builder_address": "0x7301e2d1b227c7638093ca8f3064b12bdeaec91b",
+		"total_fees": 8.957432,
+		"total_volume": 9092.45041,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x46a3e6",
+		"builder_address": "0x46a3e6426095efc43aa613f9ac6c0fbeaab77ca2",
+		"total_fees": 8.40130473,
+		"total_volume": 119132.6094887,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "XBITUNSTABLE",
+		"builder_address": "0xdaaafa40f70d72f7dfd3a153fc167a18b54e21ab",
+		"total_fees": 7.971934,
+		"total_volume": 79654.416429,
+		"total_users": 33,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x30f448",
+		"builder_address": "0x30f4489915c0002dffd8bd598fe356739a7fb22d",
+		"total_fees": 7.47292,
+		"total_volume": 51867.54767556,
+		"total_users": 30,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "NEXUSLABS",
+		"builder_address": "0x9074a6eedbc32abbffa64cccaee7e970155f8249",
+		"total_fees": 7.430376,
+		"total_volume": 14860.75491,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd5b8ba",
+		"builder_address": "0xd5b8ba2860dd92aa08814d01f2035a6aa4adebe8",
+		"total_fees": 6.996833,
+		"total_volume": 14217.368719,
+		"total_users": 4,
+		"trade_count_30d": 9
+	},
+	{
+		"builder_name": "ASTRAFI",
+		"builder_address": "0x490b605cc6337f4b03a6bbb998dfb65b6ce791eb",
+		"total_fees": 6.38913,
+		"total_volume": 17711.131376999998,
+		"total_users": 11,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xe5ec09",
+		"builder_address": "0xe5ec09feb6e88fb3eac7f576e779b99cff61d062",
+		"total_fees": 6.3539080000000006,
+		"total_volume": 25504.060747,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xefeb77",
+		"builder_address": "0xefeb771e55d88706101159f859152977f27df064",
+		"total_fees": 6.308639,
+		"total_volume": 6308.7168,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x32e4ae",
+		"builder_address": "0x32e4ae1d49999a4ab7e58db24b42613518b78762",
+		"total_fees": 6.195773,
+		"total_volume": 25059.036635,
+		"total_users": 3,
+		"trade_count_30d": 82
+	},
+	{
+		"builder_name": "Builder_0x04ce3c",
+		"builder_address": "0x04ce3ca877bdbb2faffa63f9eee55d7d639a1700",
+		"total_fees": 6.1255089,
+		"total_volume": 23707.8673432,
+		"total_users": 2,
+		"trade_count_30d": 43
+	},
+	{
+		"builder_name": "DEXARENA",
+		"builder_address": "0xb1e79339c73f091f8557d39cf895eada38ed8129",
+		"total_fees": 6.036215,
+		"total_volume": 60085.328061,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4a88c1",
+		"builder_address": "0x4a88c18ba42ef50c1fee607d334590617234f97d",
+		"total_fees": 5.893517999999999,
+		"total_volume": 5893.60039,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x35404c",
+		"builder_address": "0x35404c01ca0ae916a320ea9cd9b54d827a36f358",
+		"total_fees": 5.888652,
+		"total_volume": 5888.67695,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xca00df",
+		"builder_address": "0xca00dff8745fb24f26d5dff1db87d6189ea57dc7",
+		"total_fees": 5.72586,
+		"total_volume": 6160.745894,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x03230d",
+		"builder_address": "0x03230dc380617db54cefd0140562e30ae19e162e",
+		"total_fees": 5.495774,
+		"total_volume": 1997.27124,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xa5c0d8",
+		"builder_address": "0xa5c0d8a71048414c086c45fd86a2ee94fc5df16a",
+		"total_fees": 5.439254,
+		"total_volume": 37868.381778,
+		"total_users": 9,
+		"trade_count_30d": 14
+	},
+	{
+		"builder_name": "Builder_0x4ef880",
+		"builder_address": "0x4ef880525383ab4e3d94b7689e3146bf899a296e",
+		"total_fees": 5.210314,
+		"total_volume": 11943.525656,
+		"total_users": 20,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x5ac8a0",
+		"builder_address": "0x5ac8a0f0155fd0ea2a0b9540f0bf787fa353fa77",
+		"total_fees": 4.84321017,
+		"total_volume": 6227.74423152,
+		"total_users": 5,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "SWAPPERFI",
+		"builder_address": "0xdf06e2472784fffa3ffed9ed4a05425dc569d24a",
+		"total_fees": 4.483237,
+		"total_volume": 421289.99685552,
+		"total_users": 9,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x8814ef",
+		"builder_address": "0x8814ef6edafa023725faa114b9291b6bd13b3f53",
+		"total_fees": 3.6912469999999997,
+		"total_volume": 24611.24758,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x778628",
+		"builder_address": "0x77862830a17506d0710ed4b67f21c53b5a27b7ab",
+		"total_fees": 3.524073,
+		"total_volume": 35087.871272000004,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x52eb70",
+		"builder_address": "0x52eb70f58f714e3dd0bfe796ae5dd48d40c02df7",
+		"total_fees": 3.404583,
+		"total_volume": 8511.813042,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "CAESARJULIUS0",
+		"builder_address": "0x04b9ca8e87d743c834c40068d8564116ec2d40dc",
+		"total_fees": 3.371551,
+		"total_volume": 3371.5535,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x05f097",
+		"builder_address": "0x05f097adc8ff4b9545669a8e23948fcc9a36bb1a",
+		"total_fees": 3.195472,
+		"total_volume": 3984.66683,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "PERPMAX10",
+		"builder_address": "0xa1dfc4353f48843fc68b9fee1b6226693625845d",
+		"total_fees": 3.191434,
+		"total_volume": 32149.79510802,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "CHRISLING",
+		"builder_address": "0x1549920373edb37ae3a9cffe1be02844df3127d0",
+		"total_fees": 3.02094423,
+		"total_volume": 59971.736688,
+		"total_users": 5,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x1bb1e3",
+		"builder_address": "0x1bb1e3b89cbba1ebe7a150070baa2038f395fa2f",
+		"total_fees": 3.00858952,
+		"total_volume": 21143.828471200002,
+		"total_users": 19,
+		"trade_count_30d": 1
+	},
+	{
+		"builder_name": "Builder_0x5b7c2d",
+		"builder_address": "0x5b7c2d8f152bc7af6e3dd024f3b96c92948cc24a",
+		"total_fees": 2.9658420000000003,
+		"total_volume": 12965.68467881,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x1c2794",
+		"builder_address": "0x1c279431efa939c5845edbf257a7b4c76027b194",
+		"total_fees": 2.963839,
+		"total_volume": 5927.74594,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x1eab2d",
+		"builder_address": "0x1eab2d7c886890a60c03abf9954e5586f22a19d8",
+		"total_fees": 2.937449,
+		"total_volume": 2937.48524,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xaa9f1e",
+		"builder_address": "0xaa9f1ee0f973c396c15a4ac40440e06a18c66044",
+		"total_fees": 2.878158,
+		"total_volume": 2878.18104,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "654321",
+		"builder_address": "0x666c537a2d36760a02c963e55b04a80592aa3666",
+		"total_fees": 2.846325,
+		"total_volume": 284655.49888,
+		"total_users": 12,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xe7ca28",
+		"builder_address": "0xe7ca28457301b380cae17aecc940588481ed18b3",
+		"total_fees": 2.743639,
+		"total_volume": 5487.304,
+		"total_users": 9,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "BOH",
+		"builder_address": "0x5d60bc3b4a142753eac6e578457da567b11f4ca6",
+		"total_fees": 2.677912,
+		"total_volume": 6785.38004,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "BULLE",
+		"builder_address": "0x33470d8f04e4356de9365e39a777d4127d20e55c",
+		"total_fees": 2.5903150000000004,
+		"total_volume": 6918.26596,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xb69ad2",
+		"builder_address": "0xb69ad224017061acb4837c17185bf4cbc3bd2b16",
+		"total_fees": 2.221483,
+		"total_volume": 22215.563716999997,
+		"total_users": 2,
+		"trade_count_30d": 17
+	},
+	{
+		"builder_name": "Builder_0xd6d904",
+		"builder_address": "0xd6d9040e23806d24d7af74fad480f07dd152fd61",
+		"total_fees": 2.214806,
+		"total_volume": 8827.59728,
+		"total_users": 10,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x0d0946",
+		"builder_address": "0x0d0946c57647a26cc3be55387098bf24573f9afe",
+		"total_fees": 2.180616,
+		"total_volume": 2259.89668,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd44184",
+		"builder_address": "0xd4418418f6673b48e1828f539bed0340f78114e1",
+		"total_fees": 2.109312,
+		"total_volume": 2109.330314,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x1d04b2",
+		"builder_address": "0x1d04b2fd5fdf549ead7ffca76bb09a35c9d7fd93",
+		"total_fees": 2.08815675,
+		"total_volume": 20896.48602,
+		"total_users": 3,
+		"trade_count_30d": 2
+	},
+	{
+		"builder_name": "PERPCOPY",
+		"builder_address": "0xc095b3e88cbfcc12e151b056696824d2fd5252d4",
+		"total_fees": 2.0476360000000002,
+		"total_volume": 5062.23139,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x9c255b",
+		"builder_address": "0x9c255b494c5c8bacd9cfbd1e9c078eff0921eb0f",
+		"total_fees": 2.04590386,
+		"total_volume": 19708.96152924,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xdab1d7",
+		"builder_address": "0xdab1d785788be01f22731660e10a214169f118df",
+		"total_fees": 2.018085,
+		"total_volume": 2018.12796,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x0ffe9a",
+		"builder_address": "0x0ffe9aa38329c407f6d678aee8c5e88f7068dcad",
+		"total_fees": 1.89422556,
+		"total_volume": 1468.9808964699998,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xcf0328",
+		"builder_address": "0xcf03287a85298166522002c97ae4b1556ff026b3",
+		"total_fees": 1.858847,
+		"total_volume": 1858.847,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "HUIPHUIOHGUIPHFTI",
+		"builder_address": "0x2b11a188d49956930b0c0f873e6a1e338ab7e80f",
+		"total_fees": 1.830599,
+		"total_volume": 3670.76579,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x92da2a",
+		"builder_address": "0x92da2af212a6503645c84abd682889e8d645558c",
+		"total_fees": 1.66554715,
+		"total_volume": 1540.312106,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x32648c",
+		"builder_address": "0x32648c7f54271892db4342aca7aad702bde31047",
+		"total_fees": 1.573502,
+		"total_volume": 1573.5368910000002,
+		"total_users": 11,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xb538a4",
+		"builder_address": "0xb538a447f47328fc9fe6b83f21a169d5306d7073",
+		"total_fees": 1.4896120000000002,
+		"total_volume": 3040.22141,
+		"total_users": 2,
+		"trade_count_30d": 50
+	},
+	{
+		"builder_name": "MARSBOT",
+		"builder_address": "0xd949bab2c9a80ddea4d42a522b3809c3e400b4f3",
+		"total_fees": 1.335648,
+		"total_volume": 8570.968567,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "FIGSTAGEREFER",
+		"builder_address": "0xaefd9742b65bff9c912059be92adb002537a37d6",
+		"total_fees": 1.14827,
+		"total_volume": 1148.27881,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x5ca960",
+		"builder_address": "0x5ca960064aa27b9b019ce9f76fec62b17b4b65b2",
+		"total_fees": 1.129222,
+		"total_volume": 2258.4729,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x292f0e",
+		"builder_address": "0x292f0e22a0245387a89d5db50f016d18d6af0bac",
+		"total_fees": 1.073339,
+		"total_volume": 4809.2002,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd5498d",
+		"builder_address": "0xd5498dd7786828bc7dbb6c5a808224f948e3ebb7",
+		"total_fees": 1.01524,
+		"total_volume": 0.0,
+		"total_users": 0,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd6c067",
+		"builder_address": "0xd6c067547dfe951ee0c6febd454f241327a2c943",
+		"total_fees": 0.994152,
+		"total_volume": 40224.06631254,
+		"total_users": 32,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xea996a",
+		"builder_address": "0xea996a2dcc37ddde0f2ed80baaac962e81c7c721",
+		"total_fees": 0.9827172,
+		"total_volume": 209.08744,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x545fa0",
+		"builder_address": "0x545fa0d7993929fef64158f68799e6fadfbeb983",
+		"total_fees": 0.880886,
+		"total_volume": 17618.4703,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x141fc0",
+		"builder_address": "0x141fc0f77aa5e083b0c373410655b7e6a00618dd",
+		"total_fees": 0.812356,
+		"total_volume": 3271.181029,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x1edf4c",
+		"builder_address": "0x1edf4c682b89dbbe6bdc0eb9be2f9900426bb170",
+		"total_fees": 0.771601,
+		"total_volume": 978234.64908166,
+		"total_users": 23,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "DATBRO",
+		"builder_address": "0x13e46ccd194ca86212236543d2e7376b00bafa42",
+		"total_fees": 0.700192,
+		"total_volume": 4819.100787,
+		"total_users": 9,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x71f268",
+		"builder_address": "0x71f2684cd99b8ae7b4aa690def21112c312f43e0",
+		"total_fees": 0.67856872,
+		"total_volume": 1732.3525217,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x3763a2",
+		"builder_address": "0x3763a2cb49ca42d6c45190ded76b3623df2cedc8",
+		"total_fees": 0.591744,
+		"total_volume": 591.75542,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x18b42e",
+		"builder_address": "0x18b42e4d367b306a96001c35349c412d64b002a8",
+		"total_fees": 0.586448,
+		"total_volume": 946.36168,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x171319",
+		"builder_address": "0x171319751c866bea180a2ee37eec229173714933",
+		"total_fees": 0.564597,
+		"total_volume": 564.59864,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "HYPERSOLIDLFG",
+		"builder_address": "0x416684a2260030d7bed456f8f7939e0c3e603c3c",
+		"total_fees": 0.5020910000000001,
+		"total_volume": 27108.80483,
+		"total_users": 11,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x20b931",
+		"builder_address": "0x20b9312ca24b182c708e426dc270841bccacfdce",
+		"total_fees": 0.481288,
+		"total_volume": 1925.18069,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "STRADA",
+		"builder_address": "0xd51e68896104bce2518079956f2b8c24c8693278",
+		"total_fees": 0.467405,
+		"total_volume": 207.9982,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xb8af8c",
+		"builder_address": "0xb8af8c339f69433ccc04b439e61c31c216c23960",
+		"total_fees": 0.456717,
+		"total_volume": 127.6955247,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xc450e4",
+		"builder_address": "0xc450e488ef4c7090aa434a73f21defc8bc05a948",
+		"total_fees": 0.437896,
+		"total_volume": 87.49802,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x06919e",
+		"builder_address": "0x06919e1f2310aaff394481ee34925a1c59d47666",
+		"total_fees": 0.415583,
+		"total_volume": 4156.18672,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4cb5ef",
+		"builder_address": "0x4cb5ef084e9fe906b412c99ac276ed6c3a18e4e4",
+		"total_fees": 0.411934,
+		"total_volume": 1165.72531,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "DEWFWEF",
+		"builder_address": "0xa2467c56dab779a67a9202aac35426e93ede86bc",
+		"total_fees": 0.409197,
+		"total_volume": 5179.31868,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xe74928",
+		"builder_address": "0xe74928c9e236b0df9d82c7fdbc3d1559d20153eb",
+		"total_fees": 0.386414,
+		"total_volume": 272.92008,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x0ee938",
+		"builder_address": "0x0ee93869f40f894262e36b33f8f643ef76f7fe53",
+		"total_fees": 0.384367,
+		"total_volume": 384.38265,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xcc58e2",
+		"builder_address": "0xcc58e29180b011a6062a3210fae14198502ba789",
+		"total_fees": 0.36298,
+		"total_volume": 930.761331,
+		"total_users": 6,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xf3cde1",
+		"builder_address": "0xf3cde11514925852392442189dc87d07e099d80c",
+		"total_fees": 0.35015,
+		"total_volume": 5670.21975,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd4a03c",
+		"builder_address": "0xd4a03ce230616680574f177095c07433e3a3b992",
+		"total_fees": 0.345174,
+		"total_volume": 3669.771549,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "RABBYTEST",
+		"builder_address": "0x341a1fbd51825e5a107db54ccb3166deba145479",
+		"total_fees": 0.330919,
+		"total_volume": 661.84138,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x1b26eb",
+		"builder_address": "0x1b26eb31104804e00bc3ba7f9c0b6791f663f411",
+		"total_fees": 0.24518937,
+		"total_volume": 991.16726,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x38a0c1",
+		"builder_address": "0x38a0c17b784ac6468b78c7dbe98a60d3df4d1b5f",
+		"total_fees": 0.24064,
+		"total_volume": 318.29171,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xfadedf",
+		"builder_address": "0xfadedfa3b3dba4f20de37bff09bef5210f4cefc0",
+		"total_fees": 0.239721,
+		"total_volume": 479.4425,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xc54e0d",
+		"builder_address": "0xc54e0d0ea775762ccd9a56d063cc0ca3276d8f90",
+		"total_fees": 0.231348,
+		"total_volume": 231.348,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x697fb3",
+		"builder_address": "0x697fb3dc21e178fbe446a50891b5a124dd5342f5",
+		"total_fees": 0.217604,
+		"total_volume": 310.28,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x69b4b0",
+		"builder_address": "0x69b4b015db7f185375f4503fb7536e65d2834bcf",
+		"total_fees": 0.212719,
+		"total_volume": 21273.76039,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x9b8e3f",
+		"builder_address": "0x9b8e3fc65a8324a30383389e4b213c7bda6b1f44",
+		"total_fees": 0.168297,
+		"total_volume": 1892.3906200000001,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "VIP200",
+		"builder_address": "0xf2cfd400fe32d6346d1e19c324b3c023e71c11e0",
+		"total_fees": 0.162198,
+		"total_volume": 272.88496,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x50774c",
+		"builder_address": "0x50774ce11756b01a379c6d8d95f3487d81ce48fb",
+		"total_fees": 0.135728,
+		"total_volume": 591.910331,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd3042d",
+		"builder_address": "0xd3042dd32cc3ce05d45ee185714bc8fed59593f6",
+		"total_fees": 0.135514,
+		"total_volume": 0.0,
+		"total_users": 0,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "JKORF",
+		"builder_address": "0x64134a9577a857bcc5dafa42e1647e1439e5f8e7",
+		"total_fees": 0.1347986,
+		"total_volume": 1001.0595000000001,
+		"total_users": 1,
+		"trade_count_30d": 4
+	},
+	{
+		"builder_name": "Builder_0x433673",
+		"builder_address": "0x4336739f29cdcf5ae759a26b000eac34edc17035",
+		"total_fees": 0.134495,
+		"total_volume": 395.48,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x8384a5",
+		"builder_address": "0x8384a5dfb64a525f3d38a03538ee83ff2b97e559",
+		"total_fees": 0.129933,
+		"total_volume": 129.93777,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xa99f7f",
+		"builder_address": "0xa99f7ff0d8b3dbc1ef552b1b80822f551b81f6f6",
+		"total_fees": 0.12785,
+		"total_volume": 2418.7878,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x586583",
+		"builder_address": "0x586583f67a1a246f41b3215f5b7876db09348f23",
+		"total_fees": 0.118242,
+		"total_volume": 2365.46046,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xa9749d",
+		"builder_address": "0xa9749d84fe8551988075765e5ae4826fa3266378",
+		"total_fees": 0.116525,
+		"total_volume": 12018.65568,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x6a3efc",
+		"builder_address": "0x6a3efc32b3767bca3119a324cf3a444ca6d355d9",
+		"total_fees": 0.113423,
+		"total_volume": 2892.26804,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x02ad7b",
+		"builder_address": "0x02ad7b9051d1dbc0d46bc3d36dd9374398cf6d10",
+		"total_fees": 0.100778,
+		"total_volume": 30.74826,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x5867ef",
+		"builder_address": "0x5867ef988d72f1266b96400ea74f57373d42ddd3",
+		"total_fees": 0.099758,
+		"total_volume": 0.0,
+		"total_users": 0,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x3fed12",
+		"builder_address": "0x3fed127856eefd0723929363b2b2e4ae38918adb",
+		"total_fees": 0.099156,
+		"total_volume": 99.15615,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x25127d",
+		"builder_address": "0x25127d9a125b479033951ce14beb5f6c6723c19f",
+		"total_fees": 0.090748,
+		"total_volume": 90.7488,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd8f234",
+		"builder_address": "0xd8f234e12f301ac31435a0cbc3683bc72ab981f9",
+		"total_fees": 0.08174086,
+		"total_volume": 1486.98640159,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x87d795",
+		"builder_address": "0x87d795cbb0cabd0a68df54e6a01033046919ba43",
+		"total_fees": 0.080195,
+		"total_volume": 1168.156611,
+		"total_users": 2,
+		"trade_count_30d": 12
+	},
+	{
+		"builder_name": "Builder_0x1f5904",
+		"builder_address": "0x1f5904adba30f6f5588c290718e5e41ebfbaa5df",
+		"total_fees": 0.076515,
+		"total_volume": 7662.51413,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xb71b6c",
+		"builder_address": "0xb71b6ce23fc6ae2d1535fa1a2376b44bf5f00d5d",
+		"total_fees": 0.069563,
+		"total_volume": 139.12902,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x973409",
+		"builder_address": "0x97340931f3c6f77061c9ff86cf5dd467d74e7fd6",
+		"total_fees": 0.06669583,
+		"total_volume": 7647.6360388,
+		"total_users": 2,
+		"trade_count_30d": 186
+	},
+	{
+		"builder_name": "Builder_0xf26a5b",
+		"builder_address": "0xf26a5ba1a2a7f641d9813e56e77e8af69d3a32e6",
+		"total_fees": 0.055615,
+		"total_volume": 5562.10548,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x45422a",
+		"builder_address": "0x45422aa2cc6cd965777a5e0ff83fd22b87c5bdee",
+		"total_fees": 0.054696999999999996,
+		"total_volume": 109.396,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xdf93dc",
+		"builder_address": "0xdf93dc811730e440995f25b36e192b3f661baa78",
+		"total_fees": 0.053198,
+		"total_volume": 53.19943,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xe89cac",
+		"builder_address": "0xe89cac3a7783b0a0a5d8303032852a0ef043baf6",
+		"total_fees": 0.052656,
+		"total_volume": 5266.97157,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "MSO",
+		"builder_address": "0x316bde155acd07609872a56bc32ccfb0b13201fa",
+		"total_fees": 0.05253,
+		"total_volume": 52.532461,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "CRYPTOISFUTURE",
+		"builder_address": "0xff4af1cec8261e67a884a0634d921aa2209d59d3",
+		"total_fees": 0.052174,
+		"total_volume": 544.95689,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "GREATSOLANA",
+		"builder_address": "0x306287da2077ca6ee541d27abb84a4b7c5a6cb51",
+		"total_fees": 0.045226,
+		"total_volume": 45.22644,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x999474",
+		"builder_address": "0x999474e12b095a4fb22a3eca6eeef4bf365a3784",
+		"total_fees": 0.03462,
+		"total_volume": 138.51508,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xa049a6",
+		"builder_address": "0xa049a68ba04fadfa7aea62b74f8902869b85761f",
+		"total_fees": 0.031702,
+		"total_volume": 126.8184,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xfc4dfc",
+		"builder_address": "0xfc4dfc4da978e1b844b8916a75a47413a33e762e",
+		"total_fees": 0.028901,
+		"total_volume": 52.5492,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x6383a3",
+		"builder_address": "0x6383a356c441b79ce511a646962b31a69bc09ff2",
+		"total_fees": 0.028261,
+		"total_volume": 56.524,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x9a3ce1",
+		"builder_address": "0x9a3ce1c68a9798d812adf47206799b5f6d98a3cc",
+		"total_fees": 0.02447449,
+		"total_volume": 2883.93057,
+		"total_users": 4,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "HAMOOD",
+		"builder_address": "0xb61d37fbf309ed2f50c0624f5c651188eb5cbe43",
+		"total_fees": 0.020837,
+		"total_volume": 208.44417,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xa8b90c",
+		"builder_address": "0xa8b90cef0e388a23cf2d3625481ce14d7c53750d",
+		"total_fees": 0.0184704,
+		"total_volume": 3795.0528332,
+		"total_users": 8,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd433de",
+		"builder_address": "0xd433def4bcdadf579a13fb588e3e91404561ad5e",
+		"total_fees": 0.018206,
+		"total_volume": 451.54583,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x2e3ab3",
+		"builder_address": "0x2e3ab3e88a7dbdc763aadf5b28c18fb085af420a",
+		"total_fees": 0.01728,
+		"total_volume": 236.901,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x0fca36",
+		"builder_address": "0x0fca364c4cac0ed6bfa248c9ee6f81b7071f0873",
+		"total_fees": 0.014766,
+		"total_volume": 14.7667,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x893806",
+		"builder_address": "0x893806663c6673b96f61914e17e002e4f303b62f",
+		"total_fees": 0.012517,
+		"total_volume": 1253.18276,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xc3718c",
+		"builder_address": "0xc3718c5165e7335e24d83bba1fb72ccb418f97d1",
+		"total_fees": 0.011657,
+		"total_volume": 58.29486,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xf34565",
+		"builder_address": "0xf34565a5d229865ca1bc15cd9a3e9dbc08b01ea2",
+		"total_fees": 0.011386,
+		"total_volume": 28.46753,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "BUYLOW",
+		"builder_address": "0x774c8a7700b0d385799e83bcfdc4cc97f34c5f36",
+		"total_fees": 0.007405,
+		"total_volume": 148.17685,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x4ea863",
+		"builder_address": "0x4ea863346b2b050c0e830690c757027d4f7bf30e",
+		"total_fees": 0.005413,
+		"total_volume": 542.72847,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xcd893b",
+		"builder_address": "0xcd893b1acafafc311fb65e79134474151b4c2ca4",
+		"total_fees": 0.00519817,
+		"total_volume": 549.14329,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xf1f286",
+		"builder_address": "0xf1f28614bd0a0bf6f06eb8444fe61a29279bd023",
+		"total_fees": 0.004173,
+		"total_volume": 10.43328,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x0b1ffc",
+		"builder_address": "0x0b1ffce03b2c23b0dc19612386c4cf2d328a9f33",
+		"total_fees": 0.003879,
+		"total_volume": 38.81095,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xed99a7",
+		"builder_address": "0xed99a7ccf2095c4177c3c89aaaf40e12b83ee0d2",
+		"total_fees": 0.003703,
+		"total_volume": 37.0405,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x202325",
+		"builder_address": "0x202325f2487b1143f3c001d94585b1d8e9aa60d2",
+		"total_fees": 0.002747,
+		"total_volume": 275.047,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xf31117",
+		"builder_address": "0xf31117f7605331205b715696c059fe607202a9cc",
+		"total_fees": 0.002663,
+		"total_volume": 26.63,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xe45010",
+		"builder_address": "0xe450108fa35812e745c42eed5d181bd108431840",
+		"total_fees": 0.002482,
+		"total_volume": 49.64476,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "WALLETV",
+		"builder_address": "0xd64a453da8fcdd049697aa5c6dabfff09916c795",
+		"total_fees": 0.002474,
+		"total_volume": 24.743,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x59f181",
+		"builder_address": "0x59f181ff5dbaadd84f4e4564228642aedd96e93e",
+		"total_fees": 0.002398,
+		"total_volume": 569.87032555,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x782592",
+		"builder_address": "0x7825928c6df2986d2d55b3808682978473532b26",
+		"total_fees": 0.002322,
+		"total_volume": 232.25,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x3a1249",
+		"builder_address": "0x3a12494af817f40abfc0215fbbdd0b71255d8287",
+		"total_fees": 0.002093,
+		"total_volume": 32.53057,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x019e5e",
+		"builder_address": "0x019e5e9ed5354b9aff55c67e82cae7a779a23087",
+		"total_fees": 0.002066,
+		"total_volume": 20.66391,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xfb93c6",
+		"builder_address": "0xfb93c6b81bab695bbb4905df87fe14eb829cc514",
+		"total_fees": 0.001646,
+		"total_volume": 31.09184,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xb77bd0",
+		"builder_address": "0xb77bd0d0aa3eea33a0200d4b21ad9794bc7ebeac",
+		"total_fees": 0.001377,
+		"total_volume": 138.27662,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x7e9d7a",
+		"builder_address": "0x7e9d7a5fcf9c652c267cf9c469bcbd826ed94091",
+		"total_fees": 0.001271,
+		"total_volume": 23.11949,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xb99b13",
+		"builder_address": "0xb99b13fd88cd7c56b743bc0964c8a679f6c51425",
+		"total_fees": 0.001221,
+		"total_volume": 245.814342,
+		"total_users": 2,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x5cba62",
+		"builder_address": "0x5cba62ca5f5c47d39943f38b2047b90bffa41cd9",
+		"total_fees": 0.001058,
+		"total_volume": 10.5851,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x3db3a0",
+		"builder_address": "0x3db3a09e66dd9dd4da8372c39f19fd5252734158",
+		"total_fees": 0.000682,
+		"total_volume": 68.389,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "CHAINPILOT",
+		"builder_address": "0x404acaa8216315e15302aa48dec55c60d9ff8865",
+		"total_fees": 0.000579,
+		"total_volume": 58.179118,
+		"total_users": 3,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "DEXTRA01",
+		"builder_address": "0xd5725ced63c37df9dbf4791af33e26ff61eba960",
+		"total_fees": 0.000564,
+		"total_volume": 56.4746,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xdc6024",
+		"builder_address": "0xdc6024fb6d0905a9ef6a3b45d784119aadb68c31",
+		"total_fees": 0.0004133,
+		"total_volume": 40.85974,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xb71d17",
+		"builder_address": "0xb71d17ca59c3f9c5d16f995185c3d47fbccec9aa",
+		"total_fees": 0.000342,
+		"total_volume": 34.276,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0xd1216c",
+		"builder_address": "0xd1216ccd55b256785921e174000be468a3a0a62d",
+		"total_fees": 0.000304,
+		"total_volume": 20.22712,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "HYPERLIQUIDH",
+		"builder_address": "0x8603e429abbec232aabbd7037b5026435589422b",
+		"total_fees": 0.000295,
+		"total_volume": 59.033,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x789722",
+		"builder_address": "0x78972210caa567f55e7b3e6615e5728667ee5ba1",
+		"total_fees": 0.000276,
+		"total_volume": 27.7008,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x2867a0",
+		"builder_address": "0x2867a0570377c28684383026608015f10185b9f3",
+		"total_fees": 0.000122,
+		"total_volume": 12.275,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x3b20fd",
+		"builder_address": "0x3b20fdfd5b1185fae6d2eabd1c0f56c219b70c46",
+		"total_fees": 0.000117,
+		"total_volume": 11.7245,
+		"total_users": 1,
+		"trade_count_30d": 0
+	},
+	{
+		"builder_name": "Builder_0x35948c",
+		"builder_address": "0x35948c1866b06e19d007482ed0228147a728c90b",
+		"total_fees": 0.000113,
+		"total_volume": 11.3901,
+		"total_users": 1,
+		"trade_count_30d": 0
+	}
+]

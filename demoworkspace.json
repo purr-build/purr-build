@@ -1,0 +1,25 @@
+{
+	"app": "purrbuild",
+	"kind": "workspace",
+	"version": 1,
+	"exportedAt": "2026-05-06T18:27:54.104Z",
+	"network": "mainnet",
+	"closedDefaultViews": ["api"],
+	"workspace": {
+		"entries": [
+			{
+				"id": "l1core",
+				"type": "l1core",
+				"address": "0x162cc7c861Ebd0c06b3d72319201150482518185",
+				"name": "ABC"
+			},
+			{
+				"id": "l1core:0x81196517de1d77ebc8a1951c3ea1a103e732479c",
+				"type": "l1core",
+				"address": "0x81196517De1d77ebC8a1951c3ea1A103E732479c",
+				"name": "infinitefield.xyz"
+			}
+		],
+		"focusedId": "l1core"
+	}
+}

@@ -1,0 +1,53 @@
+@import 'tailwindcss';
+@plugin '../../node_modules/daisyui' {
+	themes:
+		dim --default,
+		dark --prefersdark,
+		silk,
+		nord,
+		business;
+}
+
+@layer base {
+	html {
+		scrollbar-color: color-mix(in oklab, var(--color-base-content) 18%, transparent) transparent;
+	}
+
+	body {
+		min-width: 320px;
+		background-color: var(--color-base-200);
+	}
+
+	::selection {
+		background-color: var(--color-primary);
+		color: var(--color-primary-content);
+	}
+}
+
+@layer components {
+	.table :where(thead th) {
+		background-color: color-mix(in oklab, var(--color-base-100) 88%, var(--color-base-200));
+		border-color: transparent;
+	}
+
+	.table :where(tbody tr) {
+		border-color: transparent;
+	}
+
+	.table :where(tbody tr:nth-child(even)) {
+		background-color: color-mix(in oklab, var(--color-base-200) 28%, transparent);
+	}
+
+	.table :where(tbody tr:hover) {
+		background-color: color-mix(in oklab, var(--color-primary) 8%, transparent);
+	}
+
+	.modal-box,
+	.dropdown-content {
+		box-shadow: 0 24px 80px color-mix(in oklab, var(--color-neutral) 24%, transparent);
+	}
+}
+
+.border-base-300 {
+	border-color: color-mix(in oklab, var(--color-base-content) 5%, transparent);
+}
