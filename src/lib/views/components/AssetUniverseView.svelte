@@ -7,6 +7,7 @@
 	} from '@nktkas/hyperliquid';
 	import type { Component } from 'svelte';
 	import HeroIcon from '$lib/components/HeroIcon.svelte';
+	import TableScroll from '$lib/components/TableScroll.svelte';
 	import { getHttpInfoClient } from '$lib/hl/clients.js';
 	import { hyperliquidNetwork, type HyperliquidNetwork } from '$lib/hl/network.svelte';
 	import ViewTabs from './ViewTabs.svelte';
@@ -519,14 +520,15 @@
 		{:else if filteredRows.length === 0}
 			<p class="p-4 text-sm text-base-content/60">No {activeLabel.toLowerCase()} match.</p>
 		{:else}
-			<div
-				bind:this={listNode}
+			<TableScroll
+				bind:viewport={listNode}
 				bind:clientHeight={viewportHeight}
-				class="min-h-0 flex-1 overflow-auto"
+				class="min-h-0 flex-1"
+				fill
 				onscroll={handleListScroll}
 			>
 				<ActiveUniverseTab ctx={activeTabContext} />
-			</div>
+			</TableScroll>
 		{/if}
 	</div>
 </View>

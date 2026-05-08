@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CopyAddress from '$lib/components/CopyAddress.svelte';
+	import TableScroll from '$lib/components/TableScroll.svelte';
 	import CurlDetails from './CurlDetails.svelte';
 	import LoadableState from './LoadableState.svelte';
 
@@ -24,8 +25,8 @@
 	/>
 
 	{#if ctx.userRole.data}
-		<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-			<table class="table table-xs">
+		<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+			<table class="table table-md">
 				<tbody>
 					<tr>
 						<th class="w-44 text-[10px] text-base-content/50 uppercase">User role</th>
@@ -48,7 +49,7 @@
 					{/if}
 				</tbody>
 			</table>
-		</div>
+		</TableScroll>
 	{/if}
 
 	{#if ctx.userFees.data && ctx.userFeesOverview}
@@ -139,8 +140,8 @@
 		</div>
 
 		{#if ctx.userFeeVolumeRows.length > 0}
-			<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-				<table class="table table-xs">
+			<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+				<table class="table table-md">
 					<thead>
 						<tr class="text-[10px] text-base-content/50 uppercase">
 							<th>Date</th>
@@ -165,7 +166,7 @@
 						{/each}
 					</tbody>
 				</table>
-			</div>
+			</TableScroll>
 		{/if}
 	{/if}
 
@@ -233,8 +234,8 @@
 		</div>
 
 		{#if ctx.userReferralRows.length > 0}
-			<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-				<table class="table table-xs">
+			<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+				<table class="table table-md">
 					<thead>
 						<tr class="text-[10px] text-base-content/50 uppercase">
 							<th>Referred user</th>
@@ -265,12 +266,12 @@
 						{/each}
 					</tbody>
 				</table>
-			</div>
+			</TableScroll>
 		{/if}
 
 		{#if ctx.userReferralRewardRows.length > 0}
-			<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-				<table class="table table-xs">
+			<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+				<table class="table table-md">
 					<thead>
 						<tr class="text-[10px] text-base-content/50 uppercase">
 							<th>Reward time</th>
@@ -292,7 +293,7 @@
 						{/each}
 					</tbody>
 				</table>
-			</div>
+			</TableScroll>
 		{/if}
 	{/if}
 
@@ -302,8 +303,8 @@
 		hasData={ctx.accountRateLimit.data !== null}
 	/>
 	{#if ctx.accountRateLimit.data}
-		<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-			<table class="table table-xs">
+		<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+			<table class="table table-md">
 				<tbody>
 					<tr>
 						<th class="w-44 text-[10px] text-base-content/50 uppercase">Cumulative volume</th>
@@ -331,7 +332,7 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
+		</TableScroll>
 	{/if}
 
 	{#if ctx.canSignForActiveAddress}

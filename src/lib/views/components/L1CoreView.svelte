@@ -4096,12 +4096,10 @@
 	function selectTab(tab: TabId) {
 		activeTab = tab;
 		if (syncTabHash && browser) {
-			const next = new URL(window.location.href);
-			next.hash = tab;
 			window.history.replaceState(
 				window.history.state,
 				'',
-				`${next.pathname}${next.search}${next.hash}`
+				`${window.location.pathname}${window.location.search}#${tab}`
 			);
 		}
 	}

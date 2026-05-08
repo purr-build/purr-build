@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CopyAddress from '$lib/components/CopyAddress.svelte';
+	import TableScroll from '$lib/components/TableScroll.svelte';
 	import CurlDetails from './CurlDetails.svelte';
 	import LoadableState from './LoadableState.svelte';
 	import SortIcon from './SortIcon.svelte';
@@ -84,8 +85,8 @@
 		{#if ctx.builderTableRows().length === 0}
 			<p class="p-2 text-sm text-base-content/60">No approved builders.</p>
 		{:else}
-			<div class="overflow-x-auto">
-				<table class="table table-xs">
+			<TableScroll>
+				<table class="table table-md">
 					<thead>
 						<tr class="text-[10px] text-base-content/50 uppercase">
 							<th>
@@ -136,7 +137,7 @@
 						{/each}
 					</tbody>
 				</table>
-			</div>
+			</TableScroll>
 		{/if}
 	{/if}
 </div>

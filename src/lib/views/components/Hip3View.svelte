@@ -17,6 +17,7 @@
 	import { loadSavedAgentWallets, type SavedAgentWallet } from '$lib/hl/agent-wallets.js';
 	import { hyperliquidNetwork, type HyperliquidNetwork } from '$lib/hl/network.svelte';
 	import { wallet } from '$lib/stores/wallet.svelte';
+	import TableScroll from '$lib/components/TableScroll.svelte';
 	import ViewTabs from './ViewTabs.svelte';
 	import CurlDetails from './l1core/CurlDetails.svelte';
 	import View from '../View.svelte';
@@ -872,8 +873,8 @@
 						{#if row.assets.length === 0}
 							<p class="p-3 text-sm text-base-content/60">No deployed tickers.</p>
 						{:else}
-							<div class="overflow-x-auto">
-								<table class="table min-w-[54rem] table-xs">
+							<TableScroll>
+								<table class="table min-w-[54rem] table-md">
 									<thead>
 										<tr class="text-[10px] text-base-content/50 uppercase">
 											<th>Ticker</th>
@@ -928,7 +929,7 @@
 										{/each}
 									</tbody>
 								</table>
-							</div>
+							</TableScroll>
 						{/if}
 					</section>
 				{/each}

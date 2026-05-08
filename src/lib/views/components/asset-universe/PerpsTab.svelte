@@ -33,7 +33,7 @@
 	let { ctx }: Props = $props();
 </script>
 
-<table class="table min-w-[62rem] table-xs">
+<table class="table min-w-[62rem] table-md">
 	<thead class="sticky top-0 z-10 bg-base-100">
 		<tr class="text-[10px] text-base-content/50 uppercase">
 			<th>Asset</th>

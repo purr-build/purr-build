@@ -1,4 +1,5 @@
 <script lang="ts">
+	import TableScroll from '$lib/components/TableScroll.svelte';
 	import LoadableState from './LoadableState.svelte';
 
 	type Props = {
@@ -92,8 +93,8 @@
 		{/if}
 
 		{#if ctx.lendingActiveRows.length > 0}
-			<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-				<table class="table table-xs">
+			<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+				<table class="table table-md">
 					<thead>
 						<tr class="text-[10px] text-base-content/50 uppercase">
 							<th>Token</th>
@@ -128,12 +129,12 @@
 						{/each}
 					</tbody>
 				</table>
-			</div>
+			</TableScroll>
 		{/if}
 
 		{#if ctx.lendingInterestRows.length > 0}
-			<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-				<table class="table table-xs">
+			<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+				<table class="table table-md">
 					<thead>
 						<tr class="text-[10px] text-base-content/50 uppercase">
 							<th>Interest time</th>
@@ -163,7 +164,7 @@
 						{/each}
 					</tbody>
 				</table>
-			</div>
+			</TableScroll>
 		{/if}
 	{/if}
 </div>
