@@ -2,4 +2,4 @@
 	import WalletPageView from '$lib/views/components/WalletPageView.svelte';
 </script>
 
-<WalletPageView paramName="address" viewIdPrefix="address-wallet" />
+<WalletPageView paramName="address" viewIdPrefix="wallet" />
