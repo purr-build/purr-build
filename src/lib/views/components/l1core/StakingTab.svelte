@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CopyAddress from '$lib/components/CopyAddress.svelte';
+	import TableScroll from '$lib/components/TableScroll.svelte';
 	import LoadableState from './LoadableState.svelte';
 
 	type Props = {
@@ -95,8 +96,8 @@
 			</div>
 		{:else}
 			{#if ctx.stakingDelegationRows.length > 0}
-				<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-					<table class="table table-xs">
+				<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+					<table class="table table-md">
 						<thead>
 							<tr class="text-[10px] text-base-content/50 uppercase">
 								<th>Validator</th>
@@ -148,7 +149,7 @@
 							{/each}
 						</tbody>
 					</table>
-				</div>
+				</TableScroll>
 			{/if}
 
 			{#if ctx.stakingRewardSummary.total > 0}
@@ -175,8 +176,8 @@
 			{/if}
 
 			{#if ctx.stakingRewardRows.length > 0}
-				<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-					<table class="table table-xs">
+				<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+					<table class="table table-md">
 						<thead>
 							<tr class="text-[10px] text-base-content/50 uppercase">
 								<th>Reward time</th>
@@ -196,12 +197,12 @@
 							{/each}
 						</tbody>
 					</table>
-				</div>
+				</TableScroll>
 			{/if}
 
 			{#if ctx.stakingHistoryRows.length > 0}
-				<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-					<table class="table table-xs">
+				<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+					<table class="table table-md">
 						<thead>
 							<tr class="text-[10px] text-base-content/50 uppercase">
 								<th>Event time</th>
@@ -246,7 +247,7 @@
 							{/each}
 						</tbody>
 					</table>
-				</div>
+				</TableScroll>
 			{/if}
 		{/if}
 	{/if}

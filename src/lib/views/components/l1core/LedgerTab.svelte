@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CopyAddress from '$lib/components/CopyAddress.svelte';
 	import HeroIcon from '$lib/components/HeroIcon.svelte';
+	import TableScroll from '$lib/components/TableScroll.svelte';
 	import LoadableState from './LoadableState.svelte';
 
 	type Loadable<T> = { loading: boolean; error: string | null; data: T | null };
@@ -120,8 +121,8 @@
 				<span>No non-funding ledger updates.</span>
 			</div>
 		{:else}
-			<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-				<table class="table table-xs">
+			<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+				<table class="table table-md">
 					<thead>
 						<tr class="text-[10px] text-base-content/50 uppercase">
 							<th>Time</th>
@@ -192,7 +193,7 @@
 						{/each}
 					</tbody>
 				</table>
-			</div>
+			</TableScroll>
 
 			<div class="px-1">
 				{@render paginationControls()}

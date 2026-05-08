@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import View from '../View.svelte';
 	import HeroIcon from '$lib/components/HeroIcon.svelte';
+	import TableScroll from '$lib/components/TableScroll.svelte';
 
 	type Props = {
 		viewId: string;
@@ -210,8 +211,8 @@
 				</div>
 			</div>
 
-			<div class="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
-				<table class="table table-xs">
+			<TableScroll class="rounded-lg border border-base-300 bg-base-100">
+				<table class="table table-md">
 					<thead>
 						<tr class="text-[10px] text-base-content/50 uppercase">
 							<th>Component</th>
@@ -239,7 +240,7 @@
 						{/each}
 					</tbody>
 				</table>
-			</div>
+			</TableScroll>
 
 			{#if summary.incidents.length > 0}
 				<div class="rounded-lg border border-base-300 bg-base-100 p-3">
