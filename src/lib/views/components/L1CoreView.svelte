@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { onDestroy, untrack } from 'svelte';
 	import type { Component } from 'svelte';
 	import type { ISubscription } from '@nktkas/hyperliquid';
@@ -29,6 +30,7 @@
 	import BalancesTab from './l1core/BalancesTab.svelte';
 	import BuildersTab from './l1core/BuildersTab.svelte';
 	import FillsTab from './l1core/FillsTab.svelte';
+	import LedgerTab from './l1core/LedgerTab.svelte';
 	import LendingTab from './l1core/LendingTab.svelte';
 	import OrdersTab from './l1core/OrdersTab.svelte';
 	import OutcomesTab from './l1core/OutcomesTab.svelte';
@@ -46,6 +48,8 @@
 		movable?: boolean;
 		fullWidth?: boolean;
 		editable?: boolean;
+		initialTab?: string | null;
+		syncTabHash?: boolean;
 	};
 	type L1TabComponent = Component<{ ctx: unknown }>;
 
@@ -56,7 +60,9 @@
 		closeable = true,
 		movable = true,
 		fullWidth = false,
-		editable = true
+		editable = true,
+		initialTab = null,
+		syncTabHash = false
 	}: Props = $props();
 
 	const TABS = [
@@ -66,6 +72,7 @@
 		{ id: 'orders', label: 'Open orders', component: OrdersTab },
 		{ id: 'outcomes', label: 'Outcomes', component: OutcomesTab },
 		{ id: 'fills', label: 'Fills', component: FillsTab },
+		{ id: 'ledger', label: 'Ledger', component: LedgerTab },
 		{ id: 'agents', label: 'Agent wallets', component: AgentsTab },
 		{ id: 'builders', label: 'Builder codes', component: BuildersTab },
 		{ id: 'lending', label: 'Lending', component: LendingTab },
@@ -90,6 +97,12 @@
 			wallet.current?.source === 'injected' &&
 			wallet.current.address.toLowerCase() === activeAddress.toLowerCase()
 	);
+
+	function tabIdFromString(value: string | null | undefined): TabId | null {
+		if (!value) return null;
+		const normalized = value.trim().replace(/^#/, '').toLowerCase();
+		return TABS.some((tab) => tab.id === normalized) ? (normalized as TabId) : null;
+	}
 
 	type Loadable<T> = { loading: boolean; error: string | null; data: T | null };
 	type AnyLoadable = { loading: boolean; error: string | null; data: unknown | null };
@@ -412,6 +425,15 @@
 		| 'time'
 		| 'oid'
 		| 'tid';
+	type LedgerDelta = {
+		type: string;
+		[key: string]: unknown;
+	};
+	type LedgerUpdate = {
+		time: number;
+		hash: `0x${string}`;
+		delta: LedgerDelta;
+	};
 	type AgentSortKey = 'name' | 'address' | 'validUntil' | 'status' | 'localKey';
 	type BuilderSortKey = 'name' | 'address' | 'maxFee';
 	type SortDirection = 'asc' | 'desc';
@@ -482,6 +504,23 @@
 		tid: number | null;
 		hash: string | null;
 	};
+	type LedgerTableRow = {
+		key: string;
+		time: number | null;
+		hash: string | null;
+		type: string;
+		label: string;
+		amount: string;
+		amountValue: number | null;
+		details: LedgerDetailItem[];
+	};
+	type LedgerDetailItem = {
+		key: string;
+		label: string;
+		value: string;
+		address: string | null;
+	};
+	type LedgerPageCursor = number | null;
 	type AgentWallet = {
 		address: `0x${string}`;
 		name: string;
@@ -585,6 +624,7 @@
 	let orders = $state<Loadable<Order[]>>({ loading: false, error: null, data: null });
 	let outcomes = $state<Loadable<OutcomeRow[]>>({ loading: false, error: null, data: null });
 	let fills = $state<Loadable<Fill[]>>({ loading: false, error: null, data: null });
+	let ledgerUpdates = $state<Loadable<LedgerUpdate[]>>({ loading: false, error: null, data: null });
 	let agentWallets = $state<Loadable<AgentWallet[]>>({ loading: false, error: null, data: null });
 	let approvedBuilders = $state<Loadable<BuilderApproval[]>>({
 		loading: false,
@@ -653,6 +693,8 @@
 	let agentSortDirection = $state<SortDirection>('desc');
 	let builderSortKey = $state<BuilderSortKey>('maxFee');
 	let builderSortDirection = $state<SortDirection>('desc');
+	let ledgerPageIndex = $state(0);
+	let ledgerPageCursors = $state<LedgerPageCursor[]>([null]);
 	let agentNameInput = $state('purrbuild');
 	let agentImportNameInput = $state('');
 	let agentImportPrivateKeyInput = $state('');
@@ -682,6 +724,7 @@
 	let userFeesGeneration = 0;
 	let userStakingGeneration = 0;
 	let userLendingGeneration = 0;
+	let ledgerGeneration = 0;
 	let agentWalletGeneration = 0;
 	let builderGeneration = 0;
 	let activeOutcomeSpotSubscriptionNetwork: HyperliquidNetwork | null = null;
@@ -692,6 +735,7 @@
 	const HYPERLIQUID_L1_CHAIN_ID = Number(BigInt(HYPERLIQUID_L1_SIGNATURE_CHAIN_ID));
 	const RESERVE_REQUEST_WEIGHT_PRICE_USDC = 0.0005;
 	const BORROW_LEND_INTEREST_LOOKBACK_MS = 30 * 24 * 60 * 60 * 1000;
+	const LEDGER_PAGE_LIMIT = 500;
 	const BUILDER_NAME_BY_ADDRESS = buildBuilderNameIndex(builders);
 	let reserveWeightPreview = $derived(clampReserveWeight(reserveWeightInput));
 	let reservePricePreview = $derived(reserveWeightPreview * RESERVE_REQUEST_WEIGHT_PRICE_USDC);
@@ -732,6 +776,33 @@
 		maximumFractionDigits: 0
 	});
 	const STABLE_BALANCE_COINS = new Set(['USDC', 'USDH', 'USDT']);
+	const LEDGER_TYPE_LABELS: Record<string, string> = {
+		accountClassTransfer: 'Account class transfer',
+		activateDexAbstraction: 'Activate DEX abstraction',
+		borrowLend: 'Borrow/lend',
+		cStakingTransfer: 'Staking transfer',
+		deployGasAuction: 'Deploy gas auction',
+		internalTransfer: 'Internal transfer',
+		rewardsClaim: 'Rewards claim',
+		spotGenesis: 'Spot genesis',
+		spotTransfer: 'Spot transfer',
+		subAccountTransfer: 'Sub-account transfer',
+		vaultCreate: 'Vault create',
+		vaultDeposit: 'Vault deposit',
+		vaultDistribution: 'Vault distribution',
+		vaultLeaderCommission: 'Vault leader commission',
+		vaultWithdraw: 'Vault withdraw'
+	};
+	const LEDGER_DETAIL_OMIT_FIELDS = new Set([
+		'type',
+		'usdc',
+		'amount',
+		'token',
+		'usdcValue',
+		'liquidatedNtlPos',
+		'netWithdrawnUsd',
+		'requestedUsd'
+	]);
 
 	function setLoading(slot: AnyLoadable) {
 		slot.loading = true;
@@ -747,6 +818,11 @@
 		slot.loading = false;
 		slot.error = null;
 		slot.data = null;
+	}
+
+	function resetLedgerPagination() {
+		ledgerPageIndex = 0;
+		ledgerPageCursors = [null];
 	}
 
 	function buildBuilderNameIndex(rows: unknown) {
@@ -768,6 +844,7 @@
 		clearSlot(orders);
 		clearSlot(outcomes);
 		clearSlot(fills);
+		clearSlot(ledgerUpdates);
 		clearSlot(agentWallets);
 		clearSlot(approvedBuilders);
 		clearSlot(accountRateLimit);
@@ -782,6 +859,7 @@
 		userFeesGeneration += 1;
 		userStakingGeneration += 1;
 		userLendingGeneration += 1;
+		ledgerGeneration += 1;
 		agentWalletGeneration += 1;
 		builderGeneration += 1;
 		reserveActionLoading = false;
@@ -798,6 +876,7 @@
 		builderActionError = null;
 		builderActionNotice = null;
 		builderCurl = null;
+		resetLedgerPagination();
 		perpUniverseByDex = {};
 		perpCtxsByDexCoin = {};
 		perpCtxsByAssetId = {};
@@ -821,6 +900,7 @@
 		setLoading(orders);
 		setLoading(outcomes);
 		setLoading(fills);
+		setLoading(ledgerUpdates);
 		setLoading(agentWallets);
 		setLoading(approvedBuilders);
 		setLoading(accountRateLimit);
@@ -1425,6 +1505,28 @@
 		return sortFillRows(rows);
 	}
 
+	function ledgerTableRows() {
+		const rows: LedgerTableRow[] = [];
+		const sorted = [...(ledgerUpdates.data ?? [])].sort(
+			(a, b) => b.time - a.time || b.hash.localeCompare(a.hash)
+		);
+		for (const [index, update] of sorted.entries()) {
+			const delta = update.delta;
+			const amount = ledgerAmount(delta);
+			rows.push({
+				key: ledgerKey(update, index),
+				time: toNumber(update.time),
+				hash: update.hash ?? null,
+				type: delta.type,
+				label: ledgerTypeLabel(delta.type),
+				amount: amount.label,
+				amountValue: amount.value,
+				details: ledgerDetails(delta)
+			});
+		}
+		return rows;
+	}
+
 	function agentTableRows() {
 		const rows: AgentTableRow[] = [];
 		const localByAddress = new Map(
@@ -1493,6 +1595,274 @@
 			value: size == null || price == null ? null : size * price,
 			fee: toNumber(fill.fee)
 		};
+	}
+
+	function ledgerAmount(delta: LedgerDelta) {
+		const token = ledgerString(delta, 'token');
+		const amount = ledgerString(delta, 'amount');
+		const usdc = ledgerString(delta, 'usdc');
+		const usdcValue = ledgerString(delta, 'usdcValue');
+
+		if ((delta.type === 'spotTransfer' || delta.type === 'send') && amount) {
+			const parsedAmount = toNumber(amount);
+			const parsedUsdc = toNumber(usdcValue);
+			const sign = ledgerTransferSign(delta);
+			return {
+				label: [
+					formatTokenValue(parsedAmount, token ?? 'Token'),
+					parsedUsdc == null ? null : formatUsd(parsedUsdc)
+				]
+					.filter(Boolean)
+					.join(' / '),
+				value: sign == null || parsedUsdc == null ? null : sign * parsedUsdc
+			};
+		}
+
+		if (amount) {
+			const parsedAmount = toNumber(amount);
+			const sign = delta.type === 'spotGenesis' ? Math.sign(parsedAmount ?? 0) || null : null;
+			return {
+				label:
+					sign == null
+						? formatTokenValue(parsedAmount, token ?? 'Token')
+						: formatSignedTokenAmount(parsedAmount, token ?? 'Token'),
+				value: sign == null || parsedAmount == null ? null : sign * Math.abs(parsedAmount)
+			};
+		}
+
+		if (delta.type === 'liquidation') {
+			return {
+				label: formatUsd(toNumber(ledgerString(delta, 'liquidatedNtlPos'))),
+				value: null
+			};
+		}
+
+		if (delta.type === 'vaultWithdraw') {
+			const value = toNumber(ledgerString(delta, 'netWithdrawnUsd'));
+			return {
+				label: formatUsd(value),
+				value
+			};
+		}
+
+		if (usdc) {
+			const value = toNumber(usdc);
+			const sign = ledgerUsdcSign(delta);
+			return {
+				label:
+					value == null
+						? '—'
+						: sign == null
+							? formatTokenValue(value, 'USDC')
+							: formatSignedTokenAmount(sign * (value ?? 0), 'USDC'),
+				value: sign == null || value == null ? null : sign * value
+			};
+		}
+
+		return { label: '—', value: null };
+	}
+
+	function ledgerUsdcSign(delta: LedgerDelta) {
+		if (delta.type === 'deposit') return 1;
+		if (delta.type === 'withdraw') return -1;
+		if (delta.type === 'vaultCreate' || delta.type === 'vaultDeposit') return -1;
+		if (delta.type === 'vaultDistribution') return 1;
+		if (delta.type === 'internalTransfer' || delta.type === 'subAccountTransfer') {
+			return ledgerTransferSign(delta);
+		}
+		if (delta.type === 'vaultLeaderCommission') return 1;
+		return null;
+	}
+
+	function ledgerTransferSign(delta: LedgerDelta) {
+		const current = activeAddress?.toLowerCase();
+		if (!current) return null;
+
+		const destination = ledgerString(delta, 'destination')?.toLowerCase();
+		if (destination === current) return 1;
+
+		const source = ledgerString(delta, 'user')?.toLowerCase();
+		if (source === current) return -1;
+
+		return null;
+	}
+
+	function ledgerDetails(delta: LedgerDelta) {
+		const details: LedgerDetailItem[] = [];
+		const add = (key: string, label = ledgerDetailLabel(key)) =>
+			addLedgerDetail(details, key, label, delta[key]);
+		const addValue = (key: string, label: string, value: unknown) =>
+			addLedgerDetail(details, key, label, value);
+		const addUsd = (key: string, label: string) => {
+			const value = toNumber(ledgerString(delta, key));
+			if (value != null) addValue(key, label, formatUsd(value));
+		};
+		const addToken = (key: string, label: string, token = ledgerString(delta, 'token')) => {
+			const value = toNumber(ledgerString(delta, key));
+			if (value != null) addValue(key, label, formatTokenValue(value, token ?? 'Token'));
+		};
+		const addFee = (key: string, label: string, token = 'USDC') => {
+			const value = toNumber(ledgerString(delta, key));
+			if (value != null) addValue(key, label, formatTokenValue(value, token));
+		};
+
+		if (delta.type === 'accountClassTransfer') {
+			addValue('direction', 'Direction', delta.toPerp === true ? 'Spot to perps' : 'Perps to spot');
+		} else if (delta.type === 'internalTransfer') {
+			add('user', 'From');
+			add('destination', 'To');
+			addFee('fee', 'Fee');
+		} else if (delta.type === 'liquidation') {
+			addUsd('accountValue', 'Account value');
+			add('leverageType', 'Leverage');
+			add('liquidatedPositions', 'Positions');
+		} else if (delta.type === 'rewardsClaim') {
+			add('token', 'Token');
+		} else if (delta.type === 'spotTransfer') {
+			add('user', 'From');
+			add('destination', 'To');
+			add('token', 'Token');
+			addFee('fee', 'Fee', ledgerString(delta, 'feeToken') ?? 'USDC');
+			addFee('nativeTokenFee', 'Native fee', ledgerString(delta, 'token') ?? 'Token');
+			add('nonce', 'Nonce');
+		} else if (delta.type === 'subAccountTransfer') {
+			add('user', 'From');
+			add('destination', 'To');
+		} else if (delta.type === 'vaultCreate') {
+			add('vault', 'Vault');
+			addFee('fee', 'Creation fee');
+		} else if (delta.type === 'vaultDeposit' || delta.type === 'vaultDistribution') {
+			add('vault', 'Vault');
+		} else if (delta.type === 'vaultWithdraw') {
+			add('vault', 'Vault');
+			add('user', 'User');
+			addUsd('requestedUsd', 'Requested');
+			addUsd('commission', 'Commission');
+			addUsd('closingCost', 'Closing cost');
+			addUsd('basis', 'Basis');
+		} else if (delta.type === 'withdraw') {
+			add('nonce', 'Nonce');
+			addFee('fee', 'Fee');
+		} else if (delta.type === 'send') {
+			add('user', 'From');
+			add('destination', 'To');
+			add('sourceDex', 'Source DEX');
+			add('destinationDex', 'Destination DEX');
+			add('token', 'Token');
+			addFee('fee', 'Fee', ledgerString(delta, 'feeToken') ?? 'USDC');
+			addFee('nativeTokenFee', 'Native fee', ledgerString(delta, 'token') ?? 'Token');
+			add('nonce', 'Nonce');
+		} else if (delta.type === 'deployGasAuction') {
+			add('token', 'Token');
+		} else if (delta.type === 'cStakingTransfer') {
+			addValue(
+				'direction',
+				'Direction',
+				delta.isDeposit === true ? 'Spot to staking' : 'Staking to spot'
+			);
+			add('token', 'Token');
+		} else if (delta.type === 'borrowLend') {
+			add('operation', 'Operation');
+			add('token', 'Token');
+			addToken('interestAmount', 'Interest');
+		} else if (delta.type === 'activateDexAbstraction') {
+			add('dex', 'DEX');
+			add('token', 'Token');
+		} else if (delta.type === 'vaultLeaderCommission') {
+			add('user', 'Leader');
+		}
+
+		return details.length > 0 ? details : ledgerGenericDetails(delta);
+	}
+
+	function ledgerGenericDetails(delta: LedgerDelta) {
+		const details: LedgerDetailItem[] = [];
+		for (const [key, value] of Object.entries(delta)) {
+			if (LEDGER_DETAIL_OMIT_FIELDS.has(key) || value == null) continue;
+			addLedgerDetail(details, key, ledgerDetailLabel(key), value);
+		}
+		return details;
+	}
+
+	function addLedgerDetail(
+		details: LedgerDetailItem[],
+		key: string,
+		label: string,
+		value: unknown
+	) {
+		const item = ledgerDetailItem(key, label, value);
+		if (item) details.push(item);
+	}
+
+	function ledgerDetailItem(key: string, label: string, value: unknown): LedgerDetailItem | null {
+		if (value == null) return null;
+		const rendered = ledgerDetailValue(key, value);
+		if (!rendered) return null;
+		const address = typeof value === 'string' && isAddressLike(value) ? value : null;
+		return { key, label, value: rendered, address };
+	}
+
+	function ledgerDetailLabel(key: string) {
+		const withSpaces = key.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/_/g, ' ');
+		return withSpaces
+			.replace(/\busdc\b/gi, 'USDC')
+			.replace(/\bdex\b/gi, 'DEX')
+			.replace(/\bid\b/gi, 'ID')
+			.replace(/^\w/, (letter) => letter.toUpperCase());
+	}
+
+	function ledgerDetailValue(key: string, value: unknown): string {
+		if (key === 'toPerp' && typeof value === 'boolean') {
+			return value ? 'To perps' : 'To spot';
+		}
+		if (key === 'isDeposit' && typeof value === 'boolean') {
+			return value ? 'Deposit' : 'Withdrawal';
+		}
+		if (typeof value === 'string') {
+			return isAddressLike(value) ? short(value) : value;
+		}
+		if (typeof value === 'number' || typeof value === 'boolean') {
+			return String(value);
+		}
+		if (Array.isArray(value)) {
+			return ledgerArrayDetail(value);
+		}
+		if (isRecord(value)) {
+			return truncateLedgerDetail(JSON.stringify(value));
+		}
+		return truncateLedgerDetail(String(value));
+	}
+
+	function ledgerArrayDetail(value: unknown[]) {
+		const rendered = value.map((item) => {
+			if (isRecord(item) && typeof item.coin === 'string') {
+				return `${item.coin} ${typeof item.szi === 'string' ? item.szi : ''}`.trim();
+			}
+			if (isRecord(item)) return JSON.stringify(item);
+			return String(item);
+		});
+		return truncateLedgerDetail(rendered.join(', '));
+	}
+
+	function truncateLedgerDetail(value: string) {
+		return value.length <= 120 ? value : `${value.slice(0, 117)}...`;
+	}
+
+	function ledgerString(delta: LedgerDelta, key: string) {
+		const value = delta[key];
+		return typeof value === 'string' ? value : null;
+	}
+
+	function ledgerTypeLabel(type: string) {
+		return LEDGER_TYPE_LABELS[type] ?? ledgerDetailLabel(type);
+	}
+
+	function isAddressLike(value: string) {
+		return /^0x[a-fA-F0-9]{40,64}$/.test(value);
+	}
+
+	function isRecord(value: unknown): value is Record<string, unknown> {
+		return typeof value === 'object' && value !== null && !Array.isArray(value);
 	}
 
 	function outcomeRow(outcome: OutcomeRow) {
@@ -2072,6 +2442,7 @@
 	function tabCount(tab: TabId) {
 		if (tab === 'account') return null;
 		if (tab === 'fills') return null;
+		if (tab === 'ledger') return ledgerUpdates.data ? ledgerUpdates.data.length : null;
 		if (tab === 'lending') return userLending.data ? lendingActiveRows.length : null;
 		if (tab === 'staking') return userStaking.data ? stakingDelegationRows.length : null;
 		if (tab === 'balances') return balanceTabHasData() ? balanceTableRows().length : null;
@@ -2132,6 +2503,10 @@
 		return `${fill.time}:${fill.coin}:${fill.side}:${fill.px}:${fill.sz}:${index}`;
 	}
 
+	function ledgerKey(update: LedgerUpdate, index: number) {
+		return `${update.hash}:${update.time}:${update.delta.type}:${index}`;
+	}
+
 	function reloadAll() {
 		clearActiveOutcomeSpotSubscriptions();
 		accountRateLimitGeneration += 1;
@@ -2140,6 +2515,7 @@
 		userFeesGeneration += 1;
 		userStakingGeneration += 1;
 		userLendingGeneration += 1;
+		ledgerGeneration += 1;
 		agentWalletGeneration += 1;
 		builderGeneration += 1;
 		clearSlot(accountRateLimit);
@@ -2154,6 +2530,7 @@
 		clearSlot(orders);
 		clearSlot(outcomes);
 		clearSlot(fills);
+		clearSlot(ledgerUpdates);
 		clearSlot(agentWallets);
 		clearSlot(approvedBuilders);
 		reserveActionError = null;
@@ -2167,6 +2544,7 @@
 		builderActionError = null;
 		builderActionNotice = null;
 		builderCurl = null;
+		resetLedgerPagination();
 		userStreamKey += 1;
 		marketStreamKey += 1;
 	}
@@ -2660,6 +3038,100 @@
 			userLending.error =
 				err instanceof Error ? err.message : 'Failed to load user lending summary.';
 		}
+	}
+
+	async function loadLedgerUpdatesPage(
+		user: Address,
+		network: HyperliquidNetwork,
+		pageIndex = ledgerPageIndex,
+		endTime: LedgerPageCursor = ledgerPageCursors[pageIndex] ?? null,
+		generation = ++ledgerGeneration
+	) {
+		setLoading(ledgerUpdates);
+		try {
+			const params = endTime == null ? { user } : { user, endTime };
+			const data = (await getHttpInfoClient(network).userNonFundingLedgerUpdates(
+				params
+			)) as LedgerUpdate[];
+			if (generation !== ledgerGeneration) return;
+			ledgerPageIndex = pageIndex;
+			ledgerUpdates.data = data;
+			ledgerUpdates.error = null;
+			ledgerUpdates.loading = false;
+		} catch (err) {
+			if (generation !== ledgerGeneration) return;
+			ledgerUpdates.loading = false;
+			ledgerUpdates.error = err instanceof Error ? err.message : 'Failed to load ledger updates.';
+		}
+	}
+
+	async function refreshLedgerUpdates(user = activeAddress, network = hyperliquidNetwork.current) {
+		if (!user || ledgerUpdates.loading) return;
+		await loadLedgerUpdatesPage(
+			user,
+			network,
+			ledgerPageIndex,
+			ledgerPageCursors[ledgerPageIndex] ?? null,
+			++ledgerGeneration
+		);
+	}
+
+	async function loadNewerLedgerUpdates(
+		user = activeAddress,
+		network = hyperliquidNetwork.current
+	) {
+		if (!user || ledgerUpdates.loading || !ledgerCanLoadNewer()) return;
+		const pageIndex = Math.max(0, ledgerPageIndex - 1);
+		await loadLedgerUpdatesPage(
+			user,
+			network,
+			pageIndex,
+			ledgerPageCursors[pageIndex] ?? null,
+			++ledgerGeneration
+		);
+	}
+
+	async function loadOlderLedgerUpdates(
+		user = activeAddress,
+		network = hyperliquidNetwork.current
+	) {
+		if (!user || ledgerUpdates.loading || !ledgerCanLoadOlder()) return;
+		const endTime = ledgerOlderEndTime();
+		if (endTime == null) return;
+
+		const pageIndex = ledgerPageIndex + 1;
+		ledgerPageCursors = [...ledgerPageCursors.slice(0, pageIndex), endTime];
+		await loadLedgerUpdatesPage(user, network, pageIndex, endTime, ++ledgerGeneration);
+	}
+
+	function ledgerCanLoadNewer() {
+		return ledgerPageIndex > 0;
+	}
+
+	function ledgerCanLoadOlder() {
+		return (ledgerUpdates.data?.length ?? 0) >= LEDGER_PAGE_LIMIT && ledgerOlderEndTime() !== null;
+	}
+
+	function ledgerOlderEndTime() {
+		const times = (ledgerUpdates.data ?? [])
+			.map((row) => toNumber(row.time))
+			.filter((time): time is number => time !== null);
+		if (times.length === 0) return null;
+
+		const oldest = Math.min(...times);
+		return oldest > 0 ? oldest - 1 : null;
+	}
+
+	function ledgerRangeLabel() {
+		const times = (ledgerUpdates.data ?? [])
+			.map((row) => toNumber(row.time))
+			.filter((time): time is number => time !== null);
+		if (times.length === 0) return `Page ${ledgerPageIndex + 1}`;
+
+		const oldest = Math.min(...times);
+		const newest = Math.max(...times);
+		const range = oldest === newest ? fmtTs(newest) : `${fmtTs(oldest)} to ${fmtTs(newest)}`;
+		return `Page ${ledgerPageIndex + 1} · ${range}`;
 	}
 
 	async function loadUserStaking(
@@ -3279,6 +3751,7 @@
 		void loadUserFees(user, network, ++userFeesGeneration);
 		void loadUserStaking(user, network, ++userStakingGeneration);
 		void loadUserLending(user, network, ++userLendingGeneration);
+		void loadLedgerUpdatesPage(user, network, 0, null, ++ledgerGeneration);
 		void loadUserRateLimit(user, network, ++accountRateLimitGeneration);
 		void loadAgentWallets(user, network, ++agentWalletGeneration);
 		void loadApprovedBuilders(user, network, ++builderGeneration);
@@ -3393,6 +3866,11 @@
 			if (!resetKey) return;
 			resetAll();
 		});
+	});
+
+	$effect(() => {
+		const nextTab = tabIdFromString(initialTab);
+		if (nextTab) activeTab = nextTab;
 	});
 
 	$effect(() => {
@@ -3529,6 +4007,13 @@
 		formatUsd,
 		formatUsdcCost,
 		formatUserRole,
+		ledgerCanLoadNewer,
+		ledgerCanLoadOlder,
+		ledgerRangeLabel,
+		ledgerTableRows,
+		ledgerUpdates,
+		loadNewerLedgerUpdates,
+		loadOlderLedgerUpdates,
 		lendingActiveRows,
 		lendingInterestRows,
 		lendingInterestSummary,
@@ -3546,6 +4031,7 @@
 		positionTableRows,
 		positions,
 		removeAgentWallet,
+		refreshLedgerUpdates,
 		reserveActionError,
 		reserveActionLoading,
 		reserveActionNotice,
@@ -3609,6 +4095,15 @@
 
 	function selectTab(tab: TabId) {
 		activeTab = tab;
+		if (syncTabHash && browser) {
+			const next = new URL(window.location.href);
+			next.hash = tab;
+			window.history.replaceState(
+				window.history.state,
+				'',
+				`${next.pathname}${next.search}${next.hash}`
+			);
+		}
 	}
 
 	function setReserveWeightInput(value: string | number) {
