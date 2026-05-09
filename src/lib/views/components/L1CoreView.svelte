@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { onDestroy, untrack } from 'svelte';
+	import { untrack } from 'svelte';
 	import type { Component } from 'svelte';
 	import type { ISubscription } from '@nktkas/hyperliquid';
 	import { getAddress, isAddress, type Address } from 'viem';
@@ -97,6 +97,8 @@
 			wallet.current?.source === 'injected' &&
 			wallet.current.address.toLowerCase() === activeAddress.toLowerCase()
 	);
+	const managingAgentWallet = $derived(localManagingAgentWallet());
+	const canManageActiveAddress = $derived(canSignForActiveAddress || managingAgentWallet !== null);
 
 	function tabIdFromString(value: string | null | undefined): TabId | null {
 		if (!value) return null;
@@ -594,10 +596,6 @@
 		total: string;
 		entryNtl: string;
 	};
-	type ActiveOutcomeSpotSubscription = {
-		generation: number;
-		subscription: ISubscription | null;
-	};
 	type OutcomeToken = { outcomeName: string; sideName: string; encoding: number | null };
 	type OutcomeMetaIndex = {
 		byToken: Record<number, OutcomeToken>;
@@ -667,7 +665,6 @@
 	let perpAssetIdBySymbol = $state<Partial<Record<string, number>>>({});
 	let spotCtxsByCoin = $state<Partial<Record<string, SpotAssetCtx>>>({});
 	let spotCtxsByAssetId = $state<Partial<Record<number, SpotAssetCtx>>>({});
-	let activeSpotCtxsByCoin = $state<Partial<Record<string, SpotAssetCtx>>>({});
 	let spotTokenByIndex = $state<Partial<Record<number, SpotTokenMeta>>>({});
 	let spotUniverseByIndex = $state<Partial<Record<number, SpotUniverse>>>({});
 	let spotAssetIdBySymbol = $state<Partial<Record<string, number>>>({});
@@ -696,8 +693,8 @@
 	let ledgerPageIndex = $state(0);
 	let ledgerPageCursors = $state<LedgerPageCursor[]>([null]);
 	let agentNameInput = $state('purrbuild');
-	let agentImportNameInput = $state('');
 	let agentImportPrivateKeyInput = $state('');
+	let agentImportTarget = $state<AgentTableRow | null>(null);
 	let agentValidDays = $state(90);
 	let agentStorageAck = $state(false);
 	let agentActionLoading = $state<string | null>(null);
@@ -727,9 +724,6 @@
 	let ledgerGeneration = 0;
 	let agentWalletGeneration = 0;
 	let builderGeneration = 0;
-	let activeOutcomeSpotSubscriptionNetwork: HyperliquidNetwork | null = null;
-	let activeOutcomeSpotSubscriptionGeneration = 0;
-	let activeOutcomeSpotSubscriptions: Record<string, ActiveOutcomeSpotSubscription> = {};
 	const AGENT_MAX_VALID_DAYS = 180;
 	const ZERO_AGENT_ADDRESS = '0x0000000000000000000000000000000000000000' as const;
 	const HYPERLIQUID_L1_CHAIN_ID = Number(BigInt(HYPERLIQUID_L1_SIGNATURE_CHAIN_ID));
@@ -837,7 +831,6 @@
 	}
 
 	function resetAll() {
-		clearActiveOutcomeSpotSubscriptions();
 		clearSlot(balances);
 		clearSlot(dexBalances);
 		clearSlot(positions);
@@ -883,7 +876,6 @@
 		perpAssetIdBySymbol = {};
 		spotCtxsByCoin = {};
 		spotCtxsByAssetId = {};
-		activeSpotCtxsByCoin = {};
 		spotTokenByIndex = {};
 		spotUniverseByIndex = {};
 		spotAssetIdBySymbol = {};
@@ -1185,12 +1177,6 @@
 			const spotInfo = spotUniverseByIndex[index];
 			const base = spotInfo ? spotTokenByIndex[spotInfo.tokens[0]]?.name : null;
 			const quote = spotInfo ? spotTokenByIndex[spotInfo.tokens[1]]?.name : null;
-			const byActiveSpotName = spotInfo ? (activeSpotCtxsByCoin[spotInfo.name] ?? null) : null;
-			if (byActiveSpotName) return byActiveSpotName;
-			const byActiveOutcomeName = activeSpotCtxsByCoin[`#${index}`] ?? null;
-			if (byActiveOutcomeName) return byActiveOutcomeName;
-			const byActiveIndexName = activeSpotCtxsByCoin[`@${index}`] ?? null;
-			if (byActiveIndexName) return byActiveIndexName;
 			const byAssetId = spotCtxsByAssetId[assetId] ?? null;
 			if (byAssetId) return byAssetId;
 			const byCoin = spotCtxsByCoin[coin] ?? null;
@@ -1569,6 +1555,25 @@
 		return sortAgentRows(rows);
 	}
 
+	function localManagingAgentWallet() {
+		const now = Date.now();
+		const registeredByAddress = new Map(
+			(agentWallets.data ?? []).map((row) => [row.address.toLowerCase(), row])
+		);
+		for (const saved of savedAgentWallets) {
+			const registered = registeredByAddress.get(saved.address.toLowerCase()) ?? null;
+			if (!registered) continue;
+			const validUntil = registered.validUntil ?? saved.validUntil;
+			if (validUntil <= now) continue;
+			return {
+				...saved,
+				name: agentBaseName(registered.name) || saved.name,
+				validUntil
+			};
+		}
+		return null;
+	}
+
 	function builderTableRows() {
 		const rows: BuilderTableRow[] = [];
 		for (const builder of approvedBuilders.data ?? []) {
@@ -1887,10 +1892,6 @@
 	}
 
 	function outcomeSpotCtx(outcome: OutcomeRow) {
-		for (const coin of outcomeActiveSpotCoinsFor(outcome)) {
-			const ctx = activeSpotCtxsByCoin[coin] ?? null;
-			if (ctx) return ctx;
-		}
 		return getSpotCtx(outcome.coin, outcome.token);
 	}
 
@@ -2302,127 +2303,6 @@
 		return value ? 'Yes' : 'No';
 	}
 
-	function outcomeActiveSpotCoins() {
-		const seen: Record<string, true> = {};
-		const coins: string[] = [];
-		for (const outcome of outcomes.data ?? []) {
-			for (const coin of outcomeActiveSpotCoinsFor(outcome)) {
-				if (seen[coin]) continue;
-				seen[coin] = true;
-				coins.push(coin);
-			}
-		}
-		return coins.sort();
-	}
-
-	function outcomeActiveSpotCoinsFor(outcome: OutcomeRow) {
-		const seen: Record<string, true> = {};
-		const coins: string[] = [];
-		if (outcome.encoding != null) {
-			addOutcomeActiveSpotCoin(coins, seen, `#${outcome.encoding}`);
-		}
-
-		const coinEncoding = parseOutcomeEncoding(outcome.coin);
-		if (coinEncoding != null) {
-			addOutcomeActiveSpotCoin(coins, seen, `#${coinEncoding}`);
-		}
-
-		if (Number.isFinite(outcome.token)) {
-			addOutcomeActiveSpotCoin(coins, seen, `#${outcome.token}`);
-		}
-
-		const assetId = resolveSpotAssetId(outcome.coin, outcome.token);
-		if (assetId != null) {
-			const spotIndex = assetId - 10000;
-			addOutcomeActiveSpotCoin(coins, seen, `#${spotIndex}`);
-
-			const spotInfo = spotUniverseByIndex[spotIndex];
-			if (spotInfo?.name?.startsWith('#')) {
-				addOutcomeActiveSpotCoin(coins, seen, spotInfo.name);
-			}
-		}
-
-		return coins;
-	}
-
-	function addOutcomeActiveSpotCoin(coins: string[], seen: Record<string, true>, coin: string) {
-		if (seen[coin]) return;
-		seen[coin] = true;
-		coins.push(coin);
-	}
-
-	function syncCurrentOutcomeSpotSubscriptions(network: HyperliquidNetwork) {
-		syncActiveOutcomeSpotSubscriptions(network, outcomeActiveSpotCoins());
-	}
-
-	function syncActiveOutcomeSpotSubscriptions(network: HyperliquidNetwork, coins: string[]) {
-		if (activeOutcomeSpotSubscriptionNetwork !== network) {
-			clearActiveOutcomeSpotSubscriptions();
-			activeOutcomeSpotSubscriptionNetwork = network;
-		}
-
-		const desired: Record<string, true> = {};
-		for (const coin of coins) desired[coin] = true;
-
-		for (const [coin, entry] of Object.entries(activeOutcomeSpotSubscriptions)) {
-			if (desired[coin]) continue;
-			void entry.subscription?.unsubscribe();
-			delete activeOutcomeSpotSubscriptions[coin];
-			const next = { ...activeSpotCtxsByCoin };
-			delete next[coin];
-			activeSpotCtxsByCoin = next;
-		}
-
-		const client = getSubscriptionClient(network);
-		for (const coin of coins) {
-			if (activeOutcomeSpotSubscriptions[coin]) continue;
-
-			const generation = ++activeOutcomeSpotSubscriptionGeneration;
-			activeOutcomeSpotSubscriptions[coin] = { generation, subscription: null };
-			void client
-				.activeSpotAssetCtx({ coin }, (event) => {
-					if (!isActiveOutcomeSpotSubscription(coin, generation)) return;
-
-					const ctx = event.ctx as SpotAssetCtx;
-					activeSpotCtxsByCoin = {
-						...activeSpotCtxsByCoin,
-						[coin]: ctx,
-						[event.coin]: ctx,
-						[ctx.coin]: ctx
-					};
-				})
-				.then((subscription) => {
-					const entry = activeOutcomeSpotSubscriptions[coin];
-					if (!entry || entry.generation !== generation) {
-						void subscription.unsubscribe();
-						return;
-					}
-					entry.subscription = subscription;
-				})
-				.catch((err: unknown) => {
-					if (!isActiveOutcomeSpotSubscription(coin, generation)) return;
-					delete activeOutcomeSpotSubscriptions[coin];
-					marketError =
-						err instanceof Error ? err.message : `Failed to subscribe to outcome spot ${coin}`;
-				});
-		}
-	}
-
-	function isActiveOutcomeSpotSubscription(coin: string, generation: number) {
-		const entry = activeOutcomeSpotSubscriptions[coin];
-		return entry?.generation === generation;
-	}
-
-	function clearActiveOutcomeSpotSubscriptions() {
-		activeOutcomeSpotSubscriptionGeneration += 1;
-		for (const entry of Object.values(activeOutcomeSpotSubscriptions)) {
-			void entry.subscription?.unsubscribe();
-		}
-		activeOutcomeSpotSubscriptions = {};
-		activeOutcomeSpotSubscriptionNetwork = null;
-		activeSpotCtxsByCoin = {};
-	}
-
 	function balanceTabHasData() {
 		return balances.data !== null || dexBalances.data !== null;
 	}
@@ -2508,7 +2388,6 @@
 	}
 
 	function reloadAll() {
-		clearActiveOutcomeSpotSubscriptions();
 		accountRateLimitGeneration += 1;
 		userRoleGeneration += 1;
 		userReferralGeneration += 1;
@@ -2586,16 +2465,20 @@
 		closeTrackedWalletEditor();
 	}
 
-	function openAgentImportModal() {
+	function openAgentImportModal(row: AgentTableRow) {
 		agentActionError = null;
 		agentActionNotice = null;
+		agentImportTarget = row;
+		agentImportPrivateKeyInput = '';
+		agentStorageAck = false;
 		agentImportModalOpen = true;
 	}
 
 	function closeAgentImportModal() {
 		agentImportModalOpen = false;
-		agentImportNameInput = '';
+		agentImportTarget = null;
 		agentImportPrivateKeyInput = '';
+		agentStorageAck = false;
 	}
 
 	function submitImportAgentWalletPrivateKey(event: SubmitEvent) {
@@ -3284,6 +3167,17 @@
 		return signingWallet;
 	}
 
+	async function requireManageSigningWallet(action = 'sign this action') {
+		if (canSignForActiveAddress) return requireL1SigningWallet(action);
+
+		const agent = localManagingAgentWallet();
+		if (agent) return privateKeyToAccount(agent.privateKey);
+
+		throw new Error(
+			`Connect the tracked wallet or add a private key for a registered agent wallet to ${action}.`
+		);
+	}
+
 	function recordAgentRequest(request: RecordedExchangeRequest) {
 		if (request.endpoint !== 'exchange') return;
 		agentCurl = requestToCurl(request);
@@ -3339,7 +3233,7 @@
 		reserveCurl = null;
 
 		try {
-			const signingWallet = await requireL1SigningWallet('reserve request weight');
+			const signingWallet = await requireManageSigningWallet('reserve request weight');
 			await getExchangeClient(signingWallet, network, recordReserveRequest).reserveRequestWeight({
 				weight
 			});
@@ -3382,7 +3276,7 @@
 		builderCurl = null;
 
 		try {
-			const signingWallet = await requireL1SigningWallet('approve builder fees');
+			const signingWallet = await requireManageSigningWallet('approve builder fees');
 			await getExchangeClient(signingWallet, network, recordBuilderRequest).approveBuilderFee({
 				builder: getAddress(builder),
 				maxFeeRate
@@ -3412,11 +3306,6 @@
 			agentActionError = 'Enter an agent name.';
 			return;
 		}
-		if (!agentStorageAck) {
-			agentActionError = 'Acknowledge local private-key storage before creating an agent.';
-			return;
-		}
-
 		const validDays = clampAgentValidDays(agentValidDays);
 		agentValidDays = validDays;
 		const validUntil = Date.now() + validDays * 24 * 60 * 60 * 1000;
@@ -3455,6 +3344,12 @@
 		const network = hyperliquidNetwork.current;
 		if (!user || agentActionLoading) return;
 
+		const target = agentImportTarget;
+		if (!target) {
+			agentActionError = 'Select an agent wallet from the table first.';
+			return;
+		}
+
 		agentActionLoading = 'import';
 		agentActionError = null;
 		agentActionNotice = null;
@@ -3466,22 +3361,25 @@
 			}
 			const privateKey = normalizePrivateKeyInput(agentImportPrivateKeyInput);
 			const agentAccount = privateKeyToAccount(privateKey);
-			const name =
-				sanitizeAgentName(agentImportNameInput) || `imported-${agentAccount.address.slice(2, 8)}`;
-			const validDays = clampAgentValidDays(agentValidDays);
-			agentValidDays = validDays;
+			if (agentAccount.address.toLowerCase() !== target.address.toLowerCase()) {
+				throw new Error('Private key does not match this agent wallet.');
+			}
+			const name = sanitizeAgentName(target.name);
+			const createdAt = Date.now();
+			const validUntil =
+				target.validUntil ?? createdAt + clampAgentValidDays(agentValidDays) * 24 * 60 * 60 * 1000;
 			upsertSavedAgentWallet(user, network, {
-				address: agentAccount.address,
-				name,
+				address: target.address,
+				name: name || `imported-${target.address.slice(2, 8)}`,
 				privateKey,
-				createdAt: Date.now(),
-				validUntil: Date.now() + validDays * 24 * 60 * 60 * 1000
+				createdAt,
+				validUntil
 			});
-			agentImportNameInput = '';
+			agentImportTarget = null;
 			agentImportPrivateKeyInput = '';
 			agentImportModalOpen = false;
 			agentStorageAck = false;
-			agentActionNotice = 'Agent private key saved locally.';
+			agentActionNotice = `Private key saved for ${name || short(target.address)}.`;
 		} catch (err) {
 			agentActionError = err instanceof Error ? err.message : 'Failed to import agent private key.';
 		} finally {
@@ -3603,7 +3501,6 @@
 		spotUniverseByIndex = universeByIndex;
 		spotAssetIdBySymbol = assetIdsBySymbol;
 		spotAssetIdByToken = assetIdsByToken;
-		syncCurrentOutcomeSpotSubscriptions(network);
 	}
 
 	async function loadOutcomeMetaIndex(network: HyperliquidNetwork, generation: number) {
@@ -3761,7 +3658,6 @@
 			outcomes.data = buildOutcomeRows(latestSpotBalances, currentOutcomeIndex);
 			outcomes.error = null;
 			outcomes.loading = false;
-			syncCurrentOutcomeSpotSubscriptions(network);
 		}
 
 		function updateDexBalances() {
@@ -3923,19 +3819,6 @@
 		};
 	});
 
-	$effect(() => {
-		const network = hyperliquidNetwork.current;
-		const user = activeAddress;
-		untrack(() => {
-			if (user) syncCurrentOutcomeSpotSubscriptions(network);
-			else clearActiveOutcomeSpotSubscriptions();
-		});
-	});
-
-	onDestroy(() => {
-		clearActiveOutcomeSpotSubscriptions();
-	});
-
 	const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 	const fmtTs = (t: number) => new Date(t).toLocaleString();
 
@@ -3961,9 +3844,9 @@
 		agentActionLoading,
 		agentActionNotice,
 		agentCurl,
-		agentImportNameInput,
 		agentImportPrivateKeyInput,
 		agentImportModalOpen,
+		agentImportTarget,
 		agentNameInput,
 		agentSortIndicator,
 		agentStorageAck,
@@ -3985,6 +3868,7 @@
 		builderMaxFeeRateInput,
 		builderSortIndicator,
 		builderTableRows,
+		canManageActiveAddress,
 		canSignForActiveAddress,
 		fillSortIndicator,
 		fillTableRows,
@@ -4018,6 +3902,7 @@
 		lendingInterestRows,
 		lendingInterestSummary,
 		lendingOverview,
+		managingAgentWallet,
 		orderSideClass,
 		orderSideLabel,
 		orderSortIndicator,
@@ -4083,7 +3968,6 @@
 		referrerStageLabel,
 		submitImportAgentWalletPrivateKey,
 		closeAgentImportModal,
-		setAgentImportNameInput,
 		setAgentImportPrivateKeyInput,
 		setAgentNameInput,
 		setAgentStorageAck,
@@ -4110,10 +3994,6 @@
 
 	function setAgentNameInput(value: string) {
 		agentNameInput = value;
-	}
-
-	function setAgentImportNameInput(value: string) {
-		agentImportNameInput = value;
 	}
 
 	function setAgentImportPrivateKeyInput(value: string) {

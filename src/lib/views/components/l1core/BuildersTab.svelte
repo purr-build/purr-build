@@ -22,7 +22,7 @@
 </script>
 
 <div class="space-y-3 p-2">
-	{#if ctx.canSignForActiveAddress}
+	{#if ctx.canManageActiveAddress}
 		<form
 			class="rounded-lg border border-base-300 bg-base-100 p-3"
 			onsubmit={ctx.submitApproveBuilder}
@@ -60,7 +60,7 @@
 		</form>
 	{:else}
 		<div role="alert" class="alert alert-soft text-xs alert-warning">
-			<span>Connect this tracked address to approve builders.</span>
+			<span>Connect this tracked address or add a private key for a registered agent.</span>
 		</div>
 	{/if}
 
