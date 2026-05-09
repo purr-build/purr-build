@@ -175,10 +175,6 @@
 	let handledCloseNonce = 0;
 	let evmBlockModeGeneration = 0;
 
-	function addPanel() {
-		views.open(viewSpecForType('panel'));
-	}
-
 	function addL1Core() {
 		trackL1CoreModalOpen = true;
 	}
@@ -902,7 +898,7 @@
 		<div class="min-h-0 flex-1">
 			{#if views.entries.length === 0}
 				<div class="flex h-full items-center justify-center">
-					<button class="btn btn-primary" onclick={addPanel}>Add your first panel</button>
+					<button class="btn btn-primary" onclick={addL1Core}>Add wallet</button>
 				</div>
 			{:else}
 				<ViewStack />
