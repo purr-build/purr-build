@@ -4,6 +4,7 @@
 	import { getAddress, isAddress, type Address } from 'viem';
 	import ConnectWalletModal from '$lib/components/ConnectWalletModal.svelte';
 	import TrackWalletModal from '$lib/components/TrackWalletModal.svelte';
+	import { upsertSavedAgentWallet, type SavedAgentWallet } from '$lib/hl/agent-wallets.js';
 	import { getExchangeClient, HYPERLIQUID_L1_SIGNATURE_CHAIN_ID } from '$lib/hl/clients.js';
 	import { hyperliquidNetwork, type HyperliquidNetwork } from '$lib/hl/network.svelte';
 	import { HYPERLIQUID_L1_ADD_ETHEREUM_CHAIN_PARAMETER } from '$lib/hl/wallet-chains.js';
@@ -241,7 +242,14 @@
 		});
 	}
 
-	function addManualL1Core(address: Address, name: string | null) {
+	function addManualL1Core(
+		address: Address,
+		name: string | null,
+		agentWallet: SavedAgentWallet | null
+	) {
+		if (agentWallet) {
+			upsertSavedAgentWallet(address, hyperliquidNetwork.current, agentWallet);
+		}
 		openL1CoreView(address, { name });
 	}
 

@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { getAddress, isAddress, type Address } from 'viem';
 	import HeroIcon from '$lib/components/HeroIcon.svelte';
+	import { savedAgentWalletFromPrivateKey, type SavedAgentWallet } from '$lib/hl/agent-wallets.js';
 	import { normalizeTrackedWalletName, TRACKED_WALLET_NAME_MAX_LENGTH } from '$lib/wallet-names.js';
 
 	type Props = {
 		open: boolean;
 		currentAddress?: Address | null;
-		onAdd: (address: Address, name: string | null) => void;
+		onAdd: (address: Address, name: string | null, agentWallet: SavedAgentWallet | null) => void;
 		onAddCurrent?: (name: string | null) => void;
 		onClose: () => void;
 	};
@@ -15,7 +16,10 @@
 
 	let addressInput = $state('');
 	let nameInput = $state('');
+	let agentPrivateKeyInput = $state('');
+	let agentStorageAck = $state(false);
 	let error = $state<string | null>(null);
+	let agentKeyPending = $derived(agentPrivateKeyInput.trim() !== '');
 
 	function dialogController(node: HTMLDialogElement) {
 		$effect(() => {
@@ -27,6 +31,8 @@
 	function close() {
 		addressInput = '';
 		nameInput = '';
+		agentPrivateKeyInput = '';
+		agentStorageAck = false;
 		error = null;
 		onClose();
 	}
@@ -40,7 +46,21 @@
 			return;
 		}
 
-		onAdd(getAddress(trimmed), normalizeTrackedWalletName(nameInput));
+		const name = normalizeTrackedWalletName(nameInput);
+		let agentWallet: SavedAgentWallet | null = null;
+		try {
+			if (agentKeyPending) {
+				if (!agentStorageAck) {
+					throw new Error('Acknowledge local private-key storage before saving this agent.');
+				}
+				agentWallet = savedAgentWalletFromPrivateKey(agentPrivateKeyInput, { name });
+			}
+		} catch (err) {
+			error = err instanceof Error ? err.message : 'Failed to save agent private key.';
+			return;
+		}
+
+		onAdd(getAddress(trimmed), name, agentWallet);
 		close();
 	}
 
@@ -97,7 +117,34 @@
 						autocomplete="off"
 					/>
 				</label>
-				<button type="submit" class="btn w-full btn-outline" disabled={addressInput.trim() === ''}>
+				<label class="floating-label">
+					<span>Agent private key (Optional)</span>
+					<input
+						type="password"
+						class="input-bordered input w-full font-mono text-sm"
+						placeholder="0x..."
+						bind:value={agentPrivateKeyInput}
+						spellcheck="false"
+						autocomplete="off"
+					/>
+				</label>
+				{#if agentKeyPending}
+					<label class="flex items-start gap-2 text-xs text-base-content/70">
+						<input
+							type="checkbox"
+							class="checkbox mt-0.5 checkbox-xs"
+							bind:checked={agentStorageAck}
+						/>
+						<span>
+							I understand this agent private key will be stored in this browser's localStorage.
+						</span>
+					</label>
+				{/if}
+				<button
+					type="submit"
+					class="btn w-full btn-outline"
+					disabled={addressInput.trim() === '' || (agentKeyPending && !agentStorageAck)}
+				>
 					Continue
 				</button>
 			</form>

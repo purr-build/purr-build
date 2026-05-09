@@ -335,7 +335,7 @@
 		</TableScroll>
 	{/if}
 
-	{#if ctx.canSignForActiveAddress}
+	{#if ctx.canManageActiveAddress}
 		<form
 			class="rounded-lg border border-base-300 bg-base-100 p-3"
 			onsubmit={ctx.submitReserveRequestWeight}
@@ -382,7 +382,7 @@
 		</form>
 	{:else}
 		<div role="alert" class="alert alert-soft text-xs alert-warning">
-			<span>Connect an injected root wallet to reserve request weight.</span>
+			<span>Connect this tracked address or add a private key for a registered agent.</span>
 		</div>
 	{/if}
 

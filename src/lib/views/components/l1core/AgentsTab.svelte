@@ -17,10 +17,6 @@
 		ctx.setAgentNameInput((event.currentTarget as HTMLInputElement).value);
 	}
 
-	function updateImportName(event: Event) {
-		ctx.setAgentImportNameInput((event.currentTarget as HTMLInputElement).value);
-	}
-
 	function updateImportPrivateKey(event: Event) {
 		ctx.setAgentImportPrivateKeyInput((event.currentTarget as HTMLInputElement).value);
 	}
@@ -42,8 +38,8 @@
 </script>
 
 <div class="space-y-3 p-2">
-	{#if ctx.canSignForActiveAddress}
-		<div class="rounded-lg border border-base-300 bg-base-100 p-3">
+	<div class="rounded-lg border border-base-300 bg-base-100 p-3">
+		{#if ctx.canSignForActiveAddress}
 			<div class="grid gap-3 md:grid-cols-[minmax(0,1fr)_9rem_auto] md:items-end">
 				<label class="form-control">
 					<span class="label pb-1 text-xs text-base-content/60">Name</span>
@@ -69,7 +65,7 @@
 				<button
 					type="button"
 					class="btn btn-sm btn-primary"
-					disabled={ctx.agentActionLoading !== null || !ctx.agentStorageAck}
+					disabled={ctx.agentActionLoading !== null}
 					onclick={ctx.addAgentWallet}
 				>
 					{#if ctx.agentActionLoading === 'add'}
@@ -78,27 +74,12 @@
 					Add agent
 				</button>
 			</div>
-			<label class="mt-3 flex items-start gap-2 text-xs text-base-content/70">
-				<input
-					type="checkbox"
-					class="checkbox mt-0.5 checkbox-xs"
-					checked={ctx.agentStorageAck}
-					onchange={updateStorageAck}
-				/>
-				<span>
-					I understand the generated agent private key will be stored in this browser's
-					localStorage.
-					<button type="button" class="ml-1 link" onclick={ctx.openAgentImportModal}>
-						Add private key manually
-					</button>
-				</span>
-			</label>
-		</div>
-	{:else}
-		<div role="alert" class="alert alert-soft text-xs alert-warning">
-			<span>Connect this tracked address to manage agents.</span>
-		</div>
-	{/if}
+		{:else}
+			<div role="alert" class="alert alert-soft text-xs alert-warning">
+				<span>Connect this tracked address to generate or remove registered agents.</span>
+			</div>
+		{/if}
+	</div>
 
 	{#if ctx.agentActionError}
 		<div role="alert" class="alert alert-soft text-xs alert-error">
@@ -212,18 +193,30 @@
 									{/if}
 								</td>
 								<td class="whitespace-nowrap">
-									<button
-										type="button"
-										class="btn btn-outline btn-xs btn-error"
-										disabled={ctx.agentActionLoading !== null ||
-											(row.registered && (!ctx.canSignForActiveAddress || !row.approvalName))}
-										onclick={() => ctx.removeAgentWallet(row)}
-									>
-										{#if ctx.agentActionLoading === row.address}
-											<span class="loading loading-xs loading-spinner"></span>
+									<div class="flex flex-wrap gap-2">
+										{#if row.registered && !row.privateKey}
+											<button
+												type="button"
+												class="btn btn-outline btn-xs"
+												disabled={ctx.agentActionLoading !== null}
+												onclick={() => ctx.openAgentImportModal(row)}
+											>
+												Add private key
+											</button>
 										{/if}
-										{row.registered ? 'Remove' : 'Forget'}
-									</button>
+										<button
+											type="button"
+											class="btn btn-outline btn-xs btn-error"
+											disabled={ctx.agentActionLoading !== null ||
+												(row.registered && (!ctx.canSignForActiveAddress || !row.approvalName))}
+											onclick={() => ctx.removeAgentWallet(row)}
+										>
+											{#if ctx.agentActionLoading === row.address}
+												<span class="loading loading-xs loading-spinner"></span>
+											{/if}
+											{row.registered ? 'Remove' : 'Forget'}
+										</button>
+									</div>
 								</td>
 							</tr>
 						{/each}
@@ -246,6 +239,16 @@
 		</div>
 
 		<form class="mt-5 space-y-3" onsubmit={ctx.submitImportAgentWalletPrivateKey}>
+			{#if ctx.agentImportTarget}
+				<div class="rounded-lg border border-base-300 bg-base-200/40 p-3 text-xs">
+					<div class="mb-1 font-semibold text-base-content/70">{ctx.agentImportTarget.name}</div>
+					<CopyAddress
+						address={ctx.agentImportTarget.address}
+						notification="Agent address copied"
+						buttonClass="btn h-auto min-h-0 px-0 py-0 font-mono text-xs btn-ghost"
+					/>
+				</div>
+			{/if}
 			<label class="form-control">
 				<span class="label pb-1 text-xs text-base-content/60">Private key</span>
 				<input
@@ -257,15 +260,16 @@
 					oninput={updateImportPrivateKey}
 				/>
 			</label>
-			<label class="form-control">
-				<span class="label pb-1 text-xs text-base-content/60">Name</span>
+			<label class="flex items-start gap-2 text-xs text-base-content/70">
 				<input
-					class="input input-sm w-full"
-					maxlength="16"
-					value={ctx.agentImportNameInput}
-					placeholder="Optional"
-					oninput={updateImportName}
+					type="checkbox"
+					class="checkbox mt-0.5 checkbox-xs"
+					checked={ctx.agentStorageAck}
+					onchange={updateStorageAck}
 				/>
+				<span>
+					I understand this agent private key will be stored in this browser's localStorage.
+				</span>
 			</label>
 			<button
 				type="submit"

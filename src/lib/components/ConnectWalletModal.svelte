@@ -25,7 +25,7 @@
 	async function pick(provider: (typeof wallet.providers)[number]) {
 		await wallet.connect(provider);
 		if (wallet.current) {
-			manualAddress = '';
+			resetManualForm();
 			onClose();
 		}
 	}
@@ -33,21 +33,32 @@
 	async function pickLegacy() {
 		await wallet.connectLegacyInjected();
 		if (wallet.current) {
-			manualAddress = '';
+			resetManualForm();
 			onClose();
 		}
 	}
 
 	function handleManualSubmit(event: SubmitEvent) {
 		event.preventDefault();
+		wallet.error = null;
+
 		if (wallet.setManual(manualAddress)) {
-			manualAddress = '';
+			resetManualForm();
 			onClose();
 		}
 	}
+
+	function resetManualForm() {
+		manualAddress = '';
+	}
+
+	function close() {
+		resetManualForm();
+		onClose();
+	}
 </script>
 
-<dialog {@attach dialogController} class="modal" onclose={onClose}>
+<dialog {@attach dialogController} class="modal" onclose={close}>
 	<div class="modal-box max-w-md">
 		<div class="flex items-center justify-between">
 			<h3 class="text-lg font-bold">Connect wallet</h3>
@@ -98,11 +109,11 @@
 				</p>
 			{/if}
 
-			<div class="divider">OR</div>
+			<div class="divider">Public address</div>
 
-			<form class="space-y-2" onsubmit={handleManualSubmit}>
+			<form class="space-y-3" onsubmit={handleManualSubmit}>
 				<label class="floating-label">
-					<span>Address</span>
+					<span>Public address</span>
 					<input
 						type="text"
 						class="input-bordered input w-full font-mono text-sm"
@@ -117,7 +128,7 @@
 					class="btn w-full btn-outline"
 					disabled={manualAddress.trim().length === 0}
 				>
-					Use address (read-only)
+					Open public address
 				</button>
 			</form>
 
