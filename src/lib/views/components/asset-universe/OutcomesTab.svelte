@@ -7,6 +7,9 @@
 		marketName: string;
 		description: string;
 		encoding: number;
+		spotCoin: string;
+		tokenName: string;
+		assetId: number;
 		settled: boolean;
 		fallback: boolean;
 	};
@@ -24,14 +27,16 @@
 	let { ctx }: Props = $props();
 </script>
 
-<table class="table min-w-[72rem] table-md">
+<table class="table min-w-[84rem] table-md">
 	<thead class="sticky top-0 z-10 bg-base-100">
 		<tr class="text-[10px] text-base-content/50 uppercase">
 			<th>Market</th>
 			<th>Side</th>
 			<th>Outcome</th>
+			<th class="text-right">Coin</th>
 			<th class="text-right">Encoding</th>
-			<th class="text-right">Token</th>
+			<th class="text-right">Token name</th>
+			<th class="text-right">Asset ID</th>
 			<th>Status</th>
 			<th>Description</th>
 		</tr>
@@ -39,7 +44,7 @@
 	<tbody>
 		{#if ctx.topSpacerHeight > 0}
 			<tr aria-hidden="true">
-				<td colspan="7" class="p-0" style={`height: ${ctx.topSpacerHeight}px; border: 0;`}></td>
+				<td colspan="9" class="p-0" style={`height: ${ctx.topSpacerHeight}px; border: 0;`}></td>
 			</tr>
 		{/if}
 		{#each ctx.rows as row (row.key)}
@@ -56,8 +61,10 @@
 					<td class="max-w-44">
 						<div class="truncate" title={row.outcome.name}>{row.outcome.name}</div>
 					</td>
+					<td class="text-right font-mono">{row.spotCoin}</td>
 					<td class="text-right font-mono">{ctx.formatInteger(row.encoding)}</td>
-					<td class="text-right font-mono">{ctx.formatInteger(row.side.token)}</td>
+					<td class="text-right font-mono">{row.tokenName}</td>
+					<td class="text-right font-mono">{ctx.formatInteger(row.assetId)}</td>
 					<td>
 						<span class="badge badge-xs {ctx.outcomeStatusBadgeClass(row)}">
 							{ctx.outcomeStatusLabel(row)}
@@ -73,7 +80,7 @@
 		{/each}
 		{#if ctx.bottomSpacerHeight > 0}
 			<tr aria-hidden="true">
-				<td colspan="7" class="p-0" style={`height: ${ctx.bottomSpacerHeight}px; border: 0;`}></td>
+				<td colspan="9" class="p-0" style={`height: ${ctx.bottomSpacerHeight}px; border: 0;`}></td>
 			</tr>
 		{/if}
 	</tbody>

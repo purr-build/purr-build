@@ -16,6 +16,17 @@
 	} from '$lib/hl/clients.js';
 	import type { RecordedExchangeRequest } from '$lib/hl/clients.js';
 	import {
+		isOutcomeAssetId,
+		isOutcomeCoin,
+		normalizeOutcomeEncoding,
+		outcomeAssetId,
+		outcomeEncoding,
+		outcomeSpotCoin,
+		outcomeTokenName,
+		parseOutcomeEncoding,
+		type OutcomeSideIndex
+	} from '$lib/hl/outcomes.js';
+	import {
 		loadSavedAgentWallets,
 		saveSavedAgentWallets,
 		type SavedAgentWallet
@@ -591,14 +602,23 @@
 		outcomeName: string;
 		sideName: string;
 		coin: string;
-		token: number;
-		encoding: number | null;
+		tokenName: string;
+		assetId: number;
+		encoding: number;
 		total: string;
 		entryNtl: string;
 	};
-	type OutcomeToken = { outcomeName: string; sideName: string; encoding: number | null };
+	type OutcomeToken = {
+		outcomeName: string;
+		sideName: string;
+		side: OutcomeSideIndex;
+		encoding: number;
+		spotCoin: string;
+		tokenName: string;
+		assetId: number;
+	};
 	type OutcomeMetaIndex = {
-		byToken: Record<number, OutcomeToken>;
+		byAssetId: Record<number, OutcomeToken>;
 		byEncoding: Record<number, OutcomeToken>;
 		byCoin: Record<string, OutcomeToken>;
 	};
@@ -982,15 +1002,15 @@
 		const rows: OutcomeRow[] = [];
 		for (const b of spotBalances) {
 			const hit = resolveOutcomeMeta(b, metaIndex);
-			const signedOutcome = parseSignedOutcomeCoin(b.coin);
-			if (!hit && !signedOutcome) continue;
+			if (!hit) continue;
 			if (Number(b.total) === 0) continue;
 			rows.push({
-				outcomeName: hit?.outcomeName ?? signedOutcome?.outcomeName ?? b.coin,
-				sideName: hit?.sideName ?? signedOutcome?.sideName ?? 'Outcome',
-				coin: b.coin,
-				token: b.token,
-				encoding: hit?.encoding ?? signedOutcome?.encoding ?? parseOutcomeEncoding(b.coin),
+				outcomeName: hit.outcomeName,
+				sideName: hit.sideName,
+				coin: hit.spotCoin,
+				tokenName: hit.tokenName,
+				assetId: hit.assetId,
+				encoding: hit.encoding,
 				total: b.total,
 				entryNtl: b.entryNtl
 			});
@@ -1000,28 +1020,18 @@
 
 	function resolveOutcomeMeta(balance: SpotBal, metaIndex: OutcomeMetaIndex) {
 		return (
-			metaIndex.byToken[balance.token] ??
+			resolveOutcomeAssetIdMeta(balance.token, metaIndex) ??
 			resolveOutcomeCoinMeta(balance.coin, metaIndex) ??
-			resolveOutcomeEncodingMeta(parseOutcomeEncoding(balance.coin), metaIndex) ??
-			resolveOutcomeEncodingMeta(balance.token, metaIndex) ??
 			null
 		);
 	}
 
 	function isOutcomeBalance(balance: SpotBal) {
-		return balance.coin.startsWith('+') || balance.coin.startsWith('-');
-	}
-
-	function parseSignedOutcomeCoin(coin: string) {
-		const sign = coin[0];
-		if (sign !== '+' && sign !== '-') return null;
-		const encoding = parseOutcomeEncoding(coin);
-
-		return {
-			outcomeName: coin.slice(1) || coin,
-			sideName: sign === '+' ? 'Yes' : 'No',
-			encoding
-		};
+		return (
+			isOutcomeAssetId(balance.token) ||
+			isOutcomeAssetId(balance.coin) ||
+			isOutcomeCoin(balance.coin)
+		);
 	}
 
 	function dedupeFills(next: Fill[]) {
@@ -1033,6 +1043,28 @@
 			seen[key] = true;
 			rows.push(fill);
 			if (rows.length === 200) break;
+		}
+		return rows;
+	}
+
+	function openOrderDedupeKey(order: Order) {
+		if (order.oid != null) {
+			return `oid:${order.oid}:${order.coin}:${order.side}:${order.limitPx}:${order.timestamp}`;
+		}
+		if (order.cloid) return `cloid:${order.cloid}`;
+		return `${order.dex ?? ''}:${order.coin}:${order.side}:${order.limitPx}:${order.timestamp}:${order.sz}`;
+	}
+
+	function mergeOpenOrderSources(sources: Record<string, Order[]>) {
+		const seen: Record<string, true> = {};
+		const rows: Order[] = [];
+		for (const source of Object.values(sources)) {
+			for (const order of source) {
+				const key = openOrderDedupeKey(order);
+				if (seen[key]) continue;
+				seen[key] = true;
+				rows.push(order);
+			}
 		}
 		return rows;
 	}
@@ -1096,22 +1128,6 @@
 		return coin.trim().toUpperCase();
 	}
 
-	function normalizeOutcomeEncoding(value: number | null | undefined) {
-		if (value == null || !Number.isSafeInteger(value) || value < 0) return null;
-		return value >= 100_000_000 ? value - 100_000_000 : value;
-	}
-
-	function parseOutcomeEncoding(value: string | number | null | undefined) {
-		if (typeof value === 'number') return normalizeOutcomeEncoding(value);
-		if (typeof value !== 'string') return null;
-
-		const trimmed = value.trim();
-		if (!trimmed) return null;
-		const body = ['+', '-', '#'].includes(trimmed[0]) ? trimmed.slice(1) : trimmed;
-		if (!/^\d+$/.test(body)) return null;
-		return normalizeOutcomeEncoding(Number(body));
-	}
-
 	function resolveOutcomeEncodingMeta(
 		encoding: number | null | undefined,
 		metaIndex: OutcomeMetaIndex
@@ -1120,12 +1136,22 @@
 		return normalized == null ? null : (metaIndex.byEncoding[normalized] ?? null);
 	}
 
+	function resolveOutcomeAssetIdMeta(
+		assetId: string | number | null | undefined,
+		metaIndex: OutcomeMetaIndex
+	) {
+		if (!isOutcomeAssetId(assetId)) return null;
+		const numeric = typeof assetId === 'string' ? Number(assetId.trim()) : assetId;
+		return numeric == null ? null : (metaIndex.byAssetId[numeric] ?? null);
+	}
+
 	function resolveOutcomeCoinMeta(coin: string, metaIndex: OutcomeMetaIndex) {
-		return (
-			metaIndex.byCoin[outcomeCoinKey(coin)] ??
-			resolveOutcomeEncodingMeta(parseOutcomeEncoding(coin), metaIndex) ??
-			null
-		);
+		const byCoin = metaIndex.byCoin[outcomeCoinKey(coin)] ?? null;
+		if (byCoin) return byCoin;
+		if (isOutcomeAssetId(coin)) return resolveOutcomeAssetIdMeta(coin, metaIndex);
+		return isOutcomeCoin(coin)
+			? resolveOutcomeEncodingMeta(parseOutcomeEncoding(coin), metaIndex)
+			: null;
 	}
 
 	function setOutcomeCoinAlias(
@@ -1887,12 +1913,12 @@
 			usdcValue,
 			pnlDollars,
 			pnlPercent,
-			contractAddress: spotTokenByIndex[outcome.token]?.evmContract?.address ?? null
+			contractAddress: spotTokenByIndex[outcome.assetId]?.evmContract?.address ?? null
 		};
 	}
 
 	function outcomeSpotCtx(outcome: OutcomeRow) {
-		return getSpotCtx(outcome.coin, outcome.token);
+		return getSpotCtx(outcome.coin);
 	}
 
 	function orderRow(order: Order) {
@@ -2372,9 +2398,9 @@
 	}
 
 	function outcomeKey(outcome: OutcomeRow, index: number) {
-		return outcome.token == null
+		return outcome.assetId == null
 			? `unknown:${outcome.coin}:${outcome.outcomeName}:${outcome.sideName}:${index}`
-			: `token:${outcome.token}`;
+			: `asset:${outcome.assetId}`;
 	}
 
 	function fillKey(fill: Fill, index: number) {
@@ -3507,7 +3533,7 @@
 		if (outcomeMetaIndex) return outcomeMetaIndex;
 
 		const meta = await getInfoClient(network).outcomeMeta();
-		if (generation !== userGeneration) return { byToken: {}, byEncoding: {}, byCoin: {} };
+		if (generation !== userGeneration) return { byAssetId: {}, byEncoding: {}, byCoin: {} };
 
 		const questionNameByOutcome: Record<number, string> = {};
 		for (const question of meta.questions) {
@@ -3517,43 +3543,33 @@
 			questionNameByOutcome[question.fallbackOutcome] ??= question.name;
 		}
 
-		const next: OutcomeMetaIndex = { byToken: {}, byEncoding: {}, byCoin: {} };
+		const next: OutcomeMetaIndex = { byAssetId: {}, byEncoding: {}, byCoin: {} };
 		for (const outcome of meta.outcomes) {
 			const marketName = questionNameByOutcome[outcome.outcome] ?? outcome.name;
-			const signedNames = [outcome.name, marketName];
-
-			for (const name of signedNames) {
-				setOutcomeCoinAlias(next, `+${name}`, {
-					outcomeName: marketName,
-					sideName: 'Yes',
-					encoding: null
-				});
-				setOutcomeCoinAlias(next, `-${name}`, {
-					outcomeName: marketName,
-					sideName: 'No',
-					encoding: null
-				});
-			}
 
 			for (let sideIndex = 0; sideIndex < outcome.sideSpecs.length; sideIndex += 1) {
 				const side = outcome.sideSpecs[sideIndex];
-				const encoding = 10 * outcome.outcome + sideIndex;
+				const encoding = outcomeEncoding(outcome.outcome, sideIndex);
+				if (encoding == null) continue;
+				const spotCoin = outcomeSpotCoin(encoding);
+				const tokenName = outcomeTokenName(encoding);
+				const assetId = outcomeAssetId(encoding);
+				if (!spotCoin || !tokenName || assetId == null) continue;
 				const token = {
 					outcomeName: marketName,
 					sideName: side.name,
-					encoding
+					side: sideIndex as OutcomeSideIndex,
+					encoding,
+					spotCoin,
+					tokenName,
+					assetId
 				};
 
 				next.byEncoding[encoding] = token;
-				setOutcomeCoinAlias(next, `#${encoding}`, token);
-				setOutcomeCoinAlias(next, `+${encoding}`, token);
-				setOutcomeCoinAlias(next, String(encoding), token);
-				if (typeof side.token === 'number') {
-					next.byToken[side.token] = token;
-					setOutcomeCoinAlias(next, `#${side.token}`, token, false);
-					setOutcomeCoinAlias(next, `+${side.token}`, token, false);
-					setOutcomeCoinAlias(next, String(side.token), token, false);
-				}
+				next.byAssetId[assetId] = token;
+				setOutcomeCoinAlias(next, spotCoin, token);
+				setOutcomeCoinAlias(next, tokenName, token);
+				setOutcomeCoinAlias(next, String(assetId), token);
 			}
 		}
 		outcomeMetaIndex = next;
@@ -3638,6 +3654,7 @@
 		let closed = false;
 		let latestSpotBalances: SpotBal[] | null = null;
 		let latestClearinghouseStates: [string, ClearinghouseStatePayload][] | null = null;
+		const orderSources: Record<string, Order[]> = {};
 		let currentOutcomeIndex: OutcomeMetaIndex | null = outcomeMetaIndex;
 		let currentAbstraction: AccountAbstraction | null = accountAbstraction;
 		const isClosed = () => closed || generation !== userGeneration;
@@ -3665,6 +3682,25 @@
 			dexBalances.data = buildDexBalances(latestClearinghouseStates, currentAbstraction);
 			dexBalances.error = null;
 			dexBalances.loading = false;
+		}
+
+		function updateOrders() {
+			orders.data = mergeOpenOrderSources(orderSources);
+			orders.error = null;
+			orders.loading = false;
+		}
+
+		function subscribeOpenOrders(source: string, params: { user: Address; dex?: string }) {
+			void client
+				.openOrders(params, (event) => {
+					if (isClosed()) return;
+					orderSources[source] = event.orders.map((order) => ({ ...order, dex: event.dex }));
+					updateOrders();
+				})
+				.then((subscription) => trackSubscription(subscriptions, isClosed, subscription))
+				.catch((err: unknown) => {
+					if (!isClosed() && Object.keys(orderSources).length === 0) setError(orders, err);
+				});
 		}
 
 		void loadOutcomeMetaIndex(network, generation)
@@ -3725,17 +3761,8 @@
 				}
 			});
 
-		void client
-			.openOrders({ user, dex: 'ALL_DEXS' }, (event) => {
-				if (isClosed()) return;
-				orders.data = event.orders.map((order) => ({ ...order, dex: event.dex }));
-				orders.error = null;
-				orders.loading = false;
-			})
-			.then((subscription) => trackSubscription(subscriptions, isClosed, subscription))
-			.catch((err: unknown) => {
-				if (!isClosed()) setError(orders, err);
-			});
+		subscribeOpenOrders('all-dexs', { user, dex: 'ALL_DEXS' });
+		subscribeOpenOrders('main', { user });
 
 		void client
 			.userFills({ user }, (event) => {
