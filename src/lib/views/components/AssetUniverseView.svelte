@@ -9,6 +9,12 @@
 	import HeroIcon from '$lib/components/HeroIcon.svelte';
 	import TableScroll from '$lib/components/TableScroll.svelte';
 	import { getHttpInfoClient } from '$lib/hl/clients.js';
+	import {
+		outcomeAssetId,
+		outcomeEncoding,
+		outcomeSpotCoin,
+		outcomeTokenName
+	} from '$lib/hl/outcomes.js';
 	import { hyperliquidNetwork, type HyperliquidNetwork } from '$lib/hl/network.svelte';
 	import ViewTabs from './ViewTabs.svelte';
 	import OutcomesTab from './asset-universe/OutcomesTab.svelte';
@@ -65,6 +71,9 @@
 		marketName: string;
 		description: string;
 		encoding: number;
+		spotCoin: string;
+		tokenName: string;
+		assetId: number;
 		settled: boolean;
 		fallback: boolean;
 	};
@@ -291,10 +300,15 @@
 			const description = question?.description || outcome.description;
 			for (let sideIndex = 0; sideIndex < outcome.sideSpecs.length; sideIndex += 1) {
 				const side = outcome.sideSpecs[sideIndex];
-				const encoding = outcome.outcome * 10 + sideIndex;
+				const encoding = outcomeEncoding(outcome.outcome, sideIndex);
+				if (encoding == null) continue;
+				const spotCoin = outcomeSpotCoin(encoding);
+				const tokenName = outcomeTokenName(encoding);
+				const assetId = outcomeAssetId(encoding);
+				if (!spotCoin || !tokenName || assetId == null) continue;
 				rows.push({
 					kind: 'outcome',
-					key: `outcome:${outcome.outcome}:${sideIndex}:${side.token ?? 'no-token'}`,
+					key: `outcome:${outcome.outcome}:${sideIndex}:${encoding}`,
 					search: rowSearch([
 						'outcome',
 						marketName,
@@ -302,7 +316,9 @@
 						outcome.description,
 						question?.description,
 						side.name,
-						side.token,
+						spotCoin,
+						tokenName,
+						assetId,
 						encoding,
 						question?.settledNamedOutcomes.includes(outcome.outcome) ? 'settled' : null,
 						question?.fallbackOutcome === outcome.outcome ? 'fallback' : null
@@ -312,6 +328,9 @@
 					marketName,
 					description,
 					encoding,
+					spotCoin,
+					tokenName,
+					assetId,
 					settled: question?.settledNamedOutcomes.includes(outcome.outcome) ?? false,
 					fallback: question?.fallbackOutcome === outcome.outcome
 				});
