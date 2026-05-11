@@ -40,6 +40,13 @@
 	type PerpAsset = PerpMeta['universe'][number];
 	type SpotToken = SpotMetaResponse['tokens'][number];
 	type SpotMarket = SpotMetaResponse['universe'][number];
+	type SpotMarketSummary = {
+		label: string;
+		name: string;
+		index: number;
+		tokens: number[];
+		isCanonical: boolean;
+	};
 	type Outcome = OutcomeMetaResponse['outcomes'][number];
 	type OutcomeQuestion = OutcomeMetaResponse['questions'][number];
 	type OutcomeSide = Outcome['sideSpecs'][number];
@@ -62,14 +69,14 @@
 		kind: 'spot';
 		token: SpotToken;
 		markets: string[];
-		primaryMarket: string | null;
+		marketSummaries: SpotMarketSummary[];
 	};
 	type OutcomeUniverseRow = BaseUniverseRow & {
 		kind: 'outcome';
 		outcome: Outcome;
+		question: OutcomeQuestion | null;
 		side: OutcomeSide;
 		marketName: string;
-		description: string;
 		encoding: number;
 		spotCoin: string;
 		tokenName: string;
@@ -147,9 +154,12 @@
 		formatInteger,
 		formatDecimal,
 		formatFundingRate,
+		formatBoolean,
+		formatDateLike,
 		perpMarginLabel,
 		perpMarginBadgeClass,
 		visibleMarkets,
+		visibleValues,
 		shortValue,
 		outcomeStatusLabel,
 		outcomeStatusBadgeClass
@@ -214,10 +224,15 @@
 						assetId,
 						dex,
 						dexLabel,
+						asset.szDecimals,
 						asset.maxLeverage,
+						asset.marginTableId,
 						asset.marginMode,
+						asset.growthMode,
+						asset.lastGrowthModeChangeTime,
 						asset.isDelisted ? 'delisted' : null,
-						asset.onlyIsolated ? 'isolated' : null
+						asset.onlyIsolated ? 'isolated' : null,
+						fundingMultiplierByAsset[asset.name] ?? null
 					]),
 					asset,
 					assetId,
@@ -248,14 +263,7 @@
 		return meta.tokens.map<SpotUniverseRow>((token) => {
 			const markets = marketsByToken[token.index] ?? [];
 			const marketLabels = markets.map((market) => spotMarketLabel(market, tokenByIndex));
-			const primaryMarket =
-				markets.find((market) => market.tokens[0] === token.index && market.isCanonical) ??
-				markets.find((market) => market.tokens[0] === token.index) ??
-				markets[0] ??
-				null;
-			const primaryMarketLabel = primaryMarket
-				? spotMarketLabel(primaryMarket, tokenByIndex)
-				: null;
+			const marketSummaries = markets.map((market) => spotMarketSummary(market, tokenByIndex));
 
 			return {
 				kind: 'spot',
@@ -266,15 +274,36 @@
 					token.fullName,
 					token.index,
 					token.tokenId,
+					token.szDecimals,
+					token.weiDecimals,
+					token.evmContract?.evm_extra_wei_decimals,
+					token.deployerTradingFeeShare,
 					token.evmContract?.address,
 					token.isCanonical ? 'canonical' : null,
+					markets.map((market) => market.index),
+					markets.map((market) => market.tokens.join('/')),
+					markets.map((market) => market.name),
+					markets.some((market) => market.isCanonical) ? 'canonical market' : null,
 					...marketLabels
 				]),
 				token,
 				markets: marketLabels,
-				primaryMarket: primaryMarketLabel
+				marketSummaries
 			};
 		});
+	}
+
+	function spotMarketSummary(
+		market: SpotMarket,
+		tokenByIndex: Partial<Record<number, SpotToken>>
+	): SpotMarketSummary {
+		return {
+			label: spotMarketLabel(market, tokenByIndex),
+			name: market.name,
+			index: market.index,
+			tokens: market.tokens,
+			isCanonical: market.isCanonical
+		};
 	}
 
 	function spotMarketLabel(market: SpotMarket, tokenByIndex: Partial<Record<number, SpotToken>>) {
@@ -297,7 +326,6 @@
 		for (const outcome of meta.outcomes) {
 			const question = questionByOutcome[outcome.outcome] ?? null;
 			const marketName = question?.name ?? outcome.name;
-			const description = question?.description || outcome.description;
 			for (let sideIndex = 0; sideIndex < outcome.sideSpecs.length; sideIndex += 1) {
 				const side = outcome.sideSpecs[sideIndex];
 				const encoding = outcomeEncoding(outcome.outcome, sideIndex);
@@ -311,22 +339,28 @@
 					key: `outcome:${outcome.outcome}:${sideIndex}:${encoding}`,
 					search: rowSearch([
 						'outcome',
+						question?.question,
+						outcome.outcome,
 						marketName,
 						outcome.name,
 						outcome.description,
 						question?.description,
 						side.name,
+						side.token,
 						spotCoin,
 						tokenName,
 						assetId,
 						encoding,
+						question?.fallbackOutcome,
+						question?.namedOutcomes,
+						question?.settledNamedOutcomes,
 						question?.settledNamedOutcomes.includes(outcome.outcome) ? 'settled' : null,
 						question?.fallbackOutcome === outcome.outcome ? 'fallback' : null
 					]),
 					outcome,
+					question,
 					side,
 					marketName,
-					description,
 					encoding,
 					spotCoin,
 					tokenName,
@@ -401,6 +435,22 @@
 		if (!value) return '-';
 		const rate = Number(value);
 		return Number.isFinite(rate) ? `${percentFormatter.format(rate * 100)}%` : value;
+	}
+
+	function formatBoolean(value: boolean | null | undefined) {
+		return value ? 'Yes' : 'No';
+	}
+
+	function formatDateLike(value: string | null | undefined) {
+		return value ? value.replace('T', ' ') : '-';
+	}
+
+	function visibleValues(values: (string | number | null | undefined)[], limit = 3) {
+		const visible = values.filter((value) => value !== null && value !== undefined && value !== '');
+		if (visible.length === 0) return '-';
+		const labels = visible.map((value) => String(value));
+		if (labels.length <= limit) return labels.join(', ');
+		return `${labels.slice(0, limit).join(', ')} +${integerFormatter.format(labels.length - limit)}`;
 	}
 
 	function shortValue(value: string) {
