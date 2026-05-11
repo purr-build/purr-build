@@ -1,4 +1,5 @@
 import APIView from './components/APIView.svelte';
+import ApiSandboxView from './components/ApiSandboxView.svelte';
 import AssetUniverseView from './components/AssetUniverseView.svelte';
 import Hip3View from './components/Hip3View.svelte';
 import L1CoreView from './components/L1CoreView.svelte';
@@ -12,7 +13,13 @@ type RegistrySpec = {
 };
 
 export const DEFAULT_VIEW_TYPES = ['l1core', 'api'] as const;
-export type RegisteredViewType = 'panel' | 'l1core' | 'api' | 'asset-universe' | 'hip3';
+export type RegisteredViewType =
+	| 'panel'
+	| 'l1core'
+	| 'api'
+	| 'api-sandbox'
+	| 'asset-universe'
+	| 'hip3';
 export type DefaultViewType = (typeof DEFAULT_VIEW_TYPES)[number];
 
 export const VIEW_REGISTRY: Record<RegisteredViewType, RegistrySpec> = {
@@ -28,6 +35,11 @@ export const VIEW_REGISTRY: Record<RegisteredViewType, RegistrySpec> = {
 		title: 'API',
 		component: APIView,
 		fixedId: 'api'
+	},
+	'api-sandbox': {
+		title: 'API Sandbox',
+		component: ApiSandboxView,
+		fixedId: 'api-sandbox'
 	},
 	'asset-universe': {
 		title: 'Asset Universe',
@@ -69,6 +81,9 @@ export function viewTypeForEntry(
 	entry: Pick<ViewEntry, 'id' | 'component'>
 ): RegisteredViewType | null {
 	if (entry.id === 'api' || entry.component === VIEW_REGISTRY.api.component) return 'api';
+	if (entry.id === 'api-sandbox' || entry.component === VIEW_REGISTRY['api-sandbox'].component) {
+		return 'api-sandbox';
+	}
 	if (
 		entry.id === 'asset-universe' ||
 		entry.component === VIEW_REGISTRY['asset-universe'].component

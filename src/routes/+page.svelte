@@ -77,6 +77,10 @@
 			description: 'Current Hyperliquid API status, components, incidents, and history.'
 		},
 		{
+			title: 'API sandbox',
+			description: 'Edit exchange payloads, sign them locally, and preview signed curl requests.'
+		},
+		{
 			title: 'EVM controls',
 			description: 'Switch HyperEVM, Hyperliquid L1, and Big or Small EVM block mode.'
 		}
@@ -181,6 +185,13 @@
 
 	function addAPIView() {
 		openDefaultView('api');
+	}
+
+	function addApiSandbox() {
+		views.open({
+			...viewSpecForType('api-sandbox'),
+			id: fixedViewIdForType('api-sandbox') ?? undefined
+		});
 	}
 
 	function addAssetUniverse() {
@@ -876,6 +887,9 @@
 				</button>
 				<button class="btn btn-ghost btn-sm" onclick={addAPIView} title="Open API status view">
 					API
+				</button>
+				<button class="btn btn-ghost btn-sm" onclick={addApiSandbox} title="Open API sandbox view">
+					API sandbox
 				</button>
 			</div>
 			<div class="flex flex-wrap items-center justify-end gap-2">

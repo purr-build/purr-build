@@ -63,6 +63,10 @@
 	</div>
 
 	<div class="navbar-end min-w-0 gap-2">
+		<a href={resolve('/api-sandbox')} class="btn hidden btn-ghost btn-sm md:inline-flex">
+			API sandbox
+		</a>
+
 		<select
 			class="select hidden w-28 select-ghost bg-base-200/70 select-xs md:inline-flex"
 			aria-label="UI theme"
