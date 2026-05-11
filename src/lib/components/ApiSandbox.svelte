@@ -1,6 +1,5 @@
 <script lang="ts">
 	import {
-		ApproveAgentTypes,
 		ApproveBuilderFeeTypes,
 		CDepositTypes,
 		CWithdrawTypes,
@@ -137,6 +136,16 @@
 			signing: 'l1',
 			description: 'Set whether this account uses big HyperEVM blocks.',
 			sample: { usingBigBlocks: true }
+		},
+		{
+			id: 'approveAgent',
+			label: 'approveAgent',
+			signing: 'l1',
+			description: 'Register or remove an API agent wallet.',
+			sample: {
+				agentAddress: '0x0000000000000000000000000000000000000000',
+				agentName: 'purrbuild'
+			}
 		},
 		{
 			id: 'agentSetAbstraction',
@@ -340,17 +349,6 @@
 
 	const USER_SIGNED_METHODS: MethodMeta[] = [
 		{
-			id: 'approveAgent',
-			label: 'approveAgent',
-			signing: 'user',
-			description: 'Register or remove an API agent wallet.',
-			types: ApproveAgentTypes,
-			sample: {
-				agentAddress: '0x0000000000000000000000000000000000000000',
-				agentName: 'purrbuild'
-			}
-		},
-		{
 			id: 'approveBuilderFee',
 			label: 'approveBuilderFee',
 			signing: 'user',
@@ -375,7 +373,11 @@
 			signing: 'user',
 			description: 'Send a spot token to another address.',
 			types: SpotSendTypes,
-			sample: { destination: '0x0000000000000000000000000000000000000000', token: 0, amount: '1' }
+			sample: {
+				destination: '0x0000000000000000000000000000000000000000',
+				token: 'USDC',
+				amount: '1'
+			}
 		},
 		{
 			id: 'withdraw3',
@@ -407,7 +409,12 @@
 			signing: 'user',
 			description: 'Convert an account to a multi-sig user.',
 			types: ConvertToMultiSigUserTypes,
-			sample: { signers: ['0x0000000000000000000000000000000000000000'], threshold: 1 }
+			sample: {
+				signers: {
+					authorizedUsers: ['0x0000000000000000000000000000000000000000'],
+					threshold: 1
+				}
+			}
 		},
 		{
 			id: 'linkStakingUser',
@@ -415,7 +422,7 @@
 			signing: 'user',
 			description: 'Link a staking user.',
 			types: LinkStakingUserTypes,
-			sample: { user: '0x0000000000000000000000000000000000000000' }
+			sample: { user: '0x0000000000000000000000000000000000000000', isFinalize: false }
 		},
 		{
 			id: 'sendAsset',
@@ -427,8 +434,9 @@
 				destination: '0x0000000000000000000000000000000000000000',
 				sourceDex: '',
 				destinationDex: '',
-				token: 0,
-				amount: '1'
+				token: 'USDC',
+				amount: '1',
+				fromSubAccount: ''
 			}
 		},
 		{
@@ -438,9 +446,13 @@
 			description: 'Send Core spot to HyperEVM with calldata.',
 			types: SendToEvmWithDataTypes,
 			sample: {
-				destination: '0x0000000000000000000000000000000000000000',
-				token: 0,
+				token: 'USDC',
 				amount: '1',
+				sourceDex: 'spot',
+				destinationRecipient: '0x0000000000000000000000000000000000000000',
+				addressEncoding: 'hex',
+				destinationChainId: 999,
+				gasLimit: 200000,
 				data: '0x'
 			}
 		},
@@ -470,7 +482,7 @@
 			signing: 'user',
 			description: 'Set user DEX abstraction.',
 			types: UserDexAbstractionTypes,
-			sample: { dex: 'test' }
+			sample: { user: '0x0000000000000000000000000000000000000000', enabled: true }
 		},
 		{
 			id: 'userPortfolioMargin',
@@ -478,7 +490,7 @@
 			signing: 'user',
 			description: 'Toggle portfolio margin.',
 			types: UserPortfolioMarginTypes,
-			sample: { enabled: true }
+			sample: { user: '0x0000000000000000000000000000000000000000', enabled: true }
 		},
 		{
 			id: 'userSetAbstraction',
@@ -486,7 +498,10 @@
 			signing: 'user',
 			description: 'Set user abstraction.',
 			types: UserSetAbstractionTypes,
-			sample: { abstract: true }
+			sample: {
+				user: '0x0000000000000000000000000000000000000000',
+				abstraction: 'dexAbstraction'
+			}
 		}
 	];
 
@@ -661,7 +676,34 @@
 			action[key] = value;
 		}
 		action[nonceField] = nonce;
+		normalizeUserSignedAction(method, action);
+		assertUserSignedFields(method, action);
 		return action as { signatureChainId: `0x${string}`; [key: string]: unknown };
+	}
+
+	function normalizeUserSignedAction(method: MethodMeta, action: Record<string, unknown>) {
+		if (method.id === 'sendAsset' && action.fromSubAccount == null) {
+			action.fromSubAccount = '';
+		}
+		if (
+			method.id === 'convertToMultiSigUser' &&
+			action.signers !== null &&
+			typeof action.signers === 'object'
+		) {
+			action.signers = JSON.stringify(action.signers);
+		}
+	}
+
+	function assertUserSignedFields(method: MethodMeta, action: Record<string, unknown>) {
+		if (!method.types) return;
+		const primaryType = Object.keys(method.types)[0];
+		for (const field of method.types[primaryType] ?? []) {
+			if (action[field.name] === undefined) {
+				throw new Error(
+					`Payload is missing "${field.name}", which is required for ${method.label} signing.`
+				);
+			}
+		}
 	}
 
 	function nonceFieldName(types: Eip712Types) {
