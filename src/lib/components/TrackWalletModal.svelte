@@ -7,19 +7,31 @@
 	type Props = {
 		open: boolean;
 		currentAddress?: Address | null;
+		title?: string;
+		addCurrentLabel?: string;
+		showAgentWallet?: boolean;
 		onAdd: (address: Address, name: string | null, agentWallet: SavedAgentWallet | null) => void;
 		onAddCurrent?: (name: string | null) => void;
 		onClose: () => void;
 	};
 
-	let { open, currentAddress = null, onAdd, onAddCurrent, onClose }: Props = $props();
+	let {
+		open,
+		currentAddress = null,
+		title = 'Track wallet',
+		addCurrentLabel = 'Add current address',
+		showAgentWallet = true,
+		onAdd,
+		onAddCurrent,
+		onClose
+	}: Props = $props();
 
 	let addressInput = $state('');
 	let nameInput = $state('');
 	let agentPrivateKeyInput = $state('');
 	let agentStorageAck = $state(false);
 	let error = $state<string | null>(null);
-	let agentKeyPending = $derived(agentPrivateKeyInput.trim() !== '');
+	let agentKeyPending = $derived(showAgentWallet && agentPrivateKeyInput.trim() !== '');
 
 	function dialogController(node: HTMLDialogElement) {
 		$effect(() => {
@@ -76,7 +88,7 @@
 <dialog {@attach dialogController} class="modal" onclose={close}>
 	<div class="modal-box max-w-md">
 		<div class="flex items-center justify-between">
-			<h3 class="text-lg font-bold">Track L1 wallet</h3>
+			<h3 class="text-lg font-bold">{title}</h3>
 			<form method="dialog">
 				<button class="btn btn-circle btn-ghost btn-sm" aria-label="Close">
 					<HeroIcon name="x-mark" />
@@ -90,7 +102,7 @@
 				<input
 					type="text"
 					class="input-bordered input w-full text-sm"
-					placeholder="Optional"
+					placeholder="Name (Optional)"
 					bind:value={nameInput}
 					maxlength={TRACKED_WALLET_NAME_MAX_LENGTH}
 					autocomplete="off"
@@ -99,7 +111,7 @@
 
 			{#if currentAddress && onAddCurrent}
 				<button class="btn w-full justify-between gap-3 btn-primary" onclick={addCurrent}>
-					<span>Add current address</span>
+					<span>{addCurrentLabel}</span>
 					<span class="font-mono text-xs opacity-75">{short(currentAddress)}</span>
 				</button>
 				<div class="divider">OR</div>
@@ -117,28 +129,30 @@
 						autocomplete="off"
 					/>
 				</label>
-				<label class="floating-label">
-					<span>Agent private key (Optional)</span>
-					<input
-						type="password"
-						class="input-bordered input w-full font-mono text-sm"
-						placeholder="0x..."
-						bind:value={agentPrivateKeyInput}
-						spellcheck="false"
-						autocomplete="off"
-					/>
-				</label>
-				{#if agentKeyPending}
-					<label class="flex items-start gap-2 text-xs text-base-content/70">
+				{#if showAgentWallet}
+					<label class="floating-label">
+						<span>Agent private key (Optional)</span>
 						<input
-							type="checkbox"
-							class="checkbox mt-0.5 checkbox-xs"
-							bind:checked={agentStorageAck}
+							type="password"
+							class="input-bordered input w-full font-mono text-sm"
+							placeholder="0x..."
+							bind:value={agentPrivateKeyInput}
+							spellcheck="false"
+							autocomplete="off"
 						/>
-						<span>
-							I understand this agent private key will be stored in this browser's localStorage.
-						</span>
 					</label>
+					{#if agentKeyPending}
+						<label class="flex items-start gap-2 text-xs text-base-content/70">
+							<input
+								type="checkbox"
+								class="checkbox mt-0.5 checkbox-xs"
+								bind:checked={agentStorageAck}
+							/>
+							<span>
+								I understand this agent private key will be stored in this browser's localStorage.
+							</span>
+						</label>
+					{/if}
 				{/if}
 				<button
 					type="submit"
