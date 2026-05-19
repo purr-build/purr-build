@@ -2,6 +2,7 @@ import APIView from './components/APIView.svelte';
 import ApiSandboxView from './components/ApiSandboxView.svelte';
 import AssetUniverseView from './components/AssetUniverseView.svelte';
 import Hip3View from './components/Hip3View.svelte';
+import HyperEvmView from './components/HyperEvmView.svelte';
 import L1CoreView from './components/L1CoreView.svelte';
 import Panel from './Panel.svelte';
 import type { AnyComponent, ViewEntry, ViewSpec } from './stack.svelte';
@@ -16,6 +17,7 @@ export const DEFAULT_VIEW_TYPES = ['l1core', 'api'] as const;
 export type RegisteredViewType =
 	| 'panel'
 	| 'l1core'
+	| 'hyperevm'
 	| 'api'
 	| 'api-sandbox'
 	| 'asset-universe'
@@ -30,6 +32,10 @@ export const VIEW_REGISTRY: Record<RegisteredViewType, RegistrySpec> = {
 	l1core: {
 		title: 'HyperCore L1',
 		component: L1CoreView
+	},
+	hyperevm: {
+		title: 'HyperEVM',
+		component: HyperEvmView
 	},
 	api: {
 		title: 'API',
@@ -92,6 +98,9 @@ export function viewTypeForEntry(
 	}
 	if (entry.id === 'hip3' || entry.component === VIEW_REGISTRY.hip3.component) return 'hip3';
 	if (entry.id === 'l1core' || entry.component === VIEW_REGISTRY.l1core.component) return 'l1core';
+	if (entry.id === 'hyperevm' || entry.component === VIEW_REGISTRY.hyperevm.component) {
+		return 'hyperevm';
+	}
 	if (entry.component === VIEW_REGISTRY.panel.component) return 'panel';
 	return null;
 }

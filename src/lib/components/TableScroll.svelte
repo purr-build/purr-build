@@ -17,7 +17,7 @@
 		children,
 		class: className = '',
 		scrollerClass = '',
-		maxHeight = 'min(36rem, calc(100svh - 14rem))',
+		maxHeight = 'calc(100svh - 14rem)',
 		fill = false,
 		viewport = $bindable(),
 		clientHeight = $bindable(0),

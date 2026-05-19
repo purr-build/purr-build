@@ -109,11 +109,11 @@
 				</p>
 			{/if}
 
-			<div class="divider">Public address</div>
+			<div class="divider">or add wallet address</div>
 
 			<form class="space-y-3" onsubmit={handleManualSubmit}>
 				<label class="floating-label">
-					<span>Public address</span>
+					<span>Wallet address</span>
 					<input
 						type="text"
 						class="input-bordered input w-full font-mono text-sm"
@@ -128,7 +128,7 @@
 					class="btn w-full btn-outline"
 					disabled={manualAddress.trim().length === 0}
 				>
-					Open public address
+					Continue
 				</button>
 			</form>
 

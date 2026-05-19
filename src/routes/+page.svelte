@@ -6,6 +6,7 @@
 	import TrackWalletModal from '$lib/components/TrackWalletModal.svelte';
 	import { upsertSavedAgentWallet, type SavedAgentWallet } from '$lib/hl/agent-wallets.js';
 	import { getExchangeClient, HYPERLIQUID_L1_SIGNATURE_CHAIN_ID } from '$lib/hl/clients.js';
+	import { HYPEREVM_NETWORKS, hyperEvmRpcUrl } from '$lib/hl/hyperevm.js';
 	import { hyperliquidNetwork, type HyperliquidNetwork } from '$lib/hl/network.svelte';
 	import { HYPERLIQUID_L1_ADD_ETHEREUM_CHAIN_PARAMETER } from '$lib/hl/wallet-chains.js';
 	import { wallet } from '$lib/stores/wallet.svelte';
@@ -47,6 +48,10 @@
 		{
 			title: 'Balances',
 			description: 'Spot, perps, and all-DEX collateral with USDC values and token PnL.'
+		},
+		{
+			title: 'HyperEVM balances',
+			description: 'Native HYPE, discovered ERC-20s, and manually tracked token contracts.'
 		},
 		{
 			title: 'Positions',
@@ -92,42 +97,6 @@
 		addEthereumChainParameter: HYPERLIQUID_L1_ADD_ETHEREUM_CHAIN_PARAMETER
 	} as const;
 	const HYPERLIQUID_L1_CHAIN_ID = Number(BigInt(HYPERLIQUID_L1_SIGNATURE_CHAIN_ID));
-	const HYPEREVM_CHAINS = {
-		mainnet: {
-			chainId: '0x3e7',
-			label: 'HyperEVM',
-			addEthereumChainParameter: {
-				chainId: '0x3e7',
-				chainName: 'Hyperliquid',
-				nativeCurrency: {
-					name: 'HYPE',
-					symbol: 'HYPE',
-					decimals: 18
-				},
-				rpcUrls: ['https://rpc.hyperliquid.xyz/evm'],
-				blockExplorerUrls: [
-					'https://hyperevmscan.io/',
-					'https://purrsec.com/',
-					'https://www.hyperscan.com/'
-				]
-			}
-		},
-		testnet: {
-			chainId: '0x3e6',
-			label: 'HyperEVM Testnet',
-			addEthereumChainParameter: {
-				chainId: '0x3e6',
-				chainName: 'Hyperliquid Testnet',
-				nativeCurrency: {
-					name: 'HYPE',
-					symbol: 'HYPE',
-					decimals: 18
-				},
-				rpcUrls: ['https://rpc.hyperliquid-testnet.xyz/evm'],
-				blockExplorerUrls: ['https://app.hyperliquid-testnet.xyz/explorer']
-			}
-		}
-	} as const satisfies Record<HyperliquidNetwork, unknown>;
 	const DEFAULT_VIEW_IDS = DEFAULT_VIEW_TYPES;
 	const CLOSED_DEFAULT_VIEWS_KEY = 'purrbuild:closed-default-views';
 	const VIEW_STACK_STORAGE_KEY = 'purrbuild:view-stack';
@@ -162,6 +131,7 @@
 
 	let connectModalOpen = $state(false);
 	let trackL1CoreModalOpen = $state(false);
+	let trackHyperEvmModalOpen = $state(false);
 	let disconnectedQuote = $state<string>(DISCONNECTED_QUOTES[0]);
 	let chainSwitching = $state<'l1' | 'evm' | 'big-blocks' | 'small-blocks' | null>(null);
 	let chainSwitchMessage = $state<string | null>(null);
@@ -181,6 +151,10 @@
 
 	function addL1Core() {
 		trackL1CoreModalOpen = true;
+	}
+
+	function addHyperEvm() {
+		trackHyperEvmModalOpen = true;
 	}
 
 	function addAPIView() {
@@ -249,6 +223,27 @@
 		});
 	}
 
+	function openHyperEvmView(address: Address, options: { id?: string; name?: string | null } = {}) {
+		const id = options.id ?? hyperEvmViewId(address);
+		const name = normalizeTrackedWalletName(options.name);
+		const existing = views.entries.find(
+			(entry) => isHyperEvmViewEntry(entry) && hyperEvmAddressForEntry(entry) === address
+		);
+		if (existing) {
+			if (name) views.updateProps(existing.id, { name });
+			views.focus(existing.id);
+			return;
+		}
+
+		views.open({
+			...viewSpecForType('hyperevm', {
+				address,
+				...(name ? { name } : {})
+			}),
+			id
+		});
+	}
+
 	function addManualL1Core(
 		address: Address,
 		name: string | null,
@@ -260,17 +255,34 @@
 		openL1CoreView(address, { name });
 	}
 
+	function addManualHyperEvm(address: Address, name: string | null) {
+		openHyperEvmView(address, { name });
+	}
+
 	function addCurrentL1Core(name: string | null) {
 		if (!wallet.current?.address) return;
 		openDefaultView('l1core', name);
+	}
+
+	function addCurrentHyperEvm(name: string | null) {
+		if (!wallet.current?.address) return;
+		openHyperEvmView(wallet.current.address, { name });
 	}
 
 	function isL1CoreViewEntry(entry: ViewEntry) {
 		return viewTypeForEntry(entry) === 'l1core';
 	}
 
+	function isHyperEvmViewEntry(entry: ViewEntry) {
+		return viewTypeForEntry(entry) === 'hyperevm';
+	}
+
 	function l1CoreViewId(address: Address) {
 		return `l1core:${address.toLowerCase()}`;
+	}
+
+	function hyperEvmViewId(address: Address) {
+		return `hyperevm:${address.toLowerCase()}`;
 	}
 
 	function normalizedAddress(value: unknown): Address | null {
@@ -281,6 +293,13 @@
 		return (
 			normalizedAddress(entry.props.address) ??
 			(entry.id === 'l1core' ? wallet.current?.address : null)
+		);
+	}
+
+	function hyperEvmAddressForEntry(entry: ViewEntry) {
+		return (
+			normalizedAddress(entry.props.address) ??
+			(entry.id === 'hyperevm' ? wallet.current?.address : null)
 		);
 	}
 
@@ -341,6 +360,16 @@
 		return fixedViewIdForType(type);
 	}
 
+	function isWalletViewType(type: PersistentViewType) {
+		return type === 'l1core' || type === 'hyperevm';
+	}
+
+	function walletAddressForEntry(entry: ViewEntry, type: PersistentViewType) {
+		if (type === 'l1core') return l1CoreAddressForEntry(entry);
+		if (type === 'hyperevm') return hyperEvmAddressForEntry(entry);
+		return null;
+	}
+
 	function persistentViewSpec(
 		entry: Pick<PersistedViewEntry, 'type' | 'address' | 'name'>
 	): Omit<ViewSpec, 'id' | 'parentId'> {
@@ -357,8 +386,8 @@
 	function persistedEntryForView(entry: ViewEntry): PersistedViewEntry | null {
 		const type = viewTypeForEntry(entry);
 		if (!type) return null;
-		const address = type === 'l1core' ? l1CoreAddressForEntry(entry) : null;
-		const name = type === 'l1core' ? normalizeTrackedWalletName(entry.props.name) : null;
+		const address = walletAddressForEntry(entry, type);
+		const name = isWalletViewType(type) ? normalizeTrackedWalletName(entry.props.name) : null;
 		return {
 			id: fixedPersistentViewId(type) ?? entry.id,
 			type,
@@ -433,8 +462,8 @@
 			const id = fixedPersistentViewId(type) ?? entry.id;
 			if (!id || ids[id]) continue;
 
-			const address = type === 'l1core' ? normalizedAddress(entry.address) : null;
-			const name = type === 'l1core' ? normalizeTrackedWalletName(entry.name) : null;
+			const address = isWalletViewType(type) ? normalizedAddress(entry.address) : null;
+			const name = isWalletViewType(type) ? normalizeTrackedWalletName(entry.name) : null;
 			ids[id] = true;
 			entries.push({
 				id,
@@ -574,9 +603,9 @@
 
 	function primaryAddressForWorkspace(workspace: PersistedViewStack) {
 		const focused = workspace.entries.find((entry) => entry.id === workspace.focusedId);
-		if (focused?.type === 'l1core' && focused.address) return focused.address;
+		if (focused && isWalletViewType(focused.type) && focused.address) return focused.address;
 		return (
-			workspace.entries.find((entry) => entry.type === 'l1core' && entry.address)?.address ??
+			workspace.entries.find((entry) => isWalletViewType(entry.type) && entry.address)?.address ??
 			DEMO_ADDRESS
 		);
 	}
@@ -617,9 +646,9 @@
 				});
 				chainSwitchMessage = 'Wallet switched to Hyperliquid L1.';
 			} else {
-				const chain = HYPEREVM_CHAINS[hyperliquidNetwork.current];
+				const chain = HYPEREVM_NETWORKS[hyperliquidNetwork.current];
 				await wallet.switchChain({
-					chainId: chain.chainId,
+					chainId: chain.chainIdHex,
 					addEthereumChainParameter: chain.addEthereumChainParameter
 				});
 				chainSwitchMessage = `Wallet switched to ${chain.label}.`;
@@ -729,10 +758,6 @@
 			throw new Error('HyperEVM RPC returned an invalid block mode.');
 		}
 		return payload.result;
-	}
-
-	function hyperEvmRpcUrl(network: HyperliquidNetwork) {
-		return HYPEREVM_CHAINS[network].addEthereumChainParameter.rpcUrls[0];
 	}
 
 	onMount(() => {
@@ -875,6 +900,9 @@
 				<button class="btn btn-ghost btn-sm" onclick={addL1Core} title="Open HyperCore L1 view">
 					L1 Core
 				</button>
+				<button class="btn btn-ghost btn-sm" onclick={addHyperEvm} title="Open HyperEVM view">
+					HyperEVM
+				</button>
 				<button
 					class="btn btn-ghost btn-sm"
 					onclick={addAssetUniverse}
@@ -984,8 +1012,20 @@
 <ConnectWalletModal open={connectModalOpen} onClose={() => (connectModalOpen = false)} />
 <TrackWalletModal
 	open={trackL1CoreModalOpen}
+	title="Track L1 wallet"
+	addCurrentLabel="Add current L1 wallet"
 	currentAddress={wallet.current?.address ?? null}
 	onAdd={addManualL1Core}
 	onAddCurrent={addCurrentL1Core}
 	onClose={() => (trackL1CoreModalOpen = false)}
+/>
+<TrackWalletModal
+	open={trackHyperEvmModalOpen}
+	title="Track HyperEVM wallet"
+	addCurrentLabel="Add current HyperEVM wallet"
+	showAgentWallet={false}
+	currentAddress={wallet.current?.address ?? null}
+	onAdd={addManualHyperEvm}
+	onAddCurrent={addCurrentHyperEvm}
+	onClose={() => (trackHyperEvmModalOpen = false)}
 />
