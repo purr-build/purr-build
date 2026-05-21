@@ -3,6 +3,14 @@ import type { Component } from 'svelte';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyComponent = Component<any>;
 
+export type GridPos = {
+	x?: number;
+	y?: number;
+	w?: number;
+	h?: number;
+	locked?: boolean;
+};
+
 export type ViewSpec = {
 	id?: string;
 	title: string;
@@ -10,6 +18,7 @@ export type ViewSpec = {
 	component: AnyComponent;
 	props?: Record<string, unknown>;
 	parentId?: string;
+	gridPos?: GridPos;
 };
 
 export type ViewEntry = {
@@ -19,6 +28,7 @@ export type ViewEntry = {
 	component: AnyComponent;
 	props: Record<string, unknown>;
 	parentId?: string;
+	gridPos?: GridPos;
 };
 
 let counter = 0;
@@ -41,7 +51,8 @@ class ViewStackStore {
 			subtitle: spec.subtitle,
 			component: spec.component,
 			props: spec.props ?? {},
-			parentId: spec.parentId
+			parentId: spec.parentId,
+			gridPos: spec.gridPos
 		};
 		if (existing !== -1) {
 			this.entries = [
@@ -66,7 +77,8 @@ class ViewStackStore {
 			subtitle: spec.subtitle,
 			component: spec.component,
 			props: spec.props ?? {},
-			parentId
+			parentId,
+			gridPos: spec.gridPos
 		};
 		this.entries = [...this.entries.slice(0, idx + 1), next, ...this.entries.slice(idx + 1)];
 		this.focusedId = id;

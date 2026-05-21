@@ -27,7 +27,7 @@ export const HYPEREVM_MULTICALL3_ADDRESS = getAddress('0xcA11bde05977b3631167028
 export const HYPEREVM_NETWORKS = {
 	mainnet: {
 		id: 'mainnet',
-		label: 'HyperEVM',
+		label: 'HyperEVM Mainnet',
 		chainName: 'Hyperliquid',
 		chainId: 999,
 		chainIdHex: '0x3e7',
