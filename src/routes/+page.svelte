@@ -13,8 +13,15 @@
 	import { normalizeTrackedWalletName } from '$lib/wallet-names.js';
 	import SupportFooter from '$lib/components/SupportFooter.svelte';
 	import HeroIcon from '$lib/components/HeroIcon.svelte';
-	import { views, type ViewEntry, type ViewSpec } from '$lib/views/stack.svelte';
+	import {
+		views,
+		DEFAULT_COLUMN_SIZE,
+		type LayoutSnapshot,
+		type ViewEntry,
+		type ViewSpec
+	} from '$lib/views/stack.svelte';
 	import ViewStack from '$lib/views/ViewStack.svelte';
+	import WidgetSelector from '$lib/components/WidgetSelector.svelte';
 	import {
 		DEFAULT_VIEW_TYPES,
 		fixedViewIdForType,
@@ -100,6 +107,7 @@
 	const DEFAULT_VIEW_IDS = DEFAULT_VIEW_TYPES;
 	const CLOSED_DEFAULT_VIEWS_KEY = 'purrbuild:closed-default-views';
 	const VIEW_STACK_STORAGE_KEY = 'purrbuild:view-stack';
+	const WORKSPACE_LAYOUT_STORAGE_KEY = 'purrbuild:workspace-layout';
 	type DefaultViewId = DefaultViewType;
 	type PersistentViewType = RegisteredViewType;
 	type PersistedViewEntry = {
@@ -121,11 +129,13 @@
 		network: HyperliquidNetwork;
 		closedDefaultViews: DefaultViewId[];
 		workspace: PersistedViewStack;
+		layout: LayoutSnapshot;
 	};
 	type NormalizedWorkspaceExport = {
 		network: HyperliquidNetwork | null;
 		closedDefaultViews: DefaultViewId[];
 		workspace: PersistedViewStack;
+		layout: LayoutSnapshot | null;
 	};
 	type EvmBlockMode = 'big' | 'small';
 
@@ -146,40 +156,70 @@
 	let closedDefaultViews = $state<Partial<Record<DefaultViewId, true>>>({});
 	let defaultViewsHydrated = $state(false);
 	let viewStackRestored = $state(false);
+	let widgetSelectorOpen = $state(false);
+	let widgetSelectorTarget = $state<string | null>(null);
+	let pendingColumnTarget: string | null = null;
 	let handledCloseNonce = 0;
 	let evmBlockModeGeneration = 0;
 
-	function addL1Core() {
-		trackL1CoreModalOpen = true;
+	type AddableWidget =
+		| 'l1core'
+		| 'hyperevm'
+		| 'asset-universe'
+		| 'hip3'
+		| 'api'
+		| 'api-sandbox'
+		| 'panel';
+	const WIDGET_TYPES: { type: AddableWidget; label: string; description: string }[] = [
+		{ type: 'l1core', label: 'L1 Core', description: 'Track a HyperCore L1 wallet.' },
+		{ type: 'hyperevm', label: 'HyperEVM', description: 'Track a HyperEVM wallet.' },
+		{
+			type: 'asset-universe',
+			label: 'Asset universe',
+			description: 'All DEX, spot, and outcome metadata.'
+		},
+		{ type: 'hip3', label: 'HIP-3', description: 'Builder-deployed perp DEXes.' },
+		{ type: 'api', label: 'API', description: 'Hyperliquid API status and incidents.' },
+		{ type: 'api-sandbox', label: 'API sandbox', description: 'Build and sign exchange payloads.' },
+		{ type: 'panel', label: 'Blank panel', description: 'An empty placeholder window.' }
+	];
+	let widgetOptions = $derived(
+		WIDGET_TYPES.map((widget) => ({
+			label: widget.label,
+			description: widget.description,
+			run: () => addWidget(widget.type, widgetSelectorTarget)
+		}))
+	);
+
+	function openSelector(target: string | null = null) {
+		widgetSelectorTarget = target;
+		widgetSelectorOpen = true;
 	}
 
-	function addHyperEvm() {
-		trackHyperEvmModalOpen = true;
+	function closeSelector() {
+		widgetSelectorOpen = false;
 	}
 
-	function addAPIView() {
-		openDefaultView('api');
-	}
-
-	function addApiSandbox() {
-		views.open({
-			...viewSpecForType('api-sandbox'),
-			id: fixedViewIdForType('api-sandbox') ?? undefined
-		});
-	}
-
-	function addAssetUniverse() {
-		views.open({
-			...viewSpecForType('asset-universe'),
-			id: fixedViewIdForType('asset-universe') ?? undefined
-		});
-	}
-
-	function addHip3() {
-		views.open({
-			...viewSpecForType('hip3'),
-			id: fixedViewIdForType('hip3') ?? undefined
-		});
+	function addWidget(type: AddableWidget, columnId: string | null = null) {
+		widgetSelectorOpen = false;
+		if (type === 'l1core') {
+			pendingColumnTarget = columnId;
+			trackL1CoreModalOpen = true;
+			return;
+		}
+		if (type === 'hyperevm') {
+			pendingColumnTarget = columnId;
+			trackHyperEvmModalOpen = true;
+			return;
+		}
+		if (type === 'api') {
+			closedDefaultViews = withoutClosedDefault('api');
+			persistClosedDefaultViews();
+		}
+		views.open(
+			{ ...viewSpecForType(type), id: fixedViewIdForType(type) ?? undefined },
+			columnId ? { columnId } : {}
+		);
 	}
 
 	function openDefaultView(id: DefaultViewId, name?: string | null) {
@@ -211,16 +251,22 @@
 		if (existing) {
 			if (name) views.updateProps(existing.id, { name });
 			views.focus(existing.id);
+			pendingColumnTarget = null;
 			return;
 		}
 
-		views.open({
-			...viewSpecForType('l1core', {
-				address,
-				...(name ? { name } : {})
-			}),
-			id
-		});
+		const columnId = pendingColumnTarget;
+		pendingColumnTarget = null;
+		views.open(
+			{
+				...viewSpecForType('l1core', {
+					address,
+					...(name ? { name } : {})
+				}),
+				id
+			},
+			columnId ? { columnId } : {}
+		);
 	}
 
 	function openHyperEvmView(address: Address, options: { id?: string; name?: string | null } = {}) {
@@ -232,16 +278,22 @@
 		if (existing) {
 			if (name) views.updateProps(existing.id, { name });
 			views.focus(existing.id);
+			pendingColumnTarget = null;
 			return;
 		}
 
-		views.open({
-			...viewSpecForType('hyperevm', {
-				address,
-				...(name ? { name } : {})
-			}),
-			id
-		});
+		const columnId = pendingColumnTarget;
+		pendingColumnTarget = null;
+		views.open(
+			{
+				...viewSpecForType('hyperevm', {
+					address,
+					...(name ? { name } : {})
+				}),
+				id
+			},
+			columnId ? { columnId } : {}
+		);
 	}
 
 	function addManualL1Core(
@@ -442,6 +494,61 @@
 		}
 	}
 
+	function persistWorkspaceLayout(layout = views.snapshotLayout()) {
+		if (!browser) return;
+		try {
+			localStorage.setItem(WORKSPACE_LAYOUT_STORAGE_KEY, JSON.stringify({ version: 1, ...layout }));
+		} catch {
+			// The live layout still applies in-memory for this session.
+		}
+	}
+
+	function normalizedLayoutSnapshot(value: unknown): LayoutSnapshot | null {
+		if (!value || typeof value !== 'object') return null;
+		const source = value as Record<string, unknown>;
+		if (!Array.isArray(source.columns)) return null;
+
+		const columns: LayoutSnapshot['columns'] = [];
+		for (const rawColumn of source.columns) {
+			if (!rawColumn || typeof rawColumn !== 'object') continue;
+			const column = rawColumn as Record<string, unknown>;
+			if (!Array.isArray(column.slots)) continue;
+
+			const slots: LayoutSnapshot['columns'][number]['slots'] = [];
+			for (const rawSlot of column.slots) {
+				if (!rawSlot || typeof rawSlot !== 'object') continue;
+				const slot = rawSlot as Record<string, unknown>;
+				if (typeof slot.id !== 'string') continue;
+				slots.push({ id: slot.id, weight: typeof slot.weight === 'number' ? slot.weight : 1 });
+			}
+			if (slots.length === 0) continue;
+
+			columns.push({
+				id: typeof column.id === 'string' ? column.id : '',
+				size: typeof column.size === 'number' ? column.size : DEFAULT_COLUMN_SIZE,
+				slots
+			});
+		}
+		if (columns.length === 0) return null;
+
+		return {
+			orientation: source.orientation === 'vertical' ? 'vertical' : 'horizontal',
+			focusedId: typeof source.focusedId === 'string' ? source.focusedId : null,
+			columns
+		};
+	}
+
+	function loadWorkspaceLayout(): LayoutSnapshot | null {
+		if (!browser) return null;
+		try {
+			const raw = localStorage.getItem(WORKSPACE_LAYOUT_STORAGE_KEY);
+			if (!raw) return null;
+			return normalizedLayoutSnapshot(JSON.parse(raw));
+		} catch {
+			return null;
+		}
+	}
+
 	function normalizedPersistedViewStack(value: unknown): PersistedViewStack | null {
 		const source = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
 		const rawEntries = Array.isArray(value)
@@ -501,7 +608,8 @@
 			closedDefaultViews: Array.isArray(source.closedDefaultViews)
 				? source.closedDefaultViews.filter(isDefaultViewId)
 				: [],
-			workspace
+			workspace,
+			layout: normalizedLayoutSnapshot(source.layout)
 		};
 	}
 
@@ -532,7 +640,8 @@
 			exportedAt: exportedAt.toISOString(),
 			network: hyperliquidNetwork.current,
 			closedDefaultViews: DEFAULT_VIEW_IDS.filter((id) => closedDefaultViews[id]),
-			workspace: persistedViewStack()
+			workspace: persistedViewStack(),
+			layout: views.snapshotLayout()
 		};
 	}
 
@@ -590,6 +699,8 @@
 		const persisted = loadPersistedViewStack();
 		if (persisted) {
 			applyPersistedViewStack(persisted);
+			const layout = loadWorkspaceLayout();
+			if (layout) views.applyLayout(layout);
 			return;
 		}
 
@@ -623,8 +734,10 @@
 			persistClosedDefaultViews();
 			wallet.setManual(primaryAddressForWorkspace(demo.workspace));
 			applyPersistedViewStack(demo.workspace);
+			if (demo.layout) views.applyLayout(demo.layout);
 			viewStackRestored = true;
 			persistViewStack();
+			persistWorkspaceLayout();
 		} catch (err) {
 			demoWorkspaceError = err instanceof Error ? err.message : 'Could not load demo workspace.';
 		} finally {
@@ -760,6 +873,49 @@
 		return payload.result;
 	}
 
+	function isTextEntryTarget(target: EventTarget | null) {
+		if (!(target instanceof HTMLElement)) return false;
+		const tag = target.tagName;
+		return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable;
+	}
+
+	function handleWorkspaceKeydown(event: KeyboardEvent) {
+		if (!wallet.current || event.metaKey || event.ctrlKey || event.altKey) return;
+		if (isTextEntryTarget(event.target)) return;
+		if (connectModalOpen || trackL1CoreModalOpen || trackHyperEvmModalOpen || widgetSelectorOpen) {
+			return;
+		}
+
+		const horizontal = views.orientation === 'horizontal';
+		switch (event.key) {
+			case 'h':
+				if (horizontal) views.focusColumn(-1);
+				else views.focusSlot(-1);
+				break;
+			case 'l':
+				if (horizontal) views.focusColumn(1);
+				else views.focusSlot(1);
+				break;
+			case 'k':
+				if (horizontal) views.focusSlot(-1);
+				else views.focusColumn(-1);
+				break;
+			case 'j':
+				if (horizontal) views.focusSlot(1);
+				else views.focusColumn(1);
+				break;
+			case 'o':
+				openSelector();
+				break;
+			case 'q':
+				if (views.focusedId) views.close(views.focusedId);
+				break;
+			default:
+				return;
+		}
+		event.preventDefault();
+	}
+
 	onMount(() => {
 		closedDefaultViews = loadClosedDefaultViews();
 		defaultViewsHydrated = true;
@@ -795,6 +951,12 @@
 	});
 
 	$effect(() => {
+		if (!browser || !wallet.current || !defaultViewsHydrated || !viewStackRestored) return;
+
+		persistWorkspaceLayout(views.snapshotLayout());
+	});
+
+	$effect(() => {
 		const address = wallet.current?.address;
 		const network = hyperliquidNetwork.current;
 		if (!address || wallet.current?.source !== 'injected') {
@@ -808,6 +970,8 @@
 		void loadEvmBlockMode(address, network);
 	});
 </script>
+
+<svelte:window onkeydown={handleWorkspaceKeydown} />
 
 <div class="flex h-[calc(100svh-3.5rem-1.5rem)] flex-col gap-3">
 	{#if wallet.current}
@@ -897,26 +1061,46 @@
 			class="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-base-100/60 p-1 shadow-sm shadow-neutral/5"
 		>
 			<div class="flex flex-wrap gap-2">
-				<button class="btn btn-ghost btn-sm" onclick={addL1Core} title="Open HyperCore L1 view">
+				<button
+					class="btn btn-ghost btn-sm"
+					onclick={() => addWidget('l1core')}
+					title="Open HyperCore L1 view"
+				>
 					L1 Core
 				</button>
-				<button class="btn btn-ghost btn-sm" onclick={addHyperEvm} title="Open HyperEVM view">
+				<button
+					class="btn btn-ghost btn-sm"
+					onclick={() => addWidget('hyperevm')}
+					title="Open HyperEVM view"
+				>
 					HyperEVM
 				</button>
 				<button
 					class="btn btn-ghost btn-sm"
-					onclick={addAssetUniverse}
+					onclick={() => addWidget('asset-universe')}
 					title="Open asset universe view"
 				>
 					Asset universe
 				</button>
-				<button class="btn btn-ghost btn-sm" onclick={addHip3} title="Open HIP-3 view">
+				<button
+					class="btn btn-ghost btn-sm"
+					onclick={() => addWidget('hip3')}
+					title="Open HIP-3 view"
+				>
 					HIP-3
 				</button>
-				<button class="btn btn-ghost btn-sm" onclick={addAPIView} title="Open API status view">
+				<button
+					class="btn btn-ghost btn-sm"
+					onclick={() => addWidget('api')}
+					title="Open API status view"
+				>
 					API
 				</button>
-				<button class="btn btn-ghost btn-sm" onclick={addApiSandbox} title="Open API sandbox view">
+				<button
+					class="btn btn-ghost btn-sm"
+					onclick={() => addWidget('api-sandbox')}
+					title="Open API sandbox view"
+				>
 					API sandbox
 				</button>
 			</div>
@@ -926,6 +1110,14 @@
 				{:else if workspaceExportMessage}
 					<span role="status" class="px-1 text-xs text-success">{workspaceExportMessage}</span>
 				{/if}
+				<button
+					class="btn btn-ghost btn-sm"
+					onclick={() => views.toggleOrientation()}
+					title="Toggle between horizontal and vertical scroll"
+				>
+					<HeroIcon name={views.orientation === 'horizontal' ? 'arrow-right' : 'chevron-down'} />
+					{views.orientation === 'horizontal' ? 'Horizontal' : 'Vertical'}
+				</button>
 				<button
 					class="btn btn-ghost btn-sm"
 					onclick={exportWorkspace}
@@ -940,7 +1132,7 @@
 		<div class="min-h-0 flex-1">
 			{#if views.entries.length === 0}
 				<div class="flex h-full items-center justify-center">
-					<button class="btn btn-primary" onclick={addL1Core}>Add wallet</button>
+					<button class="btn btn-primary" onclick={() => addWidget('l1core')}>Add wallet</button>
 				</div>
 			{:else}
 				<ViewStack />
@@ -1017,7 +1209,10 @@
 	currentAddress={wallet.current?.address ?? null}
 	onAdd={addManualL1Core}
 	onAddCurrent={addCurrentL1Core}
-	onClose={() => (trackL1CoreModalOpen = false)}
+	onClose={() => {
+		trackL1CoreModalOpen = false;
+		pendingColumnTarget = null;
+	}}
 />
 <TrackWalletModal
 	open={trackHyperEvmModalOpen}
@@ -1027,5 +1222,9 @@
 	currentAddress={wallet.current?.address ?? null}
 	onAdd={addManualHyperEvm}
 	onAddCurrent={addCurrentHyperEvm}
-	onClose={() => (trackHyperEvmModalOpen = false)}
+	onClose={() => {
+		trackHyperEvmModalOpen = false;
+		pendingColumnTarget = null;
+	}}
 />
+<WidgetSelector open={widgetSelectorOpen} options={widgetOptions} onClose={closeSelector} />

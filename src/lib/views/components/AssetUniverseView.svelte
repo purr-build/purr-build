@@ -530,7 +530,7 @@
 		</button>
 	{/snippet}
 
-	<div class="flex h-full min-h-[65svh] flex-col">
+	<div class="flex h-full flex-col">
 		<div class="border-b border-base-300 bg-base-100 p-3">
 			<ViewTabs
 				tabs={tabItems}
