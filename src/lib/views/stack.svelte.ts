@@ -137,6 +137,9 @@ class ViewStackStore {
 		if (!located) return;
 
 		const { column, slotIndex } = located;
+		const columnIndex = this.columns.indexOf(column);
+		const wasFocused = this.focusedId === id;
+
 		column.slots.splice(slotIndex, 1);
 		if (column.slots.length === 0) {
 			this.columns = this.columns.filter((other) => other !== column);
@@ -144,9 +147,19 @@ class ViewStackStore {
 			normalizeWeights(column.slots);
 		}
 
-		if (!this.locate(this.focusedId)) {
+		if (wasFocused) {
+			// Move focus to the nearest neighbour: a remaining window in the same
+			// column, otherwise the column that took its place (or the new last one).
+			if (column.slots.length > 0) {
+				this.focusedId = column.slots[Math.min(slotIndex, column.slots.length - 1)].entry.id;
+			} else {
+				const nextColumn = this.columns[Math.min(columnIndex, this.columns.length - 1)];
+				this.focusedId = nextColumn?.slots[0]?.entry.id ?? null;
+			}
+		} else if (!this.locate(this.focusedId)) {
 			this.focusedId = this.entries.at(-1)?.id ?? null;
 		}
+
 		this.lastClosedId = id;
 		this.closeNonce += 1;
 	}
