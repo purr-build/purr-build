@@ -63,6 +63,10 @@
 	</div>
 
 	<div class="navbar-end min-w-0 gap-2">
+		<a href={resolve('/volume-heatmap')} class="btn hidden btn-ghost btn-sm sm:inline-flex">
+			Heatmap
+		</a>
+
 		<a href={resolve('/api-sandbox')} class="btn hidden btn-ghost btn-sm md:inline-flex">
 			API sandbox
 		</a>
