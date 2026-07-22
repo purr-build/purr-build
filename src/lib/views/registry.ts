@@ -1,6 +1,7 @@
 import APIView from './components/APIView.svelte';
 import ApiSandboxView from './components/ApiSandboxView.svelte';
 import AssetUniverseView from './components/AssetUniverseView.svelte';
+import Hip1View from './components/Hip1View.svelte';
 import Hip3View from './components/Hip3View.svelte';
 import HyperEvmView from './components/HyperEvmView.svelte';
 import L1CoreView from './components/L1CoreView.svelte';
@@ -21,6 +22,7 @@ export type RegisteredViewType =
 	| 'api'
 	| 'api-sandbox'
 	| 'asset-universe'
+	| 'hip1'
 	| 'hip3';
 export type DefaultViewType = (typeof DEFAULT_VIEW_TYPES)[number];
 
@@ -51,6 +53,11 @@ export const VIEW_REGISTRY: Record<RegisteredViewType, RegistrySpec> = {
 		title: 'Asset Universe',
 		component: AssetUniverseView,
 		fixedId: 'asset-universe'
+	},
+	hip1: {
+		title: 'HIP-1',
+		component: Hip1View,
+		fixedId: 'hip1'
 	},
 	hip3: {
 		title: 'HIP-3',
@@ -96,6 +103,7 @@ export function viewTypeForEntry(
 	) {
 		return 'asset-universe';
 	}
+	if (entry.id === 'hip1' || entry.component === VIEW_REGISTRY.hip1.component) return 'hip1';
 	if (entry.id === 'hip3' || entry.component === VIEW_REGISTRY.hip3.component) return 'hip3';
 	if (entry.id === 'l1core' || entry.component === VIEW_REGISTRY.l1core.component) return 'l1core';
 	if (entry.id === 'hyperevm' || entry.component === VIEW_REGISTRY.hyperevm.component) {

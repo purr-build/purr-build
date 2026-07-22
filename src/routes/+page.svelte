@@ -77,6 +77,10 @@
 			description: 'All DEX, spot token, and outcome market metadata with lazy-rendered lists.'
 		},
 		{
+			title: 'HIP-1',
+			description: 'Guided native spot-token deployment with connected-wallet signing.'
+		},
+		{
 			title: 'HIP-3',
 			description: 'Builder-deployed perp DEXes and deployed tickers for the current address.'
 		},
@@ -166,6 +170,7 @@
 		| 'l1core'
 		| 'hyperevm'
 		| 'asset-universe'
+		| 'hip1'
 		| 'hip3'
 		| 'api'
 		| 'api-sandbox'
@@ -178,6 +183,7 @@
 			label: 'Asset universe',
 			description: 'All DEX, spot, and outcome metadata.'
 		},
+		{ type: 'hip1', label: 'HIP-1', description: 'Deploy a native spot token.' },
 		{ type: 'hip3', label: 'HIP-3', description: 'Builder-deployed perp DEXes.' },
 		{ type: 'api', label: 'API', description: 'Hyperliquid API status and incidents.' },
 		{ type: 'api-sandbox', label: 'API sandbox', description: 'Build and sign exchange payloads.' },
@@ -1081,6 +1087,13 @@
 					title="Open asset universe view"
 				>
 					Asset universe
+				</button>
+				<button
+					class="btn btn-ghost btn-sm"
+					onclick={() => addWidget('hip1')}
+					title="Open HIP-1 deployment view"
+				>
+					HIP-1
 				</button>
 				<button
 					class="btn btn-ghost btn-sm"
