@@ -55,13 +55,13 @@
 
 	const MAINNET_EXCHANGE_URL = 'https://api.hyperliquid.xyz/exchange';
 	const TESTNET_EXCHANGE_URL = 'https://api.hyperliquid-testnet.xyz/exchange';
-	const SYSTEM_ACTION_FIELDS = new Set([
-		'type',
-		'signatureChainId',
-		'hyperliquidChain',
+	const CUSTOM_L1_METHOD_ID = '__customL1Action';
+	const MANAGED_BODY_FIELDS = new Set([
+		'action',
+		'signature',
 		'nonce',
-		'time',
-		'signature'
+		'vaultAddress',
+		'expiresAfter'
 	]);
 
 	const COMMON_ORDER = {
@@ -505,7 +505,17 @@
 		}
 	];
 
+	const CUSTOM_METHODS: MethodMeta[] = [
+		{
+			id: CUSTOM_L1_METHOD_ID,
+			label: 'Custom L1 action',
+			signing: 'l1',
+			description: 'Sign any L1 action without applying an SDK exchange-action schema.',
+			sample: { type: 'customAction' }
+		}
+	];
 	const METHOD_GROUPS: MethodGroup[] = [
+		{ label: 'Custom', methods: CUSTOM_METHODS },
 		{ label: 'L1 signed actions', methods: L1_METHODS },
 		{ label: 'User-signed actions', methods: USER_SIGNED_METHODS }
 	];
@@ -514,10 +524,7 @@
 
 	let selectedMethodId = $state('order');
 	let selectedSignerKey = $state('');
-	let payloadInput = $state(prettyJson(METHOD_BY_ID.order.sample));
-	let nonceInput = $state('');
-	let vaultAddressInput = $state('');
-	let expiresAfterInput = $state('');
+	let payloadInput = $state(prettyJson(sampleRequestBody(METHOD_BY_ID.order)));
 	let savedAgentWallets = $state<SavedAgentWallet[]>([]);
 	let signing = $state(false);
 	let chainSwitching = $state(false);
@@ -560,12 +567,19 @@
 		const nextId = (event.currentTarget as HTMLSelectElement).value;
 		const next = METHOD_BY_ID[nextId] ?? METHOD_OPTIONS[0];
 		selectedMethodId = next.id;
-		payloadInput = prettyJson(next.sample);
+		payloadInput = prettyJson(sampleRequestBody(next));
 		clearPreview();
 	}
 
+	function sampleRequestBody(method: MethodMeta) {
+		return {
+			action:
+				method.id === CUSTOM_L1_METHOD_ID ? method.sample : { type: method.id, ...method.sample }
+		};
+	}
+
 	function resetPayload() {
-		payloadInput = prettyJson(selectedMethod.sample);
+		payloadInput = prettyJson(sampleRequestBody(selectedMethod));
 		clearPreview();
 	}
 
@@ -589,28 +603,37 @@
 		return method.signing === 'l1' ? 'L1' : 'User';
 	}
 
-	function getNonce() {
-		const trimmed = nonceInput.trim();
-		if (!trimmed) return Date.now();
-		const parsed = Number(trimmed);
+	function getNonce(body: Record<string, unknown>, method: MethodMeta) {
+		let value = body.nonce;
+		if ((value === undefined || value === null || value === '') && method.signing === 'user') {
+			const action = body.action;
+			if (isJsonObject(action) && method.types) {
+				value = action[nonceFieldName(method.types)];
+			}
+		}
+		if (value === undefined || value === null || value === '') return Date.now();
+
+		const parsed = Number(value);
 		if (!Number.isSafeInteger(parsed) || parsed < 0) {
-			throw new Error('Nonce must be a non-negative safe integer.');
+			throw new Error('Request body nonce must be a non-negative safe integer.');
 		}
 		return parsed;
 	}
 
-	function requestOptions() {
-		const vaultAddress = vaultAddressInput.trim();
-		const expiresAfter = expiresAfterInput.trim();
+	function requestOptions(body: Record<string, unknown>) {
+		const vaultAddress = body.vaultAddress;
+		const expiresAfter = body.expiresAfter;
 		const options: { vaultAddress?: `0x${string}`; expiresAfter?: number } = {};
-		if (vaultAddress) {
-			if (!isAddress(vaultAddress)) throw new Error('Vault address must be a valid EVM address.');
+		if (vaultAddress !== undefined && vaultAddress !== null && vaultAddress !== '') {
+			if (typeof vaultAddress !== 'string' || !isAddress(vaultAddress)) {
+				throw new Error('Request body vaultAddress must be a valid EVM address.');
+			}
 			options.vaultAddress = vaultAddress as `0x${string}`;
 		}
-		if (expiresAfter) {
+		if (expiresAfter !== undefined && expiresAfter !== null && expiresAfter !== '') {
 			const parsed = Number(expiresAfter);
 			if (!Number.isSafeInteger(parsed) || parsed < 0) {
-				throw new Error('Expires after must be a non-negative safe integer timestamp.');
+				throw new Error('Request body expiresAfter must be a non-negative safe integer timestamp.');
 			}
 			options.expiresAfter = parsed;
 		}
@@ -653,31 +676,24 @@
 		}
 	}
 
-	function actionPayload(method: MethodMeta, payload: Record<string, unknown>) {
-		const action: Record<string, unknown> = { type: method.id };
-		for (const [key, value] of Object.entries(payload)) {
-			if (key === 'signature') continue;
-			if (key === 'type') continue;
-			action[key] = value;
-		}
-		return action;
-	}
-
 	function userSignedAction(method: MethodMeta, payload: Record<string, unknown>, nonce: number) {
 		if (!method.types) throw new Error(`${method.label} has no EIP-712 type metadata.`);
+		if (payload.type !== method.id) {
+			throw new Error(`Action type must be "${method.id}" for ${method.label} signing.`);
+		}
+
 		const nonceField = nonceFieldName(method.types);
 		const action: Record<string, unknown> = {
-			type: method.id,
 			signatureChainId: HYPERLIQUID_L1_SIGNATURE_CHAIN_ID,
-			hyperliquidChain: hyperliquidNetwork.current === 'testnet' ? 'Testnet' : 'Mainnet'
+			hyperliquidChain: hyperliquidNetwork.current === 'testnet' ? 'Testnet' : 'Mainnet',
+			...payload,
+			[nonceField]: nonce
 		};
-		for (const [key, value] of Object.entries(payload)) {
-			if (SYSTEM_ACTION_FIELDS.has(key)) continue;
-			action[key] = value;
-		}
-		action[nonceField] = nonce;
 		normalizeUserSignedAction(method, action);
 		assertUserSignedFields(method, action);
+		if (typeof action.signatureChainId !== 'string' || !action.signatureChainId.startsWith('0x')) {
+			throw new Error('Action signatureChainId must be a hexadecimal string.');
+		}
 		return action as { signatureChainId: `0x${string}`; [key: string]: unknown };
 	}
 
@@ -719,13 +735,14 @@
 
 		try {
 			const method = selectedMethod;
-			const nonce = getNonce();
-			const payload = parseJsonObject(payloadInput);
+			const draft = parseJsonObject(payloadInput);
+			const action = requestAction(draft);
+			const nonce = getNonce(draft, method);
 			const signer = await signerWallet();
+			const customBodyFields = unmanagedBodyFields(draft);
 
 			if (method.signing === 'l1') {
-				const action = actionPayload(method, payload);
-				const options = requestOptions();
+				const options = requestOptions(draft);
 				const signature = await signL1Action({
 					wallet: signer,
 					action,
@@ -734,6 +751,7 @@
 					...options
 				});
 				const body = compactObject({
+					...customBodyFields,
 					action,
 					signature,
 					nonce,
@@ -742,13 +760,16 @@
 				signedBody = body;
 				curl = requestToCurl(exchangeUrl, body);
 			} else {
-				const action = userSignedAction(method, payload, nonce);
+				if (!isJsonObject(action)) {
+					throw new Error('User-signed request body action must be a JSON object.');
+				}
+				const signedAction = userSignedAction(method, action, nonce);
 				const signature = await signUserSignedAction({
 					wallet: signer,
-					action,
+					action: signedAction,
 					types: method.types as Eip712Types
 				});
-				const body = { action, signature, nonce };
+				const body = { ...customBodyFields, action: signedAction, signature, nonce };
 				signedBody = body;
 				curl = requestToCurl(exchangeUrl, body);
 			}
@@ -771,12 +792,28 @@
 		}
 	}
 
+	function isJsonObject(value: unknown): value is Record<string, unknown> {
+		return value !== null && typeof value === 'object' && !Array.isArray(value);
+	}
+
 	function parseJsonObject(value: string) {
 		const parsed = JSON.parse(value) as unknown;
-		if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-			throw new Error('Payload must be a JSON object.');
+		if (!isJsonObject(parsed)) throw new Error('Request body must be a JSON object.');
+		return parsed;
+	}
+
+	function requestAction(body: Record<string, unknown>) {
+		const action = body.action;
+		if (!isJsonObject(action) && !Array.isArray(action)) {
+			throw new Error('Request body must contain an action object or array.');
 		}
-		return parsed as Record<string, unknown>;
+		return action;
+	}
+
+	function unmanagedBodyFields(body: Record<string, unknown>) {
+		return Object.fromEntries(
+			Object.entries(body).filter(([key]) => !MANAGED_BODY_FIELDS.has(key))
+		);
 	}
 
 	function compactObject<T extends Record<string, unknown>>(value: T) {
@@ -826,7 +863,7 @@
 		<section class="space-y-3 rounded-lg border border-base-300 bg-base-100 p-3">
 			<div class="grid gap-3 sm:grid-cols-2">
 				<label class="form-control">
-					<span class="label pb-1 text-xs text-base-content/60">Method</span>
+					<span class="label pb-1 text-xs text-base-content/60">Signing preset</span>
 					<select class="select w-full select-sm" value={selectedMethodId} onchange={updateMethod}>
 						{#each METHOD_GROUPS as group (group.label)}
 							<optgroup label={group.label}>
@@ -868,46 +905,19 @@
 			</div>
 
 			<label class="form-control">
-				<span class="label pb-1 text-xs text-base-content/60">Action payload</span>
+				<span class="label pb-1 text-xs text-base-content/60">Full request body</span>
 				<textarea
-					class="textarea-bordered textarea h-80 min-h-60 w-full resize-y font-mono text-xs leading-5"
+					class="textarea-bordered textarea h-96 min-h-72 w-full resize-y font-mono text-xs leading-5"
 					spellcheck="false"
 					bind:value={payloadInput}
 					oninput={clearPreview}
 				></textarea>
+				<span class="mt-1 text-[11px] leading-4 text-base-content/50">
+					Edit <code>action</code>, <code>nonce</code>, <code>vaultAddress</code>,
+					<code>expiresAfter</code>, or custom top-level fields. Omit <code>nonce</code> to use the
+					current timestamp; any existing <code>signature</code> is replaced.
+				</span>
 			</label>
-
-			<div class="grid gap-3 md:grid-cols-3">
-				<label class="form-control">
-					<span class="label pb-1 text-xs text-base-content/60">Nonce</span>
-					<input
-						class="input input-sm w-full font-mono"
-						placeholder="Date.now()"
-						inputmode="numeric"
-						bind:value={nonceInput}
-						oninput={clearPreview}
-					/>
-				</label>
-				<label class="form-control">
-					<span class="label pb-1 text-xs text-base-content/60">Vault address</span>
-					<input
-						class="input input-sm w-full font-mono"
-						placeholder="L1 actions only"
-						bind:value={vaultAddressInput}
-						oninput={clearPreview}
-					/>
-				</label>
-				<label class="form-control">
-					<span class="label pb-1 text-xs text-base-content/60">Expires after</span>
-					<input
-						class="input input-sm w-full font-mono"
-						placeholder="timestamp ms"
-						inputmode="numeric"
-						bind:value={expiresAfterInput}
-						oninput={clearPreview}
-					/>
-				</label>
-			</div>
 
 			<div class="flex flex-wrap gap-2">
 				<button
