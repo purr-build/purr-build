@@ -5,6 +5,7 @@ import Hip1View from './components/Hip1View.svelte';
 import Hip3View from './components/Hip3View.svelte';
 import HyperEvmView from './components/HyperEvmView.svelte';
 import L1CoreView from './components/L1CoreView.svelte';
+import ValidatorVotesView from './components/ValidatorVotesView.svelte';
 import Panel from './Panel.svelte';
 import type { AnyComponent, ViewEntry, ViewSpec } from './stack.svelte';
 
@@ -20,6 +21,7 @@ export type RegisteredViewType =
 	| 'l1core'
 	| 'hyperevm'
 	| 'api'
+	| 'validator-votes'
 	| 'api-sandbox'
 	| 'asset-universe'
 	| 'hip1'
@@ -43,6 +45,11 @@ export const VIEW_REGISTRY: Record<RegisteredViewType, RegistrySpec> = {
 		title: 'API',
 		component: APIView,
 		fixedId: 'api'
+	},
+	'validator-votes': {
+		title: 'Validator Votes',
+		component: ValidatorVotesView,
+		fixedId: 'validator-votes'
 	},
 	'api-sandbox': {
 		title: 'API Sandbox',
@@ -94,6 +101,12 @@ export function viewTypeForEntry(
 	entry: Pick<ViewEntry, 'id' | 'component'>
 ): RegisteredViewType | null {
 	if (entry.id === 'api' || entry.component === VIEW_REGISTRY.api.component) return 'api';
+	if (
+		entry.id === 'validator-votes' ||
+		entry.component === VIEW_REGISTRY['validator-votes'].component
+	) {
+		return 'validator-votes';
+	}
 	if (entry.id === 'api-sandbox' || entry.component === VIEW_REGISTRY['api-sandbox'].component) {
 		return 'api-sandbox';
 	}

@@ -67,6 +67,10 @@
 			Heatmap
 		</a>
 
+		<a href={resolve('/validator-votes')} class="btn hidden btn-ghost btn-sm lg:inline-flex">
+			Validator votes
+		</a>
+
 		<a href={resolve('/api-sandbox')} class="btn hidden btn-ghost btn-sm md:inline-flex">
 			API sandbox
 		</a>

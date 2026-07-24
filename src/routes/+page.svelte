@@ -93,6 +93,10 @@
 			description: 'Current Hyperliquid API status, components, incidents, and history.'
 		},
 		{
+			title: 'Validator votes',
+			description: 'Active L1 governance actions, validator participation, and quorum status.'
+		},
+		{
 			title: 'API sandbox',
 			description: 'Edit exchange payloads, sign them locally, and preview signed curl requests.'
 		},
@@ -173,6 +177,7 @@
 		| 'hip1'
 		| 'hip3'
 		| 'api'
+		| 'validator-votes'
 		| 'api-sandbox'
 		| 'panel';
 	const WIDGET_TYPES: { type: AddableWidget; label: string; description: string }[] = [
@@ -186,6 +191,11 @@
 		{ type: 'hip1', label: 'HIP-1', description: 'Deploy a native spot token.' },
 		{ type: 'hip3', label: 'HIP-3', description: 'Builder-deployed perp DEXes.' },
 		{ type: 'api', label: 'API', description: 'Hyperliquid API status and incidents.' },
+		{
+			type: 'validator-votes',
+			label: 'Validator votes',
+			description: 'L1 governance votes and quorum status.'
+		},
 		{ type: 'api-sandbox', label: 'API sandbox', description: 'Build and sign exchange payloads.' },
 		{ type: 'panel', label: 'Blank panel', description: 'An empty placeholder window.' }
 	];
@@ -1108,6 +1118,13 @@
 					title="Open API status view"
 				>
 					API
+				</button>
+				<button
+					class="btn btn-ghost btn-sm"
+					onclick={() => addWidget('validator-votes')}
+					title="Open validator votes view"
+				>
+					Validator votes
 				</button>
 				<button
 					class="btn btn-ghost btn-sm"
