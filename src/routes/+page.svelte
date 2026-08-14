@@ -49,60 +49,20 @@
 	] as const;
 	const LANDING_FEATURES = [
 		{
-			title: 'L1 account',
-			description: 'Rate limits, reserved request weight, and root-wallet signing actions.'
+			title: 'Account overview',
+			description: 'Balances, positions, orders, fills, funding, and PnL across HyperCore.'
 		},
 		{
-			title: 'Balances',
-			description: 'Spot, perps, and all-DEX collateral with USDC values and token PnL.'
+			title: 'HyperEVM',
+			description: 'Native HYPE and ERC-20 balances, token tracking, and EVM network controls.'
 		},
 		{
-			title: 'HyperEVM balances',
-			description: 'Native HYPE, discovered ERC-20s, and manually tracked token contracts.'
+			title: 'Builder tools',
+			description: 'HIP-1 deployment, HIP-3 DEX discovery, agents, and builder approvals.'
 		},
 		{
-			title: 'Positions',
-			description: 'Live size, value, entry, mark, liquidation, margin, funding, and PnL.'
-		},
-		{
-			title: 'Orders and fills',
-			description: 'Active orders, recent executions, prices, sizes, sides, and timing.'
-		},
-		{
-			title: 'Outcome markets',
-			description: 'Outcome positions with market names, live prices, values, and PnL.'
-		},
-		{
-			title: 'Asset universe',
-			description: 'All DEX, spot token, and outcome market metadata with lazy-rendered lists.'
-		},
-		{
-			title: 'HIP-1',
-			description: 'Guided native spot-token deployment with connected-wallet signing.'
-		},
-		{
-			title: 'HIP-3',
-			description: 'Builder-deployed perp DEXes and deployed tickers for the current address.'
-		},
-		{
-			title: 'Agents and builders',
-			description: 'API agent wallets, builder approvals, names, fees, and signed requests.'
-		},
-		{
-			title: 'API status',
-			description: 'Current Hyperliquid API status, components, incidents, and history.'
-		},
-		{
-			title: 'Validator votes',
-			description: 'Active L1 governance actions, validator participation, and quorum status.'
-		},
-		{
-			title: 'API sandbox',
-			description: 'Edit exchange payloads, sign them locally, and preview signed curl requests.'
-		},
-		{
-			title: 'EVM controls',
-			description: 'Switch HyperEVM, Hyperliquid L1, and Big or Small EVM block mode.'
+			title: 'Network data',
+			description: 'Asset metadata, validator votes, API status, and a signed request sandbox.'
 		}
 	] as const;
 
@@ -1169,34 +1129,55 @@
 			{/if}
 		</div>
 	{:else}
-		<div class="min-h-0 flex-1 overflow-y-auto px-2 py-5 sm:px-6">
-			<div class="mx-auto flex min-h-full w-full max-w-6xl flex-col gap-6">
+		<div class="relative min-h-0 flex-1 overflow-y-auto px-2 py-5 sm:px-6 sm:py-7">
+			<div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+				<div class="absolute -top-24 left-[12%] size-80 rounded-full bg-primary/5 blur-3xl"></div>
+				<div class="absolute right-[8%] bottom-0 size-64 rounded-full bg-accent/5 blur-3xl"></div>
+			</div>
+
+			<div class="relative mx-auto flex min-h-full w-full max-w-6xl flex-col gap-6">
 				<div
-					class="grid flex-1 gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.15fr)] lg:items-center"
+					class="grid flex-1 gap-8 lg:grid-cols-[minmax(0,0.84fr)_minmax(0,1.16fr)] lg:items-center xl:gap-12"
 				>
-					<section class="flex min-w-0 flex-col gap-5 py-2 lg:py-8">
-						<div class="space-y-3">
+					<section class="flex min-w-0 flex-col gap-6 py-2 lg:py-8">
+						<div class="space-y-4">
 							<div class="flex items-center gap-3">
-								<span class="grid size-10 place-items-center rounded-lg bg-base-100/80 shadow-sm">
-									<img src={purr} alt="purr" class="size-6" />
+								<span
+									class="grid size-11 place-items-center rounded-xl border border-base-content/5 bg-base-100/80 shadow-sm shadow-neutral/5"
+								>
+									<img src={purr} alt="" class="size-7" />
 								</span>
-								<p class="text-xs font-medium text-base-content/50 uppercase">purr.build</p>
+								<div>
+									<p
+										class="font-mono text-[11px] font-semibold tracking-[0.16em] text-base-content/55 uppercase"
+									>
+										purr.build
+									</p>
+									<p class="mt-0.5 text-xs text-base-content/40">Builder workspace</p>
+								</div>
 							</div>
-							<h1 class="text-3xl leading-tight font-semibold text-base-content sm:text-4xl">
+
+							<h1
+								class="max-w-2xl text-4xl leading-[1.08] font-semibold tracking-[-0.025em] text-base-content sm:text-5xl lg:text-[3.25rem]"
+							>
 								Hyperliquid builder tools in one workspace.
 							</h1>
-							<p class="max-w-xl text-sm leading-6 text-base-content/65">
-								Connect a wallet to open L1 Core and API views, or load the demo workspace to
-								inspect the read-only experience.
+							<p class="max-w-xl text-base leading-7 text-base-content/65">
+								Track accounts, inspect network data, and use builder tools without jumping between
+								dashboards. Connect a wallet, or explore the read-only demo.
 							</p>
 						</div>
 
-						<div class="flex flex-wrap gap-2">
-							<button class="btn btn-sm btn-primary" onclick={() => (connectModalOpen = true)}>
+						<div class="flex flex-wrap gap-3">
+							<button
+								class="btn cursor-pointer px-5 shadow-sm shadow-primary/15 btn-primary"
+								onclick={() => (connectModalOpen = true)}
+							>
 								Connect wallet
+								<span aria-hidden="true">→</span>
 							</button>
 							<button
-								class="btn font-mono btn-outline btn-sm"
+								class="btn cursor-pointer border-base-content/15 bg-base-100/40 px-5 font-mono btn-outline disabled:cursor-not-allowed"
 								disabled={demoWorkspaceLoading}
 								onclick={useDemoWorkspace}
 							>
@@ -1207,23 +1188,43 @@
 							</button>
 						</div>
 						{#if demoWorkspaceError}
-							<p role="alert" class="text-xs text-error">{demoWorkspaceError}</p>
+							<p role="alert" class="text-sm text-error">{demoWorkspaceError}</p>
 						{/if}
+
+						<blockquote
+							class="max-w-md border-l border-base-content/10 pl-4 text-xs leading-5 text-base-content/35 italic"
+						>
+							{disconnectedQuote}
+						</blockquote>
 					</section>
 
-					<div class="grid min-w-0 gap-3 sm:grid-cols-2">
-						{#each LANDING_FEATURES as feature (feature.title)}
-							<article
-								class="rounded-lg bg-base-100/80 p-4 shadow-sm shadow-neutral/5 transition hover:bg-base-100 hover:shadow-md"
-							>
-								<h2 class="text-sm font-semibold text-base-content">{feature.title}</h2>
-								<p class="mt-2 text-xs leading-5 text-base-content/65">{feature.description}</p>
-							</article>
-						{/each}
-					</div>
-				</div>
+					<section
+						class="min-w-0 rounded-2xl border border-base-content/5 bg-base-100/35 p-3 shadow-xl shadow-neutral/5 backdrop-blur-sm sm:p-4"
+						aria-labelledby="landing-features-title"
+					>
+						<div class="mb-4 px-1">
+							<h2 id="landing-features-title" class="text-lg font-semibold text-base-content">
+								Core features
+							</h2>
+							<p class="mt-1 text-sm text-base-content/50">
+								Track accounts, build, and inspect the network.
+							</p>
+						</div>
 
-				<p class="truncate px-1 text-xs text-base-content/35 italic">{disconnectedQuote}</p>
+						<div class="grid min-w-0 gap-2 sm:grid-cols-2">
+							{#each LANDING_FEATURES as feature (feature.title)}
+								<article
+									class="rounded-xl border border-base-content/5 bg-base-100/70 p-5 shadow-sm shadow-neutral/5"
+								>
+									<h3 class="text-sm font-semibold text-base-content">{feature.title}</h3>
+									<p class="mt-2 text-sm leading-6 text-base-content/60">
+										{feature.description}
+									</p>
+								</article>
+							{/each}
+						</div>
+					</section>
+				</div>
 			</div>
 		</div>
 	{/if}
